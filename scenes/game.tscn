@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cfiwsnon8re82"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="Label" type="Label" parent="Camera2D"]
+offset_right = 138.0
+offset_bottom = 23.0
+text = "Hello from Godot!"
