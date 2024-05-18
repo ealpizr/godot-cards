@@ -1,6 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://bh3labrgxts1s"]
+[gd_scene load_steps=9 format=3 uid="uid://bh3labrgxts1s"]
 
 [ext_resource type="Theme" uid="uid://dg5a4ijak5tgo" path="res://theme.tres" id="1_a56tg"]
+[ext_resource type="Script" path="res://core/Card.cs" id="2_bkaqj"]
+[ext_resource type="Script" path="res://core/CardStateMachine.cs" id="3_xnp3a"]
+[ext_resource type="Script" path="res://core/CardIdleState.cs" id="4_xa3ls"]
+[ext_resource type="Script" path="res://core/CardClickedState.cs" id="5_vkwn3"]
+[ext_resource type="Script" path="res://core/CardDraggingState.cs" id="6_otr84"]
+[ext_resource type="Script" path="res://core/CardReleasedState.cs" id="7_odobm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_egjmp"]
 size = Vector2(20, 30)
@@ -16,6 +22,7 @@ offset_bottom = -114.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_a56tg")
+script = ExtResource("2_bkaqj")
 
 [node name="Color" type="ColorRect" parent="."]
 layout_mode = 1
@@ -24,9 +31,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.179393, 0.351562, 0.274448, 1)
 
-[node name="State" type="Label" parent="."]
+[node name="Label" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,3 +52,22 @@ monitorable = false
 [node name="CollisionShape" type="CollisionShape2D" parent="DropPointDetector"]
 position = Vector2(10, 15)
 shape = SubResource("RectangleShape2D_egjmp")
+
+[node name="CardStateMachine" type="Node" parent="." node_paths=PackedStringArray("initialState")]
+script = ExtResource("3_xnp3a")
+initialState = NodePath("CardIdleState")
+
+[node name="CardIdleState" type="Node" parent="CardStateMachine"]
+script = ExtResource("4_xa3ls")
+
+[node name="CardClickedState" type="Node" parent="CardStateMachine"]
+script = ExtResource("5_vkwn3")
+State = 1
+
+[node name="CardDraggingState" type="Node" parent="CardStateMachine"]
+script = ExtResource("6_otr84")
+State = 2
+
+[node name="CardReleasedState" type="Node" parent="CardStateMachine"]
+script = ExtResource("7_odobm")
+State = 3
