@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 
 public partial class Card : Control
 {
@@ -12,6 +13,7 @@ public partial class Card : Control
 	public ColorRect ColorRect;
 	public Label Label;
 	public Area2D DropPointDetector;
+	public Array<Node> Targets = new Array<Node>();
 	private CardStateMachine cardStateMachine;
 
 	// This is called when the node enters the scene tree for the first time
@@ -27,6 +29,9 @@ public partial class Card : Control
 
 		MouseEntered += OnMouseEntered;
 		MouseExited += OnMouseExited;
+
+		DropPointDetector.AreaEntered += DropPointAreaEntered;
+		DropPointDetector.AreaExited += DropPointAreaExited;
 	}
 
 	public override void _Input(InputEvent e)
@@ -47,5 +52,18 @@ public partial class Card : Control
 	public void OnMouseExited()
 	{
 		cardStateMachine.OnMouseExit();
+	}
+
+	public void DropPointAreaEntered(Area2D area)
+	{
+		if (!Targets.Contains(area))
+		{
+			Targets.Add(area);
+		}
+	}
+
+	public void DropPointAreaExited(Area2D area)
+	{
+		Targets.Remove(area);
 	}
 }
