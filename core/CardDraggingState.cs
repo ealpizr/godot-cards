@@ -2,6 +2,9 @@ using Godot;
 
 public partial class CardDraggingState : CardStateBase
 {
+    const float DRAG_MINIMUM_THRESHOLD = 0.05f;
+    private bool minimumDragThresholdElapsed = false;
+
     public override void Enter()
     {
         Node uiLayer = GetTree().GetFirstNodeInGroup("ui_layer");
@@ -14,6 +17,10 @@ public partial class CardDraggingState : CardStateBase
         Card.Reparent(uiLayer);
         Card.ColorRect.Color = Colors.NavyBlue;
         Card.Label.Text = "Dragging";
+
+        minimumDragThresholdElapsed = false;
+        SceneTreeTimer thresholdTimer = GetTree().CreateTimer(DRAG_MINIMUM_THRESHOLD, false);
+        thresholdTimer.Timeout += () => minimumDragThresholdElapsed = true;
     }
 
     public override void OnInput(InputEvent e)
@@ -30,7 +37,7 @@ public partial class CardDraggingState : CardStateBase
             return;
         }
 
-        if (e is InputEventMouseButton mb && mb.ButtonIndex == MouseButton.Left)
+        if (e is InputEventMouseButton mb && mb.ButtonIndex == MouseButton.Left && minimumDragThresholdElapsed)
         {
             GetViewport().SetInputAsHandled();
             EmitSignal(SignalName.TransitionRequested, this, Variant.From(CardState.Released));
