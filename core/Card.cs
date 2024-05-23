@@ -14,7 +14,7 @@ public partial class Card : Control
 	public Label Label;
 	public Area2D DropPointDetector;
 	public Array<Node> Targets = new Array<Node>();
-	private CardStateMachine cardStateMachine;
+	private IStateMachine cardStateMachine;
 
 	// This is called when the node enters the scene tree for the first time
 	public override void _Ready()

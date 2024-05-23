@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public enum CardState
@@ -8,7 +9,7 @@ public enum CardState
     Released
 }
 
-public partial class CardStateBase : Node
+public partial class CardStateBase : Node, IStateBase<CardState>
 {
     [Signal]
     public delegate void TransitionRequestedEventHandler(CardStateBase from, CardState to);
@@ -21,10 +22,22 @@ public partial class CardStateBase : Node
     public Card Card;
 
     // Called when entering a new state
+    public Enum GetState()
+    {
+        return State;
+    }
+
+
+    public void SetTransitionRequest(Action<IStateBase<CardState>, CardState> action)
+    {
+        TransitionRequested += (from, to) => action(from, to);
+    }
+
     public virtual void Enter()
     {
 
     }
+
 
     // Called when exiting a state
     public virtual void Exit()

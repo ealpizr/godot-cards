@@ -19,6 +19,7 @@ public partial class CardReleasedState : CardStateBase
     {
         if (inDropPoint)
         {
+            //Card.SetGlobalPosition(new Vector2(0, 0));
             return;
         }
 

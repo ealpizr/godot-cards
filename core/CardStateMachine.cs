@@ -1,24 +1,25 @@
+using System;
 using Godot;
 using Godot.Collections;
 
-public partial class CardStateMachine : Node
+public partial class CardStateMachine : Node, IStateMachine
 {
     [Export]
     private CardStateBase initialState;
 
-    private CardStateBase currentState;
+    private IStateBase<CardState> currentState;
     private Dictionary<CardState, CardStateBase> states = new Dictionary<CardState, CardStateBase>();
 
-    public void Init(Card card)
+    public void Init(Control card)
     {
         foreach (Node child in GetChildren())
         {
             if (child is CardStateBase)
             {
                 CardStateBase s = (CardStateBase)child;
-                states[s.State] = s;
-                s.TransitionRequested += OnTransitionRequested;
-                s.Card = card;
+                states[(CardState)s.GetState()] = s;
+                s.SetTransitionRequest(OnTransitionRequested);
+                s.Card = (Card)card;
             }
         }
 
@@ -29,7 +30,7 @@ public partial class CardStateMachine : Node
         }
     }
 
-    private void OnTransitionRequested(CardStateBase from, CardState to)
+    private void OnTransitionRequested(IStateBase<CardState> from, CardState to)
     {
         if (from != currentState)
         {
@@ -49,6 +50,7 @@ public partial class CardStateMachine : Node
             currentState.Exit();
         }
 
+        // after the state is transitioned, trigger the Enter method from that given state.
         newState.Enter();
         currentState = newState;
     }
@@ -84,4 +86,6 @@ public partial class CardStateMachine : Node
             currentState.OnMouseExit();
         }
     }
+
+
 }
