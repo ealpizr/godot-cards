@@ -1,0 +1,51 @@
+using Godot;
+using System;
+
+public partial class Login : Control
+{
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+		GetNode<AcceptDialog>("Container/AcceptDialog").GetOkButton().Hide();
+		GetNode<Button>("Container/LoginButton").Pressed += HandleLoginButtonPressed;
+		GetNode<Button>("Container/RegisterButton").Pressed += HandleRegisterButtonPressed;
+	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+	}
+
+	private async void HandleLoginButtonPressed()
+	{
+		string username = GetNode<LineEdit>("Container/Username").Text;
+		string password = GetNode<LineEdit>("Container/Password").Text;
+
+		if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+		{
+			GetNode<AcceptDialog>("Container/AcceptDialog").DialogText = "Usuario y contraseña son requeridos";
+			GetNode<AcceptDialog>("Container/AcceptDialog").PopupCentered();
+			return;
+		}
+
+		try
+		{
+			Nakama.Client client = new Nakama.Client("http", "nakama-api.ealpizar.com", 7350, "defaultkey");
+			Nakama.ISession session = await client.AuthenticateEmailAsync(username, password, create: true);
+			GetTree().ChangeSceneToFile("res://scenes/Game.tscn");
+		}
+		catch (Nakama.ApiResponseException e)
+		{
+			if (e.StatusCode == 400 || e.StatusCode == 401)
+			{
+				GetNode<AcceptDialog>("Container/AcceptDialog").DialogText = "Usuario o contraseña incorrectos";
+				GetNode<AcceptDialog>("Container/AcceptDialog").PopupCentered();
+			}
+		}
+	}
+
+	private void HandleRegisterButtonPressed()
+	{
+		GetTree().ChangeSceneToFile("res://scenes/Register.tscn");
+	}
+}
