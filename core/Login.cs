@@ -18,12 +18,12 @@ public partial class Login : Control
 
 	private async void HandleLoginButtonPressed()
 	{
-		string username = GetNode<LineEdit>("Container/Username").Text;
+		string email = GetNode<LineEdit>("Container/Email").Text;
 		string password = GetNode<LineEdit>("Container/Password").Text;
 
-		if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+		if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
 		{
-			GetNode<AcceptDialog>("Container/AcceptDialog").DialogText = "Usuario y contraseña son requeridos";
+			GetNode<AcceptDialog>("Container/AcceptDialog").DialogText = "Correo y contraseña son requeridos";
 			GetNode<AcceptDialog>("Container/AcceptDialog").PopupCentered();
 			return;
 		}
@@ -31,21 +31,26 @@ public partial class Login : Control
 		try
 		{
 			Nakama.Client client = new Nakama.Client("http", "nakama-api.ealpizar.com", 7350, "defaultkey");
-			Nakama.ISession session = await client.AuthenticateEmailAsync(username, password, create: true);
+			Nakama.ISession session = await client.AuthenticateEmailAsync(email, password, create: true);
 			GetTree().ChangeSceneToFile("res://scenes/Game.tscn");
 		}
 		catch (Nakama.ApiResponseException e)
 		{
 			if (e.StatusCode == 400 || e.StatusCode == 401)
 			{
-				GetNode<AcceptDialog>("Container/AcceptDialog").DialogText = "Usuario o contraseña incorrectos";
+				GetNode<AcceptDialog>("Container/AcceptDialog").DialogText = "Correo o contraseña incorrectos";
 				GetNode<AcceptDialog>("Container/AcceptDialog").PopupCentered();
+				return;
 			}
+
+			GD.PrintErr(e);
+			GetNode<AcceptDialog>("Container/AcceptDialog").DialogText = "Error al conectar con el servidor de autenticación";
+			GetNode<AcceptDialog>("Container/AcceptDialog").PopupCentered();
 		}
 	}
 
 	private void HandleRegisterButtonPressed()
 	{
-		GetTree().ChangeSceneToFile("res://scenes/Register.tscn");
+		GetTree().ChangeSceneToFile("res://scenes/register.tscn");
 	}
 }
