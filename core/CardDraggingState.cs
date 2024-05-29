@@ -25,8 +25,8 @@ public partial class CardDraggingState : CardStateBase
 
     public override void OnInput(InputEvent e)
     {
-        GD.Print(Card.GetGlobalMousePosition());
-        GD.Print("Working Pivot Offset: " + Card.PivotOffset);
+        // GD.Print(Card.GetGlobalMousePosition());
+        // GD.Print("Working Pivot Offset: " + Card.PivotOffset);
         if (e is InputEventMouseMotion mouseMotion)
         {
             Card.GlobalPosition = Card.GetGlobalMousePosition() - Card.PivotOffset;

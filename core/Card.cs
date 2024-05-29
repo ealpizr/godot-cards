@@ -9,6 +9,7 @@ public partial class Card : Control
 	[Signal]
 	public delegate void ReparentRequestedEventHandler(Card card);
 
+	public delegate void TestSignalEventHandler();
 	// Card properties
 	public ColorRect ColorRect;
 	public Label Label;
@@ -32,6 +33,7 @@ public partial class Card : Control
 
 		DropPointDetector.AreaEntered += DropPointAreaEntered;
 		DropPointDetector.AreaExited += DropPointAreaExited;
+	
 	}
 
 	public override void _Input(InputEvent e)

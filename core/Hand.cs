@@ -4,6 +4,7 @@ public partial class Hand : HBoxContainer
 {
 	public override void _Ready()
 	{
+		//GetTree().Get
 		foreach (Node child in GetChildren())
 		{
 			Card card = (Card)child;
