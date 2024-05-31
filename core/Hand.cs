@@ -6,11 +6,13 @@ public partial class Hand : HBoxContainer
 	{
 		foreach (Node child in GetChildren())
 		{
-			Card card = (Card)child;
-			card.ReparentRequested += OnReparentRequested;
+			if (child is Card card)
+			{
+				card.ReparentRequested += OnReparentRequested;
+			}
 		}
 	}
-
+	
 	private void OnReparentRequested(Card card)
 	{
 		card.Reparent(this);
