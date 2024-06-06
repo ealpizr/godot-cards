@@ -1,24 +1,24 @@
 [gd_scene load_steps=9 format=3 uid="uid://bh3labrgxts1s"]
 
 [ext_resource type="Theme" uid="uid://dg5a4ijak5tgo" path="res://theme.tres" id="1_a56tg"]
-[ext_resource type="Script" path="res://core/Card.cs" id="2_bkaqj"]
-[ext_resource type="Script" path="res://core/CardStateMachine.cs" id="3_xnp3a"]
-[ext_resource type="Script" path="res://core/CardIdleState.cs" id="4_xa3ls"]
-[ext_resource type="Script" path="res://core/CardClickedState.cs" id="5_vkwn3"]
-[ext_resource type="Script" path="res://core/CardDraggingState.cs" id="6_otr84"]
-[ext_resource type="Script" path="res://core/CardReleasedState.cs" id="7_odobm"]
+[ext_resource type="Script" path="res://core/Card/Card.cs" id="2_bkaqj"]
+[ext_resource type="Script" path="res://core/Card/CardStateMachine.cs" id="3_xnp3a"]
+[ext_resource type="Script" path="res://core/States/CardIdleState.cs" id="4_xa3ls"]
+[ext_resource type="Script" path="res://core/States/CardClickedState.cs" id="5_vkwn3"]
+[ext_resource type="Script" path="res://core/States/CardDraggingState.cs" id="6_otr84"]
+[ext_resource type="Script" path="res://core/States/CardReleasedState.cs" id="7_odobm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_egjmp"]
-size = Vector2(20, 30)
+size = Vector2(100, 150)
 
 [node name="CardUI" type="Control"]
-custom_minimum_size = Vector2(20, 30)
+custom_minimum_size = Vector2(100, 150)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -236.0
-offset_bottom = -114.0
+offset_right = -1180.0
+offset_bottom = -570.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_a56tg")
@@ -41,6 +41,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 18
 text = "state"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -50,7 +51,7 @@ collision_mask = 2
 monitorable = false
 
 [node name="CollisionShape" type="CollisionShape2D" parent="DropPointDetector"]
-position = Vector2(10, 15)
+position = Vector2(50, 75)
 shape = SubResource("RectangleShape2D_egjmp")
 
 [node name="CardStateMachine" type="Node" parent="." node_paths=PackedStringArray("initialState")]

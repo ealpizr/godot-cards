@@ -17,7 +17,11 @@ public partial class Campaign : Node
         this.level = level;
         this.player = (IInteractable)player;
         this.otherPlayer = new CPUPlayer();
+
+        // if level is easy, then the other player is easy.
         this.otherPlayer = new EasyCPUPlayer(otherPlayer);
+
+        // configuration of the other player. Maybe there is a way to 
         ((CPUPlayer)this.otherPlayer).Hand = otherHand;
         ((CPUPlayer)this.otherPlayer).PlayingFieldContainer = otherPlayingField;
         this.gameField = gameField;

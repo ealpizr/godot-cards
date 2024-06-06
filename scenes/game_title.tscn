@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://m87gfk0ht6aa"]
+
+[ext_resource type="Theme" uid="uid://dg5a4ijak5tgo" path="res://theme.tres" id="1_y7vas"]
+
+[node name="GameTitle" type="Control"]
+custom_minimum_size = Vector2(235, 190)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1045.0
+offset_bottom = -529.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_y7vas")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+alignment = 1
+
+[node name="Cenfo" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.32465, 0.567893, 0.947392, 1)
+theme_override_font_sizes/font_size = 70
+text = "CENFO"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Mystic Card" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.753946, 0.401881, 0.930016, 1)
+theme_override_font_sizes/font_size = 30
+text = "MYSTIC CARD"
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Master" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.898371, 0.898371, 0, 1)
+theme_override_font_sizes/font_size = 45
+text = "MASTERS"

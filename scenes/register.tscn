@@ -1,0 +1,98 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4bq7dxcinkeu"]
+
+[ext_resource type="Theme" uid="uid://dg5a4ijak5tgo" path="res://theme.tres" id="1_wkven"]
+[ext_resource type="Script" path="res://core/Register.cs" id="2_pibfs"]
+[ext_resource type="PackedScene" uid="uid://m87gfk0ht6aa" path="res://scenes/game_title.tscn" id="3_vd7pl"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_wkven")
+script = ExtResource("2_pibfs")
+
+[node name="Container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -250.5
+offset_right = 250.0
+offset_bottom = 250.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameTitle" parent="Container" instance=ExtResource("3_vd7pl")]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="Container"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="EmailLabel" type="Label" parent="Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Correo"
+
+[node name="Email" type="LineEdit" parent="Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+
+[node name="MarginContainer3" type="MarginContainer" parent="Container"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="UsernameLabel" type="Label" parent="Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Usuario"
+
+[node name="Username" type="LineEdit" parent="Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+
+[node name="MarginContainer4" type="MarginContainer" parent="Container"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="PasswordLabel" type="Label" parent="Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Contraseña"
+
+[node name="Password" type="LineEdit" parent="Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+secret = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="Container"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="RegisterButton" type="Button" parent="Container"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "Crear una cuenta"
+
+[node name="MarginContainer5" type="MarginContainer" parent="Container"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="LoginButton" type="Button" parent="Container"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "Iniciar sesión"
+
+[node name="AcceptDialog" type="AcceptDialog" parent="Container"]
+title = "Error"

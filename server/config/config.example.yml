@@ -1,0 +1,14 @@
+name: node-1
+
+logger:
+    stdout: false
+    level: "debug"
+    file: "/nakama/data/logfile.log"
+
+database:
+    address: ["postgres:localdb@postgres:5432/nakama"]
+
+console:
+    port: 7351
+    username: "admin"
+    password: ""

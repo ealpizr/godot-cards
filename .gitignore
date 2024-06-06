@@ -1,2 +1,6 @@
 .godot/
 .fake
+.vscode/
+.vs/
+Properties/
+*.csproj.user

@@ -9,12 +9,14 @@ public partial class Hand : HBoxContainer
 		//GetTree().Get
 		foreach (Node child in GetChildren())
 		{
-			Card card = (Card)child;
-			Cards.Add(card);
-			card.ReparentRequested += OnReparentRequested;
+			if (child is Card card)
+			{
+				Cards.Add(card);
+				card.ReparentRequested += OnReparentRequested;
+			}
 		}
 	}
-
+	
 	private void OnReparentRequested(Card card)
 	{
 		card.Reparent(this);
