@@ -1,6 +1,8 @@
 using Godot;
+using Nakama;
 using System;
 using System.Runtime.Intrinsics.Arm;
+using System.Text.Json;
 
 public partial class Register : Control
 {
@@ -34,6 +36,18 @@ public partial class Register : Control
 		{
 			Nakama.Client client = new Nakama.Client("http", "nakama-api.ealpizar.com", 7350, "defaultkey");
 			Nakama.ISession session = await client.AuthenticateEmailAsync(email, password, username, true);
+
+			WriteStorageObject[] defaultUserData = new WriteStorageObject[]
+			{
+				new WriteStorageObject
+				{
+					Collection = "stats",
+					Key = "economy",
+					Value = "{\"coins\": 0}",
+				},
+			};
+
+			await client.WriteStorageObjectsAsync(session, defaultUserData);
 			GetTree().ChangeSceneToFile("res://scenes/login.tscn");
 		}
 		catch (Nakama.ApiResponseException e)

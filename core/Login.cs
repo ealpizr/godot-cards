@@ -38,34 +38,30 @@ public partial class Login : Control
 			// See https://github.com/heroiclabs/nakama/issues/235.
 			Nakama.ISession session = await client.AuthenticateEmailAsync("", password, username: username, create: false);
 
+			GlobalState.Instance.Username = session.Username;
+			GlobalState.Instance.AuthToken = session.AuthToken;
 			GetTree().ChangeSceneToFile("res://scenes/game.tscn");
 		}
 		catch (Nakama.ApiResponseException e)
 		{
-			GD.PrintErr(e.StatusCode + ": " + e.Message);
+            GD.PrintErr(e);
+            string errorMessage = "Error al conectar con el servidor de autenticación";
+
 			// 400: Bad Request is returned when the password has less than 8 characters.
 			// 401: Unauthorized is returned when the email or password is incorrect.
 			// 404: Not Found is returned when the user does not exist.
 			// We don't want to expose this information to the user so we just show a generic message.
 			if (e.StatusCode == 400 || e.StatusCode == 401 || e.StatusCode == 404)
 			{
-				GetNode<AcceptDialog>("Container/AcceptDialog").DialogText = "Correo o contraseña incorrectos";
-				GetNode<AcceptDialog>("Container/AcceptDialog").PopupCentered();
-				return;
+                errorMessage = "Correo o contraseña incorrectos";
 			}
 
-			// Something else went wrong, client has no connection or server is down.
-			GD.PrintErr(e);
-			GetNode<AcceptDialog>("Container/AcceptDialog").DialogText = "Error al conectar con el servidor de autenticación";
+			GetNode<AcceptDialog>("Container/AcceptDialog").DialogText = errorMessage;
 			GetNode<AcceptDialog>("Container/AcceptDialog").PopupCentered();
-		}
-		finally
-		{
-			// We need to use finally here because of the return statement in the catch block.
 
-			// Don't forget to enable the button again.
-			GetNode<Button>("Container/LoginButton").Disabled = false;
-		}
+            // Don't forget to enable the button again.
+            GetNode<Button>("Container/LoginButton").Disabled = false;
+        }
 	}
 
 	private void HandleRegisterButtonPressed()

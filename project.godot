@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="godot-cards"
-run/main_scene="res://scenes/game.tscn"
+run/main_scene="res://scenes/login.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 config/icon="res://assets/icon.svg"
+
+[autoload]
+
+GlobalState="*res://core/GlobalState.cs"
 
 [display]
 
