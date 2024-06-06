@@ -1,2 +1,5 @@
 .godot/
 .vscode/
+.vs/
+Properties/
+*.csproj.user
