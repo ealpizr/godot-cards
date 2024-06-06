@@ -6,4 +6,4 @@ if [ ! -d "$VOLUME_PATH" ]; then
   mkdir -p "$VOLUME_PATH"
 fi
 
-VOLUME_PATH=$VOLUME_PATH podman-compose up --build --force-recreate
+VOLUME_PATH=$VOLUME_PATH podman-compose up --build --force-recreate -d
