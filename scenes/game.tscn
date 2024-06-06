@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cfiwsnon8re82"]
+[gd_scene load_steps=8 format=3 uid="uid://cfiwsnon8re82"]
 
 [ext_resource type="Texture2D" uid="uid://ieqvi3st07f7" path="res://assets/background.png" id="1_oxwpb"]
 [ext_resource type="Script" path="res://core/Hand.cs" id="2_abbgp"]
 [ext_resource type="PackedScene" uid="uid://bh3labrgxts1s" path="res://scenes/card.tscn" id="2_bccay"]
 [ext_resource type="PackedScene" uid="uid://dwhv7m8h4yduy" path="res://scenes/Coin.tscn" id="4_o4hrf"]
+[ext_resource type="Texture2D" uid="uid://d13vu1pf44wb2" path="res://assets/button UI.png" id="5_5x8wv"]
+[ext_resource type="Script" path="res://core/Coins.cs" id="5_ej0of"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_npqku"]
 size = Vector2(1260, 365)
@@ -72,3 +74,18 @@ layout_mode = 2
 
 [node name="Coin" parent="GameUI" instance=ExtResource("4_o4hrf")]
 anchors_preset = -1
+script = ExtResource("5_ej0of")
+
+[node name="Shop" type="Button" parent="."]
+offset_left = 3.0
+offset_top = 124.0
+offset_right = 17.0
+offset_bottom = 140.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Shop"]
+position = Vector2(7, 8)
+texture = ExtResource("5_5x8wv")
+region_enabled = true
+region_rect = Rect2(128, 16, 16, 16)
+
+[connection signal="pressed" from="Shop" to="Shop" method="_on_pressed"]

@@ -31,6 +31,10 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="godot-cards"
 
+[filesystem]
+
+import/blender/enabled=false
+
 [layer_names]
 
 2d_physics/layer_1="card_target_selector"

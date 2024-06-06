@@ -9,8 +9,8 @@ public partial class Coins : Control
 	public override void _Ready()
 	{
 		Label user = GetNode<Label>("VBoxContainer/ColorRect/Username");
-        Label coins = GetNode<Label>("VBoxContainer/ColorRect/Coins");
-        
+		Label coins = GetNode<Label>("VBoxContainer/ColorRect/Coins");
+
 		user.Text += GlobalState.Instance.Username;
 		coins.Text += GlobalState.Instance.Coins;
 	}
