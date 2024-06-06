@@ -1,6 +1,6 @@
 
 public interface IInteractable
 {
-    public void ReceiveInteraction(IInteractable interaction);
-    public void SendInteraction(IInteractable interaction);
+    public void ReceiveInteraction(PlayerBase interaction);
+    public void SendInteraction(PlayerBase interaction);
 }

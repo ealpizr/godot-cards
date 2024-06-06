@@ -8,6 +8,8 @@ public partial class Player: PlayerBase, IInteractable, IControllable
 
     public override Hand Hand { get; set; }
 
+    public override Hand PlayHand {get; set; }
+
     public void OnGuiInput(InputEvent e)
     {
         GD.Print("Player being clicked.");
@@ -28,12 +30,12 @@ public partial class Player: PlayerBase, IInteractable, IControllable
         throw new System.NotImplementedException();
     }
 
-    public void ReceiveInteraction(IInteractable interaction)
+    public void ReceiveInteraction(PlayerBase interaction)
     {
-        throw new System.NotImplementedException();
+        GD.Print("Player received interaction.");
     }
 
-    public void SendInteraction(IInteractable interaction)
+    public void SendInteraction(PlayerBase interaction)
     {
         throw new System.NotImplementedException();
     }

@@ -1,11 +1,43 @@
-[gd_scene load_steps=9 format=3 uid="uid://cfiwsnon8re82"]
+[gd_scene load_steps=12 format=3 uid="uid://cfiwsnon8re82"]
 
+[ext_resource type="Script" path="res://core/Game.cs" id="1_6akld"]
 [ext_resource type="Script" path="res://core/GameField.cs" id="1_ovy47"]
 [ext_resource type="Texture2D" uid="uid://ieqvi3st07f7" path="res://assets/background.png" id="1_oxwpb"]
 [ext_resource type="Script" path="res://core/Hand.cs" id="2_abbgp"]
 [ext_resource type="PackedScene" uid="uid://bh3labrgxts1s" path="res://scenes/card.tscn" id="2_bccay"]
 [ext_resource type="PackedScene" uid="uid://dwhv7m8h4yduy" path="res://scenes/Coin.tscn" id="4_o4hrf"]
 [ext_resource type="PackedScene" uid="uid://qxcpjgx3n0u7" path="res://scenes/Player.tscn" id="5_u4yd7"]
+
+[sub_resource type="FontFile" id="FontFile_14d2f"]
+cache/0/8/0/ascent = 0.0
+cache/0/8/0/descent = 0.0
+cache/0/8/0/underline_position = 0.0
+cache/0/8/0/underline_thickness = 0.0
+cache/0/8/0/scale = 1.0
+cache/0/8/0/kerning_overrides/8/0 = Vector2(0, 0)
+cache/0/8/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/8/0/kerning_overrides/9/0 = Vector2(0, 0)
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/8/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/9/0 = Vector2(0, 0)
+cache/0/9/0/ascent = 0.0
+cache/0/9/0/descent = 0.0
+cache/0/9/0/underline_position = 0.0
+cache/0/9/0/underline_thickness = 0.0
+cache/0/9/0/scale = 1.0
+cache/0/9/0/kerning_overrides/8/0 = Vector2(0, 0)
+cache/0/9/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/9/0/kerning_overrides/9/0 = Vector2(0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_n2yhw"]
+font = SubResource("FontFile_14d2f")
+font_size = 9
+font_color = Color(0.926281, 0.961496, 0.99541, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_npqku"]
 size = Vector2(229.313, 11)
@@ -14,6 +46,7 @@ size = Vector2(229.313, 11)
 size = Vector2(228, 12)
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_6akld")
 metadata/_edit_lock_ = true
 
 [node name="Background" type="Sprite2D" parent="."]
@@ -26,6 +59,23 @@ metadata/_edit_lock_ = true
 script = ExtResource("1_ovy47")
 player1Hand = NodePath("CardDropAreaOther/HBoxContainer")
 player2Hand = NodePath("CardDropArea/HBoxContainer")
+
+[node name="Level" type="Control" parent="GameUI"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 196.0
+offset_top = 3.0
+offset_right = 255.0
+offset_bottom = 20.0
+
+[node name="Label" type="Label" parent="GameUI/Level"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = -1.0
+offset_right = 60.0
+offset_bottom = 18.0
+text = "Level: "
+label_settings = SubResource("LabelSettings_n2yhw")
 
 [node name="CardDropAreaOther" type="Area2D" parent="GameUI"]
 z_index = 1
@@ -60,7 +110,7 @@ position = Vector2(128, 55)
 shape = SubResource("RectangleShape2D_777pd")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GameUI/CardDropArea"]
-anchors_preset = -1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -75,7 +125,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 alignment = 1
 
-[node name="Hand2" type="HBoxContainer" parent="GameUI"]
+[node name="HandOther" type="HBoxContainer" parent="GameUI"]
 offset_left = 92.0
 offset_top = 3.0
 offset_right = 160.0
@@ -83,13 +133,13 @@ offset_bottom = 33.0
 alignment = 1
 script = ExtResource("2_abbgp")
 
-[node name="Card2" parent="GameUI/Hand2" instance=ExtResource("2_bccay")]
+[node name="Card2" parent="GameUI/HandOther" instance=ExtResource("2_bccay")]
 layout_mode = 2
 
-[node name="Card1" parent="GameUI/Hand2" instance=ExtResource("2_bccay")]
+[node name="Card1" parent="GameUI/HandOther" instance=ExtResource("2_bccay")]
 layout_mode = 2
 
-[node name="Card3" parent="GameUI/Hand2" instance=ExtResource("2_bccay")]
+[node name="Card3" parent="GameUI/HandOther" instance=ExtResource("2_bccay")]
 layout_mode = 2
 
 [node name="Hand" type="HBoxContainer" parent="GameUI"]

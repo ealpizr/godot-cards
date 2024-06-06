@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class GameField : CanvasLayer, IPlayField
+public partial class GameField : CanvasLayer, IGameField
 {
 	[Export]
 	private HBoxContainer player1Hand;
@@ -13,10 +13,10 @@ public partial class GameField : CanvasLayer, IPlayField
 
 	public override void _Ready()
 	{
-        // for testing purpose, the idea is to place a card in the given player container.
-		this.ReparentToHboxContainer += PlaceCard;
+		ReparentToHboxContainer += PlaceCard;
 	}
 
+    // TODO: Remove this, this is for testing purpose.
 	public void PlaceCardtest(Card card)
 	{
 		card.Reparent(player1Hand);

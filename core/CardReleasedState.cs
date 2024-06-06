@@ -26,7 +26,7 @@ public partial class CardReleasedState : CardStateBase
             GD.Print(Card.Targets[0]);
             if (Card.Targets[0].GetParent().Name == "GameUI")
             {
-                // moves the card to the new container.
+                // moves the card to the the selected play zone.
                 HBoxContainer hBoxContainer = Card.Targets[0].GetNode<HBoxContainer>("HBoxContainer");
                 GD.Print(Card.Targets);
                 ((GameField) Card.Targets[0].GetParent()).EmitSignal(GameField.SignalName.ReparentToHboxContainer, Card, hBoxContainer);
