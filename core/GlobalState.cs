@@ -27,5 +27,8 @@ public partial class GlobalState : Node
 
     public string Username { get; set; }
 
+    // This is just temporary. We should move this to a proper server request system.
+    public int Coins { get; set; }
+
     public string AuthToken { get; set; }
 }

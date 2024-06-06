@@ -1,4 +1,12 @@
 using Godot;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+class Wallet
+{
+	[JsonPropertyName("c-coins")]
+	public int Coins { get; set; }
+}
 
 public partial class Login : Control
 {
@@ -40,12 +48,16 @@ public partial class Login : Control
 
 			GlobalState.Instance.Username = session.Username;
 			GlobalState.Instance.AuthToken = session.AuthToken;
+			
+			// Very ugly way to get the coins. We should move this to a proper server request system.
+            GlobalState.Instance.Coins = JsonSerializer.Deserialize<Wallet>((await client.GetAccountAsync(session)).Wallet).Coins;
+			
 			GetTree().ChangeSceneToFile("res://scenes/game.tscn");
 		}
 		catch (Nakama.ApiResponseException e)
 		{
-            GD.PrintErr(e);
-            string errorMessage = "Error al conectar con el servidor de autenticación";
+			GD.PrintErr(e);
+			string errorMessage = "Error al conectar con el servidor de autenticación";
 
 			// 400: Bad Request is returned when the password has less than 8 characters.
 			// 401: Unauthorized is returned when the email or password is incorrect.
@@ -53,15 +65,15 @@ public partial class Login : Control
 			// We don't want to expose this information to the user so we just show a generic message.
 			if (e.StatusCode == 400 || e.StatusCode == 401 || e.StatusCode == 404)
 			{
-                errorMessage = "Correo o contraseña incorrectos";
+				errorMessage = "Correo o contraseña incorrectos";
 			}
 
 			GetNode<AcceptDialog>("Container/AcceptDialog").DialogText = errorMessage;
 			GetNode<AcceptDialog>("Container/AcceptDialog").PopupCentered();
 
-            // Don't forget to enable the button again.
-            GetNode<Button>("Container/LoginButton").Disabled = false;
-        }
+			// Don't forget to enable the button again.
+			GetNode<Button>("Container/LoginButton").Disabled = false;
+		}
 	}
 
 	private void HandleRegisterButtonPressed()

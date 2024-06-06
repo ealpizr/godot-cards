@@ -42,7 +42,7 @@ text = "User: "
 label_settings = SubResource("LabelSettings_m56st")
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/ColorRect"]
+[node name="Coins" type="Label" parent="VBoxContainer/ColorRect"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5

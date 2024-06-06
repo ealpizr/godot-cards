@@ -9,7 +9,10 @@ public partial class Coins : Control
 	public override void _Ready()
 	{
 		Label user = GetNode<Label>("VBoxContainer/ColorRect/Username");
-		user.Text = GlobalState.Instance.Username;
+        Label coins = GetNode<Label>("VBoxContainer/ColorRect/Coins");
+        
+		user.Text += GlobalState.Instance.Username;
+		coins.Text += GlobalState.Instance.Coins;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
