@@ -11,7 +11,7 @@ public partial class Menu : Control
         Label usernameLabel = GetNode<Label>("InfoBar/Username");
         Label versionLabel = GetNode<Label>("InfoBar/Version");
 
-        usernameLabel.Text = GlobalState.Instance.Username;
+        usernameLabel.Text = GlobalState.Instance.Session.Username;
         versionLabel.Text = GlobalState.Instance.Version;
 
         playButton.Pressed += OnPlayButtonPressed;
@@ -21,12 +21,12 @@ public partial class Menu : Control
 
 	public void OnPlayButtonPressed()
     {
-        GetTree().ChangeSceneToFile("res://scenes/Game.tscn");
+        GetTree().ChangeSceneToFile("res://scenes/game.tscn");
     }
 
     public void OnShopButtonPressed()
     {
-        GetTree().ChangeSceneToFile("res://scenes/Shop.tscn");
+        GetTree().ChangeSceneToFile("res://scenes/example_shop.tscn");
     }
 
 	public void OnExitButtonPressed()

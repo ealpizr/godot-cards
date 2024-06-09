@@ -38,16 +38,12 @@ public partial class Login : Control
 			// Disable button to prevent multiple requests.
 			GetNode<Button>("Container/LoginButton").Disabled = true;
 
-			// (Enrique) Maybe I should proxy this trough nginx on ealpizar.com to setup SSL.
-			// Nakama can also handle SSL negotiation itself, but it's not recommended for production.
-			Nakama.Client client = new Nakama.Client("http", "nakama-api.ealpizar.com", 7350, "defaultkey");
+			Nakama.Client client = GlobalState.Instance.NakamaClient;
 
 			// AuthenticateEmailAsync also works with usernames, we just need to pass in a blank email.
 			// See https://github.com/heroiclabs/nakama/issues/235.
 			Nakama.ISession session = await client.AuthenticateEmailAsync("", password, username: username, create: false);
-
-			GlobalState.Instance.Username = session.Username;
-			GlobalState.Instance.AuthToken = session.AuthToken;
+			GlobalState.Instance.Session = session;
 
 			// Very ugly way to get the coins. We should move this to a proper server request system.
 			GlobalState.Instance.Coins = JsonSerializer.Deserialize<Wallet>((await client.GetAccountAsync(session)).Wallet).Coins;

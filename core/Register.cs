@@ -34,7 +34,7 @@ public partial class Register : Control
 
 		try
 		{
-			Nakama.Client client = new Nakama.Client("http", "nakama-api.ealpizar.com", 7350, "defaultkey");
+			Nakama.Client client = GlobalState.Instance.NakamaClient;
 			Nakama.ISession session = await client.AuthenticateEmailAsync(email, password, username, true);
 
 			GetTree().ChangeSceneToFile("res://scenes/login.tscn");

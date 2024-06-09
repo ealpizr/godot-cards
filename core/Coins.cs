@@ -11,7 +11,7 @@ public partial class Coins : Control
 		Label user = GetNode<Label>("VBoxContainer/ColorRect/Username");
 		Label coins = GetNode<Label>("VBoxContainer/ColorRect/Coins");
 
-		user.Text += GlobalState.Instance.Username;
+		user.Text += GlobalState.Instance.Session.Username;
 		coins.Text += GlobalState.Instance.Coins;
 	}
 

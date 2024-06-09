@@ -25,12 +25,13 @@ public partial class GlobalState : Node
         _instance = this;
     }
 
-    public string Username { get; set; }
+    // (Enrique) Maybe I should proxy this trough nginx on ealpizar.com to setup SSL.
+    // Nakama can also handle SSL negotiation itself, but it's not recommended for production.
+    public Nakama.Client NakamaClient { get; } = new Nakama.Client("http", "nakama-api.ealpizar.com", 7350, "defaultkey");
+    public Nakama.ISession Session { get; set; }
 
     // This is just temporary. We should move this to a proper server request system.
     public int Coins { get; set; }
-
-    public string AuthToken { get; set; }
 
     // Do we keep this here?
     public string Version { get; } = "pre-alpha v0.1";
