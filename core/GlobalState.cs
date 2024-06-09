@@ -31,4 +31,7 @@ public partial class GlobalState : Node
     public int Coins { get; set; }
 
     public string AuthToken { get; set; }
+
+    // Do we keep this here?
+    public string Version { get; } = "pre-alpha v0.1";
 }

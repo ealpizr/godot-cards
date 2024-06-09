@@ -48,11 +48,11 @@ public partial class Login : Control
 
 			GlobalState.Instance.Username = session.Username;
 			GlobalState.Instance.AuthToken = session.AuthToken;
-			
+
 			// Very ugly way to get the coins. We should move this to a proper server request system.
-            GlobalState.Instance.Coins = JsonSerializer.Deserialize<Wallet>((await client.GetAccountAsync(session)).Wallet).Coins;
-			
-			GetTree().ChangeSceneToFile("res://scenes/game.tscn");
+			GlobalState.Instance.Coins = JsonSerializer.Deserialize<Wallet>((await client.GetAccountAsync(session)).Wallet).Coins;
+
+			GetTree().ChangeSceneToFile("res://scenes/menu.tscn");
 		}
 		catch (Nakama.ApiResponseException e)
 		{
