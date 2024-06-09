@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://s7eu7hiq15jq"]
+
+[ext_resource type="Theme" uid="uid://dg5a4ijak5tgo" path="res://theme.tres" id="1_cc0g7"]
+[ext_resource type="Script" path="res://core/ExampleShopCard.cs" id="2_qps4t"]
+
+[node name="ExampleShopCard" type="Control"]
+custom_minimum_size = Vector2(150, 200)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1130.0
+offset_bottom = -520.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_cc0g7")
+script = ExtResource("2_qps4t")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(2.93598e-06, 0.520872, 0.301864, 1)
+
+[node name="Container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.5
+offset_top = -38.5
+offset_right = 60.5
+offset_bottom = 38.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ID" type="Label" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "1"
+
+[node name="Name" type="Label" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Carta 1"
+
+[node name="Cost" type="Label" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "30 c-coins"
