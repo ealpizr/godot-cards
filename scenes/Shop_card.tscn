@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://s7eu7hiq15jq"]
 
 [ext_resource type="Theme" uid="uid://dg5a4ijak5tgo" path="res://theme.tres" id="1_cc0g7"]
-[ext_resource type="Script" path="res://core/ExampleShopCard.cs" id="2_qps4t"]
+[ext_resource type="Script" path="res://core/Shop/ShopCard.cs" id="2_qps4t"]
 
-[node name="ExampleShopCard" type="Control"]
+[node name="ShopCard" type="Control"]
 custom_minimum_size = Vector2(150, 200)
 layout_mode = 3
 anchors_preset = 15
@@ -54,3 +54,9 @@ text = "Carta 1"
 layout_mode = 2
 size_flags_horizontal = 4
 text = "30 c-coins"
+
+[node name="Button" type="Button" parent="Container"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Container"]
+layout_mode = 2
