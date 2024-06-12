@@ -1,29 +1,106 @@
 using Godot;
+using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
-public partial class Shop : Node
+public class CardData
+{
+	[JsonPropertyName("id")]
+	public int ID { get; set; }
+
+	[JsonPropertyName("name")]
+	public string Name { get; set; }
+
+	[JsonPropertyName("cost")]
+	public int Cost { get; set; }
+}
+
+public partial class Shop : Control
 {
 	private int playerCoins;
-	private List<Card> availableCards;
+	private List<CardData> availableCards;
 	private List<string> upgrades;
 	private List<string> specialDice;
 
 	public override void _Ready()
 	{
-		// Inicializa la tienda con algunos datos
+		InitializeShop();
+		LoadAvailableCards();
+	}
+
+	private void InitializeShop()
+	{
 		playerCoins = 100; // Ejemplo: El jugador comienza con 100 monedas
-		availableCards = new List<Card>(); // Añade instancias de cartas disponibles
 		upgrades = new List<string> { "Energy Bar Upgrade", "Shield Upgrade" };
 		specialDice = new List<string> { "Fire Dice", "Water Dice" };
+
+		// Conectar botones a métodos de compra
+		Button purchaseCardButton = GetNode<Button>("MarginContainer/VBoxContainer/PurchaseCardButton");
+		Button purchaseUpgradeButton = GetNode<Button>("MarginContainer/VBoxContainer/PurchaseUpgradeButton");
+		Button purchaseDiceButton = GetNode<Button>("MarginContainer/VBoxContainer/PurchaseDiceButton");
+
+		purchaseCardButton.Connect("pressed", new Callable(this, nameof(OnPurchaseCardButtonPressed)));
+		purchaseUpgradeButton.Connect("pressed", new Callable(this, nameof(OnPurchaseUpgradeButtonPressed)));
+		purchaseDiceButton.Connect("pressed", new Callable(this, nameof(OnPurchaseDiceButtonPressed)));
 
 		GD.Print("Shop is ready with initial setup.");
 	}
 
-	public bool PurchaseCard(Card card)
+	private async void LoadAvailableCards()
 	{
-		if (playerCoins >= card.EnergyCost)
+		Nakama.Client client = GlobalState.Instance.NakamaClient;
+		Nakama.ISession session = GlobalState.Instance.Session;
+
+		Nakama.IApiRpc response = await client.RpcAsync(session, "GetAvailableCards");
+		availableCards = JsonSerializer.Deserialize<List<CardData>>(response.Payload);
+
+		GridContainer cardContainer = GetNode<GridContainer>("Container");
+
+		foreach (CardData card in availableCards)
 		{
-			playerCoins -= card.EnergyCost;
+			Node cardNode = GD.Load<PackedScene>("res://scenes/Shop_card.tscn").Instantiate();
+			((ShopCard)cardNode).SetCardData(card.ID, card.Name, card.Cost);
+
+			cardContainer.AddChild(cardNode);
+		}
+	}
+
+	private void OnPurchaseCardButtonPressed()
+	{
+		// Aquí selecciona la carta que deseas comprar
+		// Ejemplo: Compra la primera carta en la lista de cartas disponibles
+		if (availableCards.Count > 0)
+		{
+			PurchaseCard(availableCards[0]);
+		}
+	}
+
+	private void OnPurchaseUpgradeButtonPressed()
+	{
+		// Aquí selecciona la mejora que deseas comprar
+		// Ejemplo: Compra la primera mejora en la lista de mejoras
+		if (upgrades.Count > 0)
+		{
+			PurchaseUpgrade(upgrades[0]);
+		}
+	}
+
+	private void OnPurchaseDiceButtonPressed()
+	{
+		// Aquí selecciona el dado especial que deseas comprar
+		// Ejemplo: Compra el primer dado especial en la lista de dados especiales
+		if (specialDice.Count > 0)
+		{
+			PurchaseSpecialDice(specialDice[0]);
+		}
+	}
+
+	public bool PurchaseCard(CardData card)
+	{
+		if (playerCoins >= card.Cost)
+		{
+			playerCoins -= card.Cost;
 			availableCards.Remove(card);
 			GD.Print("Purchased card: " + card.Name);
 			return true;

@@ -106,3 +106,4 @@ public enum CardRarity
 	Elite,
 	Legendary
 }
+

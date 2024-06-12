@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://cfiwsnon8re82"]
+[gd_scene load_steps=13 format=3 uid="uid://cfiwsnon8re82"]
 
 [ext_resource type="Script" path="res://core/Game.cs" id="1_6akld"]
 [ext_resource type="Script" path="res://core/GameField.cs" id="1_ovy47"]
 [ext_resource type="Texture2D" uid="uid://ieqvi3st07f7" path="res://assets/background.png" id="1_oxwpb"]
 [ext_resource type="Script" path="res://core/Hand.cs" id="2_abbgp"]
 [ext_resource type="PackedScene" uid="uid://bh3labrgxts1s" path="res://scenes/card.tscn" id="2_bccay"]
+[ext_resource type="PackedScene" uid="uid://dwhv7m8h4yduy" path="res://scenes/Coin.tscn" id="4_o4hrf"]
 [ext_resource type="Texture2D" uid="uid://d13vu1pf44wb2" path="res://assets/button UI.png" id="5_5x8wv"]
 [ext_resource type="PackedScene" uid="uid://qxcpjgx3n0u7" path="res://scenes/Player.tscn" id="5_u4yd7"]
 
@@ -478,6 +479,9 @@ layout_mode = 2
 
 [node name="Card3" parent="GameUI/Hand" instance=ExtResource("2_bccay")]
 layout_mode = 2
+
+[node name="Coin" parent="GameUI" instance=ExtResource("4_o4hrf")]
+anchors_preset = -1
 
 [node name="Shop" type="Button" parent="."]
 offset_left = 15.0
