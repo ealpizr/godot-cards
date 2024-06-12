@@ -1,5 +1,7 @@
 using Godot;
 
+// This is meant for the management of the GameField.
+// This could be a Singleton and pass the corresponding card to the corresponding play field.
 public partial class GameField : CanvasLayer, IGameField
 {
 	[Export]

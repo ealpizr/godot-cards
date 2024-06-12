@@ -12,10 +12,6 @@ public abstract partial class CustomCPUPlayer : CPUPlayer, IInteractable
 
     public IStrategy Strategy { get; set; }
 
-    public override Hand Hand { get; set; }
-
-    public override Hand PlayHand {get; set; }
-
     public IInteractable interactable;
 
     public CustomCPUPlayer(IInteractable interactable) {
@@ -29,9 +25,9 @@ public abstract partial class CustomCPUPlayer : CPUPlayer, IInteractable
         throw new System.NotImplementedException();
     }
 
-    public override void SendInteraction(PlayerBase interaction)
+    public override void SendInteraction(GameField gameField, PlayerBase interaction)
     {
         //this.PlayHand.Cards = this.Strategy.PlanAttack((Player)interaction, this);
-        base.SendInteraction(interaction);
+        interactable.SendInteraction(gameField, interaction);
     }
 }

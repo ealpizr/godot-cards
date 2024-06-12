@@ -4,11 +4,15 @@ using Godot;
 public partial class Campaign : Node
 {
     public IInteractable player;
+
+    private IInteractable otherPlayerBase;
     IInteractable otherPlayer;
 
     GameField gameField;
 
     Difficulty level;
+
+    int currentLevel = 1;
 
 
 
@@ -16,14 +20,13 @@ public partial class Campaign : Node
     {
         this.level = level;
         this.player = (IInteractable)player;
-        this.otherPlayer = new CPUPlayer();
+        this.otherPlayerBase = new CPUPlayer();
+        this.otherPlayerBase.Init(otherPlayingField, otherHand);
 
         // if level is easy, then the other player is easy.
-        this.otherPlayer = new EasyCPUPlayer(otherPlayer);
+        this.otherPlayer = new EasyCPUPlayer(this.otherPlayerBase);
 
-        // configuration of the other player. Maybe there is a way to 
-        ((CPUPlayer)this.otherPlayer).Hand = otherHand;
-        ((CPUPlayer)this.otherPlayer).PlayingFieldContainer = otherPlayingField;
+        // configuration of the other player. Maybe there is a way to implement this more generically.
         this.gameField = gameField;
     }
 
@@ -37,16 +40,30 @@ public partial class Campaign : Node
         // Nothing so far.
     }
 
+    public void AdvanceLevel()
+    {
+        this.currentLevel++;
+
+        if (this.currentLevel == 2)
+        {
+            this.otherPlayer = new EasyCPUPlayer(this.otherPlayerBase);
+        }
+        else
+        {
+           // this.otherPlayer = new HardCPUPlayer();
+        }
+
+    }
+
     public void CPUPlayerPlay()
     {
-        this.otherPlayer.SendInteraction((PlayerBase)this.player);
-        this.gameField.EmitSignal(GameField.SignalName.ReparentToHboxContainer,((CPUPlayer)otherPlayer).PlayHand.Cards[0], ((CPUPlayer)otherPlayer).PlayingFieldContainer);
+        this.otherPlayer.SendInteraction(this.gameField, (PlayerBase)this.player);
     }
 
 
     public void PlayerPlay()
     {
-        this.player.SendInteraction((PlayerBase)this.otherPlayer);
+        this.player.SendInteraction(gameField, (PlayerBase)this.otherPlayer);
     }
 
 }

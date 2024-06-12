@@ -15,6 +15,12 @@ public partial class Player: PlayerBase, IInteractable, IControllable
         GD.Print("Player being clicked.");
     }
 
+       public void Init(HBoxContainer container, Hand hand)
+    {
+        this.Hand = hand;
+        this.PlayingFieldContainer = container;
+    }
+
     public void OnInput(InputEvent e)
     {
         throw new System.NotImplementedException();
@@ -35,7 +41,7 @@ public partial class Player: PlayerBase, IInteractable, IControllable
         GD.Print("Player received interaction.");
     }
 
-    public void SendInteraction(PlayerBase interaction)
+    public void SendInteraction(GameField gameField, PlayerBase interaction)
     {
         throw new System.NotImplementedException();
     }

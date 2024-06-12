@@ -11,10 +11,11 @@ public partial class Game : Node, IGame
 
     GameField gameField;
     public override void _Ready()
-        {
+    {
         this.Start();
 
         this.campaign = new Campaign(Difficulty.Easy, player, otherPlayer.Hand, otherPlayer.PlayingFieldContainer, gameField);        
+        this.campaign.AdvanceLevel();
         this.campaign.CPUPlayerPlay();
     }
     public void Start()
@@ -27,8 +28,9 @@ public partial class Game : Node, IGame
 
         player.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("HBoxContainer");
         otherPlayer.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("HBoxContainer");
-        otherPlayer.Hand = GetNode<Hand>("GameUI/Hand");
-        player.Hand = GetNode<Hand>("GameUI/HandOther");
+        
+        player.Hand = GetNode<Hand>("GameUI/Hand");
+        otherPlayer.Hand = GetNode<Hand>("GameUI/HandOther");
 
         gameField = GetNode<GameField>("GameUI");
         }
