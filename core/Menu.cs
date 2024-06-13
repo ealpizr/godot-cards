@@ -10,6 +10,9 @@ public partial class Menu : Control
 		Button exitButton = GetNode<Button>("Container/ExitButton");
 		Label usernameLabel = GetNode<Label>("InfoBar/Username");
 		Label versionLabel = GetNode<Label>("InfoBar/Version");
+		Button CampaignButton = GetNode<Button>("Container/CampaignButton");
+		Button PVPButton = GetNode<Button>("Container/PVPButton");
+		Button BackButton = GetNode<Button>("Container/BackButton");
 
 		usernameLabel.Text = GlobalState.Instance.Session.Username;
 		versionLabel.Text = GlobalState.Instance.Version;
@@ -17,11 +20,45 @@ public partial class Menu : Control
 		playButton.Pressed += OnPlayButtonPressed;
 		shopButton.Pressed += OnShopButtonPressed;
 		exitButton.Pressed += OnExitButtonPressed;
+		CampaignButton.Pressed += OnCampaignButtonPressed;
+		PVPButton.Pressed += OnPVPButtonPressed;
+		BackButton.Pressed += OnBackButtonPressed;
 	}
 
-	public void OnPlayButtonPressed()
+    private void OnBackButtonPressed()
+    {
+		Button playButton = GetNode<Button>("Container/PlayButton");
+		Button shopButton = GetNode<Button>("Container/ShopButton");
+        Button CampaignButton = GetNode<Button>("Container/CampaignButton");
+		Button PVPButton = GetNode<Button>("Container/PVPButton");
+		Button BackButton = GetNode<Button>("Container/BackButton");
+		CampaignButton.Visible = false;
+		PVPButton.Visible = false;
+		BackButton.Visible = false;
+
+		playButton.Visible = true;
+		shopButton.Visible = true;
+    }
+
+
+    private void OnPVPButtonPressed()
+    {
+        //GetTree().ChangeSceneToFile("res://scenes/PVP.tscn");
+    }
+
+    public void OnPlayButtonPressed()
 	{
-		GetTree().ChangeSceneToFile("res://scenes/game.tscn");
+		Button playButton = GetNode<Button>("Container/PlayButton");
+		Button shopButton = GetNode<Button>("Container/ShopButton");
+        Button CampaignButton = GetNode<Button>("Container/CampaignButton");
+		Button PVPButton = GetNode<Button>("Container/PVPButton");
+		Button BackButton = GetNode<Button>("Container/BackButton");
+		CampaignButton.Visible = true;
+		PVPButton.Visible = true;
+		BackButton.Visible = true;
+
+		playButton.Visible = false;
+		shopButton.Visible = false;
 	}
 
 	public void OnShopButtonPressed()
@@ -32,5 +69,10 @@ public partial class Menu : Control
 	public void OnExitButtonPressed()
 	{
 		GetTree().Quit();
+	}
+
+	public void OnCampaignButtonPressed()
+	{
+		GetTree().ChangeSceneToFile("res://scenes/game.tscn");
 	}
 }

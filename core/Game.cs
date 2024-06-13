@@ -4,34 +4,59 @@ using Godot;
 // team related to game logic.
 public partial class Game : Node, IGame
 {
-    PlayerBase player;
-    PlayerBase otherPlayer;
+    Player Player;
+    PlayerBase OtherPlayer;
 
-    Campaign campaign;
+    Campaign Campaign;
 
-    GameField gameField;
+    GameField GameField;
+
+    Label LevelLabel;
+
+    // atributo de turno: booleano.
+
+    int currentLevel;
     public override void _Ready()
     {
         this.Start();
 
-        this.campaign = new Campaign(Difficulty.Easy, player, otherPlayer.Hand, otherPlayer.PlayingFieldContainer, gameField);        
-        this.campaign.AdvanceLevel();
-        this.campaign.CPUPlayerPlay();
+        this.Campaign = new Campaign(Difficulty.Easy, Player, OtherPlayer.Hand, OtherPlayer.PlayingFieldContainer, GameField);        
+        this.Campaign.CPUPlayerPlay();
+
+        this.Update();
+
+        // timer.
+        // timer event => reinicia, Cambiar de turno, .
+
+    }
+
+    // turno cambie.
+    // toggle el turno de jugador.
+
+    public void Update()
+    {
+        this.currentLevel = this.Campaign.CurrentLevel;
+
+        this.LevelLabel.Text = "Level: " + this.currentLevel;
+        
     }
     public void Start()
     {
-        player = new Player();
-        this.otherPlayer = new CPUPlayer();
+        Player = new Player();
+        this.OtherPlayer = new CPUPlayer();
         // Refactorable.
         // This can be generalized to a way to use N amount of player,
-        // here the game has a predifined amount of players and it's easy as assigning.  
+        // here the game has a predifined amount of players and it's as easy as assigning.  
 
-        player.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("HBoxContainer");
-        otherPlayer.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("HBoxContainer");
+        Player.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("HBoxContainer");
+        OtherPlayer.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("HBoxContainer");
         
-        player.Hand = GetNode<Hand>("GameUI/Hand");
-        otherPlayer.Hand = GetNode<Hand>("GameUI/HandOther");
+        Player.Hand = GetNode<Hand>("GameUI/Hand");
+        OtherPlayer.Hand = GetNode<Hand>("GameUI/HandOther");
 
-        gameField = GetNode<GameField>("GameUI");
-        }
+        GameField = GetNode<GameField>("GameUI");
+
+        // UI
+        LevelLabel = GetNode<Label>("GameUI/Level/Label");
+    }
 }

@@ -20,14 +20,18 @@ public abstract partial class CustomCPUPlayer : CPUPlayer, IInteractable
 
     // don't forget to change to override.
     // https://learn.microsoft.com/es-es/dotnet/csharp/misc/cs0506
-    public new void ReceiveInteraction(PlayerBase interaction)
+    public override void ReceiveInteraction(PlayerBase interaction)
     {
         throw new System.NotImplementedException();
     }
 
     public override void SendInteraction(GameField gameField, PlayerBase interaction)
     {
-        //this.PlayHand.Cards = this.Strategy.PlanAttack((Player)interaction, this);
         interactable.SendInteraction(gameField, interaction);
+    }
+
+    public override void Init(HBoxContainer container, Hand hand)
+    {
+        throw new System.NotImplementedException();
     }
 }
