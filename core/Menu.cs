@@ -63,7 +63,7 @@ public partial class Menu : Control
 
 	public void OnShopButtonPressed()
 	{
-		GetTree().ChangeSceneToFile("res://scenes/Shop.tscn");
+		GetTree().ChangeSceneToFile("res://scenes/example_shop.tscn");
 	}
 
 	public void OnExitButtonPressed()
