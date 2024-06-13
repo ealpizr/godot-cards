@@ -4,18 +4,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-public class CardData
-{
-	[JsonPropertyName("id")]
-	public int ID { get; set; }
-
-	[JsonPropertyName("name")]
-	public string Name { get; set; }
-
-	[JsonPropertyName("cost")]
-	public int Cost { get; set; }
-}
-
 public partial class Shop : Control
 {
 	private int playerCoins;
