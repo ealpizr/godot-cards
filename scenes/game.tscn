@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cfiwsnon8re82"]
+[gd_scene load_steps=14 format=3 uid="uid://cfiwsnon8re82"]
 
 [ext_resource type="Script" path="res://core/Game.cs" id="1_6akld"]
 [ext_resource type="Script" path="res://core/GameField.cs" id="1_ovy47"]
@@ -7,7 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://bh3labrgxts1s" path="res://scenes/card.tscn" id="2_bccay"]
 [ext_resource type="PackedScene" uid="uid://dwhv7m8h4yduy" path="res://scenes/Coin.tscn" id="4_o4hrf"]
 [ext_resource type="Texture2D" uid="uid://d13vu1pf44wb2" path="res://assets/button UI.png" id="5_5x8wv"]
-[ext_resource type="PackedScene" uid="uid://qxcpjgx3n0u7" path="res://scenes/Player.tscn" id="5_u4yd7"]
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="5_u4yd7"]
+[ext_resource type="Script" path="res://core/TurnManager.cs" id="9_vwgqn"]
 
 [sub_resource type="FontFile" id="FontFile_14d2f"]
 cache/0/8/0/ascent = 0.0
@@ -505,4 +506,22 @@ offset_top = 82.0
 offset_right = 62.0
 offset_bottom = 82.0
 
+[node name="TurnManager" type="Node" parent="."]
+script = ExtResource("9_vwgqn")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_left = 1035.0
+offset_top = 650.0
+offset_right = 1159.0
+offset_bottom = 690.0
+scale = Vector2(1.84, 1.55224)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="EndTurn" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Finalizar Turno"
+
 [connection signal="pressed" from="Shop" to="Shop" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/EndTurn" to="." method="_on_end_turn_pressed"]

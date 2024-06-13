@@ -4,34 +4,73 @@ using Godot;
 // team related to game logic.
 public partial class Game : Node, IGame
 {
-    PlayerBase player;
-    PlayerBase otherPlayer;
+	PlayerBase player;
+	PlayerBase otherPlayer;
 
-    Campaign campaign;
+	Campaign campaign;
 
-    GameField gameField;
-    public override void _Ready()
-    {
-        this.Start();
+	GameField gameField;
+	TurnManager turnManager;
+	Timer timer = new Timer();
+	public override void _Ready()
+	{
+		this.Start();
 
-        this.campaign = new Campaign(Difficulty.Easy, player, otherPlayer.Hand, otherPlayer.PlayingFieldContainer, gameField);        
-        this.campaign.AdvanceLevel();
-        this.campaign.CPUPlayerPlay();
-    }
-    public void Start()
-    {
-        player = new Player();
-        this.otherPlayer = new CPUPlayer();
-        // Refactorable.
-        // This can be generalized to a way to use N amount of player,
-        // here the game has a predifined amount of players and it's easy as assigning.  
+		this.turnManager = new TurnManager();
+		this.timer.WaitTime = 10;
 
-        player.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("HBoxContainer");
-        otherPlayer.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("HBoxContainer");
-        
-        player.Hand = GetNode<Hand>("GameUI/Hand");
-        otherPlayer.Hand = GetNode<Hand>("GameUI/HandOther");
+		if (this.turnManager.IsPlayerTurn) {
+			timer.Autostart = true;
+			this.campaign = new Campaign(Difficulty.Easy, player, otherPlayer.Hand, otherPlayer.PlayingFieldContainer, gameField);        
+			this.campaign.AdvanceLevel();
+			
+			if (timer.IsStopped()) {
+				ChangeTurn();
+			}
 
-        gameField = GetNode<GameField>("GameUI");
-        }
+		} else {
+			timer.Autostart = true;
+			this.campaign.CPUPlayerPlay();
+			if (timer.IsStopped()) {
+				ChangeTurn();
+			}
+		}
+	}
+	public void Start()
+	{
+		this.player = new Player();
+		this.otherPlayer = new CPUPlayer();
+		// Refactorable.
+		// This can be generalized to a way to use N amount of player,
+		// here the game has a predifined amount of players and it's easy as assigning.  
+
+		player.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("HBoxContainer");
+		otherPlayer.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("HBoxContainer");
+		
+		player.Hand = GetNode<Hand>("GameUI/Hand");
+		otherPlayer.Hand = GetNode<Hand>("GameUI/HandOther");
+
+		gameField = GetNode<GameField>("GameUI");
+	}
+
+	private void _on_end_turn_pressed()
+	{
+		timer.Stop();
+		ChangeTurn();
+	}
+
+	public void ChangeTurn() {
+		Button endTurn = GetNode<Button>("EndTurn");
+
+		if (this.turnManager.IsPlayerTurn) {
+			this.turnManager.EndTurn();
+			GD.Print("Ahora es turno del oponente");
+
+			endTurn.Disabled = true;
+		}  else {
+			this.turnManager.IsPlayerTurn = true;
+			endTurn.Disabled = false;
+			GD.Print("Ahora es tu turno");
+		}
+	}
 }
