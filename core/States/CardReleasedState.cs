@@ -30,6 +30,7 @@ public partial class CardReleasedState : CardStateBase
             }
             Card.DropPointDetector.Monitoring = false;
             //EmitSignal(SignalName.TransitionRequested, this, Variant.From(CardState.Idle));
+            
             return;
         }
 

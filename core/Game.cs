@@ -24,14 +24,7 @@ public partial class Game : Node, IGame
         this.Campaign.CPUPlayerPlay();
 
         this.Update();
-
-        // timer.
-        // timer event => reinicia, Cambiar de turno, .
-
     }
-
-    // turno cambie.
-    // toggle el turno de jugador.
 
     public void Update()
     {
@@ -44,6 +37,7 @@ public partial class Game : Node, IGame
     {
         Player = new Player();
         this.OtherPlayer = new CPUPlayer();
+
         // Refactorable.
         // This can be generalized to a way to use N amount of player,
         // here the game has a predifined amount of players and it's as easy as assigning.  

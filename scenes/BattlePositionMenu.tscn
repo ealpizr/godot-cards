@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://fqbxvk3np8qo"]
+
+[ext_resource type="Script" path="res://core/BattlePosition/PopupMenuHandler.cs" id="1_q2qc7"]
+
+[node name="BattlePositionMenu" type="Node2D"]
+position = Vector2(0, 1)
+script = ExtResource("1_q2qc7")
+
+[node name="PopupMenu" type="PopupMenu" parent="."]
