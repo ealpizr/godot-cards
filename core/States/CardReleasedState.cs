@@ -11,13 +11,41 @@ public partial class CardReleasedState : CardStateBase
 
         if (Card.Targets.Count > 0)
         {
-            GD.Print(Card.Targets[0].Name);
             inDropPoint = true;
         }
     }
 
     public override void OnInput(InputEvent e)
     {
+        if (e is InputEventMouseButton mouseButton)
+        {
+            if (mouseButton.ButtonIndex == MouseButton.Left && mouseButton.IsPressed() && Card.IsSelected)
+            {
+                if (Card.isAttackPosition)
+                {
+                    Card.isAttackPosition = false;
+                    Card.Label.Text = "Defense";
+
+                    Card.CardShape.PivotOffset = Card.Size / 2;
+                    Card.Label.PivotOffset = Card.Size / 2;
+
+                    Card.CardShape.RotationDegrees = 90;
+                    Card.Label.RotationDegrees = -90;
+                }
+                else
+                {
+                    Card.isAttackPosition = true;
+
+                    Card.CardShape.PivotOffset = Card.Size / 2;
+                    Card.Label.PivotOffset = Card.Size / 2;
+
+                    Card.Label.Text = "Attack";
+                    Card.CardShape.RotationDegrees = 0;
+                    Card.Label.RotationDegrees = -0;
+                }
+            }
+        }
+
         if (Card.DropPointDetector.Monitoring == false) return;
         if (inDropPoint)
         {
@@ -35,5 +63,14 @@ public partial class CardReleasedState : CardStateBase
         }
 
         EmitSignal(SignalName.TransitionRequested, this, Variant.From(CardState.Idle));
+    }
+
+    public override void OnMouseEnter() {
+        Card.IsSelected = true;
+    }
+
+    public override void OnMouseExit()
+    {
+        Card.IsSelected = false;
     }
 }

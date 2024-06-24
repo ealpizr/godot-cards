@@ -21,6 +21,7 @@ public partial class CardDraggingState : CardStateBase
 		minimumDragThresholdElapsed = false;
 		SceneTreeTimer thresholdTimer = GetTree().CreateTimer(DRAG_MINIMUM_THRESHOLD, false);
 		thresholdTimer.Timeout += () => minimumDragThresholdElapsed = true;
+
 	}
 
 	public override void OnInput(InputEvent e)
