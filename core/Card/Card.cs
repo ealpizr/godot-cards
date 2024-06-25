@@ -17,6 +17,8 @@ public partial class Card : Control
 	public List<Node> Targets { get; private set; } = new List<Node>();
 	private IStateMachine cardStateMachine;
 
+	// added a control to seperate the card shape from the card itself because the hboxcontainer always resets the position of the card and for some
+	// reason the rotation! therefore it was better to handle the rotation inside the CardUI and leave the control CardUI for reparenting/state logic purposes.
 	public Control CardShape { get; private set; }
 
 	public bool isAttackPosition = true;
@@ -55,7 +57,11 @@ public partial class Card : Control
 		Label = GetNode<Label>("CardShape/Label");
 		DropPointDetector = GetNode<Area2D>("DropPointDetector");
 		CardShape = GetNode<Control>("CardShape");
+
+		// Learning point: I was debugging why the card shape was on the way of the mouse event detection from the droppointdector.
+		// this control had a handler for the mouse events, so it was handling first the mouse events and the other didn't get the chance to handle it.
 		CardShape.MouseFilter = MouseFilterEnum.Pass;
+
 		// Initialize state machine
 		cardStateMachine = GetNode<CardStateMachine>("CardStateMachine");
 		cardStateMachine.Init(this);
@@ -94,7 +100,6 @@ public partial class Card : Control
 	// Area detection event handlers
 	private void DropPointAreaEntered(Area2D area)
 	{
-		GD.Print(area.Name);
 		if (!Targets.Contains(area))
 		{
 			Targets.Add(area);
