@@ -12,14 +12,12 @@ public partial class Campaign : Node
 
     Difficulty level;
 
-    int currentLevel = 1;
+    public int CurrentLevel = 1;
 
-
-
-    public Campaign(Difficulty level, PlayerBase player, Hand otherHand, HBoxContainer otherPlayingField, GameField gameField)
+    public Campaign(Difficulty level, IInteractable player, Hand otherHand, HBoxContainer otherPlayingField, GameField gameField)
     {
         this.level = level;
-        this.player = (IInteractable)player;
+        this.player = player;
         this.otherPlayerBase = new CPUPlayer();
         this.otherPlayerBase.Init(otherPlayingField, otherHand);
 
@@ -42,9 +40,9 @@ public partial class Campaign : Node
 
     public void AdvanceLevel()
     {
-        this.currentLevel++;
+        this.CurrentLevel++;
 
-        if (this.currentLevel == 2)
+        if (this.CurrentLevel == 2)
         {
             this.otherPlayer = new EasyCPUPlayer(this.otherPlayerBase);
         }

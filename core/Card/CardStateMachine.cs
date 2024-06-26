@@ -28,6 +28,7 @@ public partial class CardStateMachine : Node, IStateMachine
 			initialState.Enter();
 			currentState = initialState;
 		}
+
 	}
 
 	private void OnTransitionRequested(IStateBase<CardState> from, CardState to)
