@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://qxcpjgx3n0u7"]
 
-[ext_resource type="Script" path="res://core/CPUPlayer.cs" id="1_g12wn"]
+[ext_resource type="Script" path="res://core/Players/CPUPlayer.cs" id="1_ondq2"]
 
 [node name="Player" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_g12wn")
+script = ExtResource("1_ondq2")

@@ -10,12 +10,13 @@ public abstract partial class CustomCPUPlayer : CPUPlayer, IInteractable
     public override int Id { get; }
     public override int Points { get; }
 
-    public IStrategy Strategy { get; set; }
+    public PlayContext Strategy { get; set; }
 
     public IInteractable interactable;
 
     public CustomCPUPlayer(IInteractable interactable) {
         this.interactable = interactable;
+        this.Strategy = new PlayContext();
     }
 
     // don't forget to change to override.

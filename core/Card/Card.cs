@@ -49,7 +49,6 @@ public partial class Card : Control
 		Rarity = CardRarity.Common; // Default value
 	}
 
-	// This is called when the node enters the scene tree for the first time
 	public override void _Ready()
 	{
 		// Get references to child nodes
