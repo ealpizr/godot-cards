@@ -6,7 +6,7 @@ public partial class Campaign : Node
     public IInteractable player;
 
     private IInteractable otherPlayerBase;
-    IInteractable otherPlayer;
+    CustomCPUPlayer otherPlayer;
 
     GameField gameField;
 
@@ -22,7 +22,8 @@ public partial class Campaign : Node
         this.otherPlayerBase.Init(otherPlayingField, otherHand);
 
         // if level is easy, then the other player is easy.
-        this.otherPlayer = new EasyCPUPlayer(this.otherPlayerBase);
+        this.otherPlayer = new DifficultyCPUPlayer(this.otherPlayerBase);
+        this.otherPlayer.ChangeLevel(level);
 
         // configuration of the other player. Maybe there is a way to implement this more generically.
         this.gameField = gameField;
@@ -44,7 +45,7 @@ public partial class Campaign : Node
 
         if (this.CurrentLevel == 2)
         {
-            this.otherPlayer = new EasyCPUPlayer(this.otherPlayerBase);
+            this.otherPlayer.ChangeLevel(Difficulty.Medium);
         }
         else
         {

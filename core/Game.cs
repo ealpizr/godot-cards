@@ -15,6 +15,8 @@ public partial class Game : Node, IGame
 
     // atributo de turno: booleano.
 
+    // Recommended to use a singleton to improve the access to the game state.
+
     int currentLevel;
     public override void _Ready()
     {

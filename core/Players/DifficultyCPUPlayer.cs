@@ -1,9 +1,9 @@
 using Godot;
 
-public partial class EasyCPUPlayer : CustomCPUPlayer
+public partial class DifficultyCPUPlayer : CustomCPUPlayer
 {
 
-    public EasyCPUPlayer(IInteractable interactable) : base(interactable)
+    public DifficultyCPUPlayer(IInteractable interactable) : base(interactable)
     {
         this.interactable = interactable;
 
@@ -15,6 +15,22 @@ public partial class EasyCPUPlayer : CustomCPUPlayer
     public new void ReceiveInteraction(PlayerBase interaction)
     {
         throw new System.NotImplementedException();
+    }
+
+    public override void ChangeLevel(Difficulty difficulty)
+    {
+        switch (difficulty)
+        {
+            case Difficulty.Easy:
+                this.Strategy.SetStrategy(new PeaceFulStrategy());
+                break;
+            case Difficulty.Medium:
+                this.Strategy.SetStrategy(new AggressiveStrategy());
+                break;
+            default:
+                this.Strategy.SetStrategy(new PeaceFulStrategy());
+                break;
+        }
     }
 
     public override void SendInteraction(GameField gameField, PlayerBase interaction)
