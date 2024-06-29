@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"database/sql"
-	"encoding/json"
 	"errors"
 	"time"
 
@@ -11,21 +10,20 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
-// For now we will use a global storage object to store game data
-// such as cards, items, etc. This might work for the whole project scope
 const (
-	storageCollection = "server"
-	storageKey        = "game-data"
+	cardsStorageKey = "cards"
 )
 
-type GameData struct {
-	Cards []Card `json:"cards"`
-}
-
 type Card struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	Cost int    `json:"cost"`
+	ID          int    `json:"id"`
+	Name        string `json:"name"`
+	Cost        int    `json:"cost"`
+	Type        string `json:"type"`
+	Attack      int    `json:"attack"`
+	Health      int    `json:"health"`
+	Rarity      string `json:"rarity"`
+	ManaCost    int    `json:"manaCost"`
+	Description string `json:"description"`
 }
 
 // This is the entry point used by Nakama's runtime
@@ -70,59 +68,18 @@ func InitializeUser(ctx context.Context, logger runtime.Logger, db *sql.DB, nk r
 // We want to make sure that the storage object exists and is initialized so that it can be modified
 // through the Nakama web dashboard. It's just easier to work with.
 func InitializeStorageObject(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule) {
-	object, err := nk.StorageRead(ctx, []*runtime.StorageRead{
-		{
-			Collection: storageCollection,
-			Key:        storageKey,
-		},
-	})
-
-	if err != nil {
-		logger.Error("Error reading storage object: %v", err)
-		panic(err)
-	}
-
-	// If the object doesn't exist, create it
-	if len(object) == 0 {
-		_, err = nk.StorageWrite(ctx, []*runtime.StorageWrite{
-			{
-				Collection:      storageCollection,
-				Key:             storageKey,
-				PermissionRead:  2, // Public read
-				PermissionWrite: 1, // Private write
-				Value:           "{}",
-			},
-		})
-
-		if err != nil {
-			logger.Error("Error writing storage object")
-			panic(err)
-		}
-
-		logger.Info("Created storage object")
-	}
+	si := NewStorageInteractor(ctx, logger, nk)
+	si.CreateStorageObjectIfNotExists(cardsStorageKey, "[]", PUBLIC_READ, NO_WRITE)
 }
 
 func GetAvailableCardsRpc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
-	records, err := nk.StorageRead(ctx, []*runtime.StorageRead{&runtime.StorageRead{
-		Collection: storageCollection,
-		Key:        storageKey,
-	}})
-	if err != nil || len(records) == 0 {
-		logger.Error("Could not read cards from storage")
-	}
+	si := NewStorageInteractor(ctx, logger, nk)
 
-	gameData := GameData{}
-	if err := json.Unmarshal([]byte(records[0].Value), &gameData); err != nil {
-		logger.Error("Could not unmarshal game data")
-		logger.Error(err.Error())
-	}
-
-	response, err := json.Marshal(gameData.Cards)
+	cards, err := si.ReadStorageObject(cardsStorageKey)
 	if err != nil {
-		logger.Error("Could not marshal cards")
-		logger.Error(err.Error())
+		logger.Error("Could not read cards from storage", err.Error())
+		return "", err
 	}
 
-	return string(response), nil
+	return cards, nil
 }
