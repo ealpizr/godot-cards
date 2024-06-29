@@ -8,26 +8,6 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
-const (
-	PUBLIC_READ = 2
-	OWNER_READ  = 1
-	NO_READ     = 0
-	OWNER_WRITE = 1
-	NO_WRITE    = 0
-
-	storageCollection = "server"
-)
-
-type StorageInteractor struct {
-	ctx    context.Context
-	logger runtime.Logger
-	nk     runtime.NakamaModule
-}
-
-type StorageObject struct {
-	Data interface{} `json:"data"`
-}
-
 func NewStorageInteractor(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule) *StorageInteractor {
 	return &StorageInteractor{
 		ctx:    ctx,
