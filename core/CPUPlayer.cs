@@ -1,7 +1,7 @@
 using System.IO;
 using Godot;
 
-public partial class CPUPlayer : PlayerBase, IInteractable
+public partial class CPUPlayer : PlayerBase
 {
     public override int Id { get; }
     public override string UserName { get; }
@@ -15,10 +15,10 @@ public partial class CPUPlayer : PlayerBase, IInteractable
         this.PlayHand = new Hand();
     }
 
-    public void ReceiveInteraction(PlayerBase interaction) {
+    public override void ReceiveInteraction(PlayerBase interaction) {
         
     }
-    public virtual void SendInteraction(GameField gameField, PlayerBase interaction) {
+    public override void SendInteraction(GameField gameField, PlayerBase interaction) {
         // default behaviour here, one base execution example
         // we could add things like: verification process for cards.
         if (PlayHand.Cards is not null)
@@ -42,7 +42,7 @@ public partial class CPUPlayer : PlayerBase, IInteractable
         ((Player)interaction).ReceiveInteraction(this);
     }
 
-    public void Init(HBoxContainer container, Hand hand)
+    public override void Init(HBoxContainer container, Hand hand)
     {
         this.Hand = hand;
         this.PlayingFieldContainer = container;
@@ -51,6 +51,7 @@ public partial class CPUPlayer : PlayerBase, IInteractable
 
 public partial class EasyCPUPlayer : CustomCPUPlayer
 {
+
     public EasyCPUPlayer(IInteractable interactable) : base(interactable)
     {
         this.interactable = interactable;
@@ -82,6 +83,13 @@ public partial class EasyCPUPlayer : CustomCPUPlayer
 
 public partial class MediumCPUPlayer : CustomCPUPlayer
 {
+    public override int Id { get; }
+    public override string UserName { get; }
+    public override int Points { get; }
+
+    public override Hand Hand { get; set; }
+
+    public override Hand PlayHand {get; set; }
     public MediumCPUPlayer(IInteractable interactable) : base(interactable)
     {
         this.interactable = interactable;
@@ -98,14 +106,14 @@ public partial class MediumCPUPlayer : CustomCPUPlayer
 
     public override void SendInteraction(GameField gameField, PlayerBase interaction)
     {
-        if (((PlayerBase)interactable).Hand is null)
+        if (((CPUPlayer)interactable).Hand is null)
         {
             GD.Print("Hand is null. Please verify the hand is being initialized.");
         }
 
         // add more points to the strategy plan beforehand.
 
-        ((PlayerBase)this.interactable).PlayHand.Cards = this.Strategy.PlanAttack((Player)interaction, (PlayerBase)this.interactable);
+        ((CPUPlayer)interactable).PlayHand.Cards = this.Strategy.PlanAttack((Player)interaction, ((CPUPlayer)interactable));
 
         base.SendInteraction(gameField, interaction);
         //this.interactable.SendInteraction(this);
