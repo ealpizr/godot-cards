@@ -12,6 +12,7 @@ public partial class Menu : Control
 		{
 			if (GetNode<BoxContainer>("Container").GetChild(i) is Button)
 			{
+				// Couldn't we just delete the node at runtime?
 				((Button)GetNode<BoxContainer>("Container").GetChild(i)).Visible = false;
 			}
 		}
@@ -21,13 +22,14 @@ public partial class Menu : Control
 
 		// Create the menu
 		menuDirector.AddNavigateToMenuButton("Play", "Jugar", 0, 1);
+		menuDirector.AddNavigateToSceneButton("Inventory", "Inventario", "res://scenes/inventory.tscn", 0);
 		menuDirector.AddNavigateToSceneButton("Store", "Tienda", "res://scenes/shop.tscn", 0);
 		menuDirector.AddExitButton("Exit", "Salir", 0);
 
 		menuDirector.AddNavigateToSceneButton("PVP", "PVP", "res://scenes/game.tscn", 1);
 		menuDirector.AddNavigateToSceneButton("Campaign", "Campaña", "res://scenes/game.tscn", 1);
 
-		menuDirector.AddNavigateToMenuButton("BacktoMainMenu", "Atras", 1, 0);
+		menuDirector.AddNavigateToMenuButton("BacktoMainMenu", "Atrás", 1, 0);
 
 		// builds the menu with the assembled parts.
 		menuDirector.Construct();

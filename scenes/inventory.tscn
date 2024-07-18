@@ -1,0 +1,265 @@
+[gd_scene load_steps=19 format=3 uid="uid://b8q6q4uaky4f8"]
+
+[ext_resource type="Texture2D" uid="uid://dyjvmh8lpcbgm" path="res://assets/inventory_character.png" id="1_2vhgc"]
+[ext_resource type="Theme" uid="uid://dg5a4ijak5tgo" path="res://theme.tres" id="1_p04yu"]
+[ext_resource type="Texture2D" uid="uid://b258vuyd4kyn3" path="res://assets/cup_icon.png" id="2_b4wjs"]
+[ext_resource type="Script" path="res://core/Inventory.cs" id="2_mouye"]
+[ext_resource type="Texture2D" uid="uid://cpkkcpwfjfc1b" path="res://assets/card_icon.png" id="3_sxvqx"]
+[ext_resource type="Texture2D" uid="uid://dlmenm6y6baqe" path="res://assets/dice_icon.png" id="4_mqysj"]
+[ext_resource type="Texture2D" uid="uid://4bsa036slb54" path="res://assets/cenfo-coin.png" id="5_tjcvm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a21xk"]
+atlas = ExtResource("1_2vhgc")
+region = Rect2(0, 40, 120, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1rw64"]
+atlas = ExtResource("1_2vhgc")
+region = Rect2(120, 40, 120, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8dbk"]
+atlas = ExtResource("1_2vhgc")
+region = Rect2(240, 40, 120, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3yy1n"]
+atlas = ExtResource("1_2vhgc")
+region = Rect2(360, 40, 120, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ir7na"]
+atlas = ExtResource("1_2vhgc")
+region = Rect2(480, 40, 120, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqk2g"]
+atlas = ExtResource("1_2vhgc")
+region = Rect2(600, 40, 120, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_objle"]
+atlas = ExtResource("1_2vhgc")
+region = Rect2(720, 40, 120, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcsfh"]
+atlas = ExtResource("1_2vhgc")
+region = Rect2(840, 40, 120, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fotf0"]
+atlas = ExtResource("1_2vhgc")
+region = Rect2(960, 40, 120, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lnynu"]
+atlas = ExtResource("1_2vhgc")
+region = Rect2(1080, 40, 120, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_llw3f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a21xk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1rw64")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8dbk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3yy1n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ir7na")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqk2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_objle")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcsfh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fotf0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lnynu")
+}],
+"loop": true,
+"name": &"idle_animation",
+"speed": 6.0
+}]
+
+[node name="Inventory" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_p04yu")
+script = ExtResource("2_mouye")
+
+[node name="Sidebar" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 0
+
+[node name="Content" type="VBoxContainer" parent="Sidebar"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="SpriteContainer" type="ColorRect" parent="Sidebar/Content"]
+custom_minimum_size = Vector2(300, 250)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.262933, 0.262932, 0.262932, 1)
+
+[node name="InventoryCharacter" type="AnimatedSprite2D" parent="Sidebar/Content/SpriteContainer"]
+position = Vector2(170, 119)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_llw3f")
+animation = &"idle_animation"
+autoplay = "idle_animation"
+frame_progress = 0.972717
+
+[node name="UsernameContainer" type="ColorRect" parent="Sidebar/Content"]
+custom_minimum_size = Vector2(300, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.183591, 0.18359, 0.18359, 1)
+
+[node name="Username" type="Label" parent="Sidebar/Content/UsernameContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.5
+offset_top = -8.5
+offset_right = 42.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 18
+text = "ealpizar"
+
+[node name="StatsContainer" type="ColorRect" parent="Sidebar/Content"]
+custom_minimum_size = Vector2(300, 410)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.262933, 0.262932, 0.262932, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Sidebar/Content/StatsContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+
+[node name="MarginContainer" type="MarginContainer" parent="Sidebar/Content/StatsContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="WinsContainer" type="HBoxContainer" parent="Sidebar/Content/StatsContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Victorias"
+
+[node name="TextureRect" type="TextureRect" parent="Sidebar/Content/StatsContainer/VBoxContainer/WinsContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("2_b4wjs")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="Sidebar/Content/StatsContainer/VBoxContainer/WinsContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Sidebar/Content/StatsContainer/VBoxContainer/WinsContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="CardsContainer" type="HBoxContainer" parent="Sidebar/Content/StatsContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Cartas"
+
+[node name="TextureRect" type="TextureRect" parent="Sidebar/Content/StatsContainer/VBoxContainer/CardsContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("3_sxvqx")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="Sidebar/Content/StatsContainer/VBoxContainer/CardsContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Sidebar/Content/StatsContainer/VBoxContainer/CardsContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="DiceContainer" type="HBoxContainer" parent="Sidebar/Content/StatsContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Dados"
+
+[node name="TextureRect" type="TextureRect" parent="Sidebar/Content/StatsContainer/VBoxContainer/DiceContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("4_mqysj")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="Sidebar/Content/StatsContainer/VBoxContainer/DiceContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Sidebar/Content/StatsContainer/VBoxContainer/DiceContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="CoinsContainer" type="HBoxContainer" parent="Sidebar/Content/StatsContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "C-Coins"
+
+[node name="TextureRect" type="TextureRect" parent="Sidebar/Content/StatsContainer/VBoxContainer/CoinsContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("5_tjcvm")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="Sidebar/Content/StatsContainer/VBoxContainer/CoinsContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Sidebar/Content/StatsContainer/VBoxContainer/CoinsContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="MarginContainer2" type="MarginContainer" parent="Sidebar/Content/StatsContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="Sidebar/Content/StatsContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Border" type="ColorRect" parent="Sidebar"]
+custom_minimum_size = Vector2(5, 720)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.188235, 0.188235, 0.188235, 1)
