@@ -20,8 +20,8 @@ public partial class Game : Node, IGame
 	{
 		this.Start();
 
-		this.Campaign = new Campaign(Difficulty.Easy, Player, OtherPlayer.Hand, OtherPlayer.PlayingFieldContainer, GameField);        
-        this.Campaign.CPUPlayerPlay();
+		this.campaign = new Campaign(Difficulty.Easy, player, otherPlayer.Hand, otherPlayer.PlayingFieldContainer, gameField);        
+        this.campaign.CPUPlayerPlay();
 
         this.Update();
 
@@ -87,7 +87,7 @@ public partial class Game : Node, IGame
 
 	public void Update()
     {
-        this.currentLevel = this.Campaign.CurrentLevel;
+        this.currentLevel = this.campaign.CurrentLevel;
 
         this.LevelLabel.Text = "Level: " + this.currentLevel;
     }
