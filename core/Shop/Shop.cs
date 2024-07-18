@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Nakama;
 
 public class CardData
 {
@@ -14,37 +15,79 @@ public class CardData
 
 	[JsonPropertyName("cost")]
 	public int Cost { get; set; }
+	
+	[JsonPropertyName("attack")]
+	public int Attack { get; set; }
+	
+	[JsonPropertyName("health")]
+	public int Health { get; set; }
+	
+	[JsonPropertyName("description")]
+	public string Description { get; set; }
+	
+	[JsonPropertyName("rarity")]
+	public string Rarity { get; set; }
+	
+	[JsonPropertyName("manacost")]
+	public int ManaCost { get; set; }
+	
+	[JsonPropertyName("type")]
+	public string Type { get; set; }
+}
+
+public class CardPackData
+{
+	[JsonPropertyName("id")]
+	public int ID { get; set; }
+
+	[JsonPropertyName("name")]
+	public string Name { get; set; }
+
+	[JsonPropertyName("cost")]
+	public int Cost { get; set; }
+
+	[JsonPropertyName("cards")]
+	public List<CardData> Cards { get; set; }
 }
 
 public partial class Shop : Control
 {
 	private int playerCoins;
 	private List<CardData> availableCards;
+	private List<CardPackData> availableCardPacks;
 	private List<string> upgrades;
 	private List<string> specialDice;
+
+	private HBoxContainer cardHBoxContainer;
+	private HBoxContainer packsHBoxContainer;
+	private HBoxContainer diceHBoxContainer;
+	private HBoxContainer upgradesHBoxContainer;
 
 	public override void _Ready()
 	{
 		InitializeShop();
+		SetupContainers();
 		LoadAvailableCards();
+		LoadAvailableCardPacks();
+		LoadAvailableUpgrades();
+		LoadAvailableSpecialDice();
 	}
 
 	private void InitializeShop()
 	{
-		playerCoins = 100; // Ejemplo: El jugador comienza con 100 monedas
+		playerCoins = 100;
 		upgrades = new List<string> { "Energy Bar Upgrade", "Shield Upgrade" };
 		specialDice = new List<string> { "Fire Dice", "Water Dice" };
 
-		// Conectar botones a métodos de compra
-		Button purchaseCardButton = GetNode<Button>("MarginContainer/VBoxContainer/PurchaseCardButton");
-		Button purchaseUpgradeButton = GetNode<Button>("MarginContainer/VBoxContainer/PurchaseUpgradeButton");
-		Button purchaseDiceButton = GetNode<Button>("MarginContainer/VBoxContainer/PurchaseDiceButton");
-
-		purchaseCardButton.Connect("pressed", new Callable(this, nameof(OnPurchaseCardButtonPressed)));
-		purchaseUpgradeButton.Connect("pressed", new Callable(this, nameof(OnPurchaseUpgradeButtonPressed)));
-		purchaseDiceButton.Connect("pressed", new Callable(this, nameof(OnPurchaseDiceButtonPressed)));
-
 		GD.Print("Shop is ready with initial setup.");
+	}
+
+	private void SetupContainers()
+	{
+		cardHBoxContainer = GetNode<HBoxContainer>("TabContainer/CARDS/ScrollContainer/cardHBoxContainer");
+		packsHBoxContainer = GetNode<HBoxContainer>("TabContainer/PACKS/ScrollContainer/packsHBoxContainer");
+		diceHBoxContainer = GetNode<HBoxContainer>("TabContainer/DICE/ScrollContainer/diceHBoxContainer");
+		upgradesHBoxContainer = GetNode<HBoxContainer>("TabContainer/UPGRADES/ScrollContainer/upgradesHBoxContainer");
 	}
 
 	private async void LoadAvailableCards()
@@ -55,44 +98,116 @@ public partial class Shop : Control
 		Nakama.IApiRpc response = await client.RpcAsync(session, "GetAvailableCards");
 		availableCards = JsonSerializer.Deserialize<List<CardData>>(response.Payload);
 
-		GridContainer cardContainer = GetNode<GridContainer>("Container");
-
 		foreach (CardData card in availableCards)
 		{
-			Node cardNode = GD.Load<PackedScene>("res://scenes/Shop_card.tscn").Instantiate();
-			((ShopCard)cardNode).SetCardData(card.ID, card.Name, card.Cost);
-
-			cardContainer.AddChild(cardNode);
+			PackedScene cardScene = GD.Load<PackedScene>("res://scenes/Shop_card.tscn");
+			ShopCard cardNode = (ShopCard)cardScene.Instantiate();
+			((ShopCard)cardNode).SetCardData(card.ID, card.Name, card.Cost, card.Attack, card.Health, card.Description, card.Rarity, card.ManaCost, card.Type);
+			cardHBoxContainer.AddChild(cardNode);
 		}
 	}
 
-	private void OnPurchaseCardButtonPressed()
+	private async void LoadAvailableCardPacks()
 	{
-		// Aquí selecciona la carta que deseas comprar
-		// Ejemplo: Compra la primera carta en la lista de cartas disponibles
-		if (availableCards.Count > 0)
+		Nakama.Client client = GlobalState.Instance.NakamaClient;
+		Nakama.ISession session = GlobalState.Instance.Session;
+
+		Nakama.IApiRpc response = await client.RpcAsync(session, "GetAvailableCards");
+		availableCards = JsonSerializer.Deserialize<List<CardData>>(response.Payload);
+
+		availableCardPacks = new List<CardPackData>();
+
+		if (availableCards.Count >= 2)
 		{
-			PurchaseCard(availableCards[0]);
+			CardPackData cardPack1 = new CardPackData
+			{
+				ID = 1,
+				Name = "Starter Pack",
+				Cost = 150,
+				Cards = new List<CardData>
+				{
+					availableCards[0],
+					availableCards[1]
+				}
+			};
+			availableCardPacks.Add(cardPack1);
+		}
+
+		if (availableCards.Count >= 4)
+		{
+			CardPackData cardPack2 = new CardPackData
+			{
+				ID = 2,
+				Name = "Advanced Pack",
+				Cost = 300,
+				Cards = new List<CardData>
+				{
+					availableCards[2],
+					availableCards[3]
+				}
+			};
+			availableCardPacks.Add(cardPack2);
+		}
+
+		foreach (CardPackData cardPack in availableCardPacks)
+		{
+			PackedScene cardPackScene = GD.Load<PackedScene>("res://scenes/ShopCardPack.tscn");
+			ShopCardPack cardPackNode = (ShopCardPack)cardPackScene.Instantiate();
+			cardPackNode.SetCardPackData(cardPack.ID, cardPack.Name, cardPack.Cost, cardPack.Cards);
+			
+			packsHBoxContainer.AddChild(cardPackNode);
 		}
 	}
 
-	private void OnPurchaseUpgradeButtonPressed()
+	private void OnBuyCardPack(int id)
 	{
-		// Aquí selecciona la mejora que deseas comprar
-		// Ejemplo: Compra la primera mejora en la lista de mejoras
-		if (upgrades.Count > 0)
+		CardPackData cardPack = availableCardPacks.Find(pack => pack.ID == id);
+		if (cardPack != null)
 		{
-			PurchaseUpgrade(upgrades[0]);
+			if (PurchaseCardPack(cardPack))
+			{
+				GD.Print("Successfully purchased card pack: " + cardPack.Name);
+				// Actualiza la interfaz de usuario o maneja la compra exitosa
+			}
+			else
+			{
+				GD.Print("Failed to purchase card pack: " + cardPack.Name);
+			}
 		}
 	}
 
-	private void OnPurchaseDiceButtonPressed()
+	public bool PurchaseCardPack(CardPackData cardPack)
 	{
-		// Aquí selecciona el dado especial que deseas comprar
-		// Ejemplo: Compra el primer dado especial en la lista de dados especiales
-		if (specialDice.Count > 0)
+		if (playerCoins >= cardPack.Cost)
 		{
-			PurchaseSpecialDice(specialDice[0]);
+			playerCoins -= cardPack.Cost;
+			availableCardPacks.Remove(cardPack);
+			GD.Print("Purchased card pack: " + cardPack.Name);
+			return true;
+		}
+		GD.Print("Not enough coins to purchase card pack: " + cardPack.Name);
+		return false;
+	}
+
+	private void LoadAvailableUpgrades()
+	{
+		foreach (string upgrade in upgrades)
+		{
+			PackedScene upgradeScene = GD.Load<PackedScene>("res://scenes/ShopUpgrade.tscn");
+			ShopUpgrade upgradeNode = (ShopUpgrade)upgradeScene.Instantiate();
+			upgradeNode.SetUpgradeData(upgrade, 50);
+			upgradesHBoxContainer.AddChild(upgradeNode);
+		}
+	}
+
+	private void LoadAvailableSpecialDice()
+	{
+		foreach (string dice in specialDice)
+		{
+			PackedScene diceScene = GD.Load<PackedScene>("res://scenes/ShopDice.tscn");
+			ShopDice diceNode = (ShopDice)diceScene.Instantiate();
+			diceNode.SetDiceData(dice, 30);
+			diceHBoxContainer.AddChild(diceNode);
 		}
 	}
 
@@ -111,7 +226,7 @@ public partial class Shop : Control
 
 	public bool PurchaseUpgrade(string upgrade)
 	{
-		int upgradeCost = 50; // Ejemplo de costo de mejora
+		int upgradeCost = 50;
 		if (playerCoins >= upgradeCost)
 		{
 			playerCoins -= upgradeCost;
@@ -125,7 +240,7 @@ public partial class Shop : Control
 
 	public bool PurchaseSpecialDice(string dice)
 	{
-		int diceCost = 30; // Ejemplo de costo de dado especial
+		int diceCost = 30;
 		if (playerCoins >= diceCost)
 		{
 			playerCoins -= diceCost;

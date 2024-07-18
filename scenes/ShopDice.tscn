@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=3 uid="uid://dj25gw0alnf2v"]
+
+[ext_resource type="Script" path="res://core/Shop/ShopDice.cs" id="1_20xh2"]
+
+[node name="ShopDice" type="Control"]
+custom_minimum_size = Vector2(141, 191)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_right = -1139.0
+offset_bottom = -528.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_20xh2")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(141, 145)
+layout_mode = 1
+anchors_preset = -1
+offset_left = 1.0
+offset_top = -1.0
+offset_right = 142.0
+offset_bottom = 144.0
+color = Color(0.605667, 0.09, 1, 1)
+
+[node name="DiceCost" type="Label" parent="."]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 38.0
+offset_right = 106.0
+offset_bottom = 61.0
+text = "50 c-coins"
+
+[node name="DiceName" type="Label" parent="."]
+layout_mode = 2
+offset_left = 31.0
+offset_top = 8.0
+offset_right = 119.0
+offset_bottom = 31.0
+text = "Dice"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 17.0
+offset_top = 74.0
+offset_right = 105.0
+offset_bottom = 74.0
+
+[node name="PurchaseButton" type="Button" parent="."]
+layout_mode = 2
+offset_left = 16.0
+offset_top = 153.0
+offset_right = 112.0
+offset_bottom = 185.0
+text = "Buy"

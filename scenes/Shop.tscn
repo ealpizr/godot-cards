@@ -1,38 +1,157 @@
-[gd_scene format=3 uid="uid://dgau5a6evwebh"]
+[gd_scene load_steps=9 format=3 uid="uid://cm0g0ay4dlkvv"]
 
-[node name="Control" type="Control"]
+[ext_resource type="Script" path="res://core/Shop/Shop.cs" id="1_msaup"]
+[ext_resource type="PackedScene" uid="uid://dwhv7m8h4yduy" path="res://scenes/Coin.tscn" id="2_udsul"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xg7rs"]
+font_size = 90
+font_color = Color(0.573085, 0.202383, 0.776155, 1)
+shadow_size = 23
+shadow_offset = Vector2(5, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_077di"]
+bg_color = Color(0.547442, 0.0837803, 0.544571, 0.779)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fgsvn"]
+bg_color = Color(0.781321, 0.528734, 0.45082, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_871yx"]
+bg_color = Color(0.819608, 0.270588, 0.811765, 0.780392)
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_udo8l"]
+bg_color = Color(0.419258, 0.0502073, 0.417225, 0.780392)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[sub_resource type="Theme" id="Theme_xiwdq"]
+TabContainer/styles/panel = SubResource("StyleBoxFlat_077di")
+TabContainer/styles/tab_focus = SubResource("StyleBoxFlat_fgsvn")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_871yx")
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_udo8l")
+TabContainer/styles/tabbar_background = null
+
+[node name="Shop" type="Control"]
 layout_mode = 3
+anchor_left = -0.015
+anchor_right = 1.0
+anchor_bottom = 1.051
+offset_left = 21.2
+offset_top = 2.0
+offset_right = 3.0
+offset_bottom = -37.72
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_msaup")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(1, 0.507, 0.13, 1)
 
-[node name="Panel" type="Panel" parent="."]
+[node name="header" type="Label" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 488.0
+offset_top = -14.0
+offset_right = 712.0
+offset_bottom = 110.0
+text = "Shop"
+label_settings = SubResource("LabelSettings_xg7rs")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 202.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_xiwdq")
+tab_focus_mode = 1
+
+[node name="CARDS" type="TabBar" parent="TabContainer"]
 layout_mode = 2
-offset_right = 40.0
-offset_bottom = 40.0
 
-[node name="Button" type="Button" parent="Panel/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/CARDS"]
+clip_contents = false
+layout_mode = 2
+anchor_right = 0.982
+anchor_bottom = 0.996
+offset_left = 21.0
+offset_top = 15.0
+offset_right = -0.302124
+offset_bottom = -0.152039
+
+[node name="cardHBoxContainer" type="HBoxContainer" parent="TabContainer/CARDS/ScrollContainer"]
 layout_mode = 2
 
-[node name="Button2" type="Button" parent="Panel/VBoxContainer"]
+[node name="PACKS" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
-[node name="Button3" type="Button" parent="Panel/VBoxContainer"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/PACKS"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1269.0
+offset_bottom = 480.0
 
-[node name="GridContainer" type="GridContainer" parent="."]
+[node name="packsHBoxContainer" type="HBoxContainer" parent="TabContainer/PACKS/ScrollContainer"]
+layout_mode = 2
+
+[node name="DICE" type="TabBar" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/DICE"]
 layout_mode = 0
-offset_right = 169.0
-offset_bottom = 175.0
+offset_top = 1.0
+offset_right = 1278.0
+offset_bottom = 512.0
+
+[node name="diceHBoxContainer" type="HBoxContainer" parent="TabContainer/DICE/ScrollContainer"]
+layout_mode = 2
+
+[node name="UPGRADES" type="TabBar" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/UPGRADES"]
+layout_mode = 0
+offset_right = 1266.0
+offset_bottom = 504.0
+
+[node name="upgradesHBoxContainer" type="HBoxContainer" parent="TabContainer/UPGRADES/ScrollContainer"]
+layout_mode = 2
+
+[node name="Coin" parent="." instance=ExtResource("2_udsul")]
+offset_left = 1076.0
+offset_top = 4.0
+offset_right = 1276.0
+offset_bottom = 54.0
+
+[node name="ExitToMenuButton" type="Button" parent="."]
+layout_mode = 2
+offset_left = 1108.0
+offset_top = 624.0
+offset_right = 1240.0
+offset_bottom = 690.0
+text = "EXIT"

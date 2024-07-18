@@ -12,9 +12,18 @@ public partial class Game : Node, IGame
 	GameField gameField;
 	TurnManager turnManager;
 	Timer timer = new Timer();
+
+    Label LevelLabel;
+	int currentLevel;
+
 	public override void _Ready()
 	{
 		this.Start();
+
+		this.Campaign = new Campaign(Difficulty.Easy, Player, OtherPlayer.Hand, OtherPlayer.PlayingFieldContainer, GameField);        
+        this.Campaign.CPUPlayerPlay();
+
+        this.Update();
 
 		this.turnManager = new TurnManager();
 		this.timer.WaitTime = 10;
@@ -36,6 +45,7 @@ public partial class Game : Node, IGame
 			}
 		}
 	}
+
 	public void Start()
 	{
 		this.player = new Player();
@@ -51,6 +61,7 @@ public partial class Game : Node, IGame
 		otherPlayer.Hand = GetNode<Hand>("GameUI/HandOther");
 
 		gameField = GetNode<GameField>("GameUI");
+		LevelLabel = GetNode<Label>("GameUI/Level/Label");
 	}
 
 	private void _on_end_turn_pressed()
@@ -73,4 +84,11 @@ public partial class Game : Node, IGame
 			GD.Print("Ahora es tu turno");
 		}
 	}
+
+	public void Update()
+    {
+        this.currentLevel = this.Campaign.CurrentLevel;
+
+        this.LevelLabel.Text = "Level: " + this.currentLevel;
+    }
 }

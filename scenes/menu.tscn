@@ -36,19 +36,42 @@ size_flags_horizontal = 4
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
+[node name="CampaignButton" type="Button" parent="Container"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Planntilla"
+
+[node name="PVPButton" type="Button" parent="Container"]
+visible = false
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "PVP"
+
+[node name="BackButton" type="Button" parent="Container"]
+visible = false
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Atras"
+
 [node name="PlayButton" type="Button" parent="Container"]
+visible = false
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Jugar"
 
 [node name="ShopButton" type="Button" parent="Container"]
+visible = false
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Tienda"
 
 [node name="ExitButton" type="Button" parent="Container"]
+visible = false
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 size_flags_horizontal = 4

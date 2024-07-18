@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://bogb2s5iagi7a"]
+
+[ext_resource type="Script" path="res://core/Shop/ShopCardPack.cs" id="2_qps4t"]
+
+[node name="Control" type="Control"]
+custom_minimum_size = Vector2(191, 359)
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1089.0
+offset_bottom = -361.0
+script = ExtResource("2_qps4t")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 189.0
+offset_bottom = 325.0
+color = Color(0.31, 0.141153, 0.0434, 1)
+
+[node name="BuyButton" type="Button" parent="."]
+layout_mode = 2
+offset_left = 4.0
+offset_top = 327.0
+offset_right = 191.0
+offset_bottom = 358.0
+text = "Buy"
+
+[node name="NameLabel" type="Label" parent="."]
+layout_mode = 2
+offset_left = 15.0
+offset_top = 16.0
+offset_right = 202.0
+offset_bottom = 39.0
+text = "Pack"
+
+[node name="CostLabel" type="Label" parent="."]
+layout_mode = 2
+offset_left = 12.0
+offset_top = 54.0
+offset_right = 199.0
+offset_bottom = 77.0
+text = "50 c-coins"
+
+[node name="CardsContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 56.366
+offset_top = 49.0
+offset_right = 243.366
+offset_bottom = 49.0

@@ -4,13 +4,12 @@
 [ext_resource type="Script" path="res://core/Shop/ShopCard.cs" id="2_qps4t"]
 
 [node name="ShopCard" type="Control"]
-custom_minimum_size = Vector2(150, 200)
+custom_minimum_size = Vector2(294, 371)
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -1130.0
-offset_bottom = -520.0
+anchor_right = 0.231
+anchor_bottom = 0.517
+offset_right = -1.67999
+offset_bottom = -1.24002
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_cc0g7")
@@ -21,21 +20,28 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -2.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(2.93598e-06, 0.520872, 0.301864, 1)
+color = Color(0.71664, 0.254541, 0.289707, 1)
+
+[node name="BuyButton" type="Button" parent="."]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 372.0
+offset_right = -173.0
+offset_bottom = 43.0
+text = "Buy"
 
 [node name="Container" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(294, 371)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -60.5
-offset_top = -38.5
-offset_right = 60.5
-offset_bottom = 38.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
@@ -55,8 +61,40 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "30 c-coins"
 
-[node name="Button" type="Button" parent="Container"]
+[node name="Attack" type="Label" parent="Container"]
 layout_mode = 2
+size_flags_horizontal = 4
+text = "attack"
+horizontal_alignment = 1
+
+[node name="Health" type="Label" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "health"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "description"
+horizontal_alignment = 1
+
+[node name="Rarity" type="Label" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "rarity"
+horizontal_alignment = 1
+
+[node name="Mana" type="Label" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "manaCost"
+
+[node name="Type" type="Label" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "type"
+horizontal_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="Container"]
 layout_mode = 2

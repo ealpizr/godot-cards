@@ -18,11 +18,6 @@ public partial class GameField : CanvasLayer, IGameField
 		ReparentToHboxContainer += PlaceCard;
 	}
 
-    // TODO: Remove this, this is for testing purpose.
-	public void PlaceCardtest(Card card)
-	{
-		card.Reparent(player1Hand);
-	}
 	public void PlaceCard(Card card, HBoxContainer container)
 	{
 		card.Reparent(container);
