@@ -9,16 +9,16 @@
 [ext_resource type="Script" path="res://core/States/CardReleasedState.cs" id="7_odobm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_egjmp"]
-size = Vector2(99, 149)
+size = Vector2(99, 139)
 
 [node name="CardUI" type="Control"]
-custom_minimum_size = Vector2(100, 150)
+custom_minimum_size = Vector2(90, 130)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1148.0
-offset_bottom = -570.0
+offset_right = -1180.0
+offset_bottom = -579.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(0, 70)
@@ -26,13 +26,14 @@ theme = ExtResource("1_a56tg")
 script = ExtResource("2_bkaqj")
 
 [node name="CardShape" type="Control" parent="."]
+custom_minimum_size = Vector2(1, 1)
 anchors_preset = 0
-offset_right = 101.0
-offset_bottom = 151.0
+offset_right = 100.0
+offset_bottom = 140.0
 
 [node name="Color" type="ColorRect" parent="CardShape"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -42,10 +43,10 @@ color = Color(0.179393, 0.351562, 0.274448, 1)
 
 [node name="Label" type="Label" parent="CardShape"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -1.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 18
@@ -58,7 +59,7 @@ collision_mask = 2
 monitorable = false
 
 [node name="CollisionShape" type="CollisionShape2D" parent="DropPointDetector"]
-position = Vector2(50.5, 75.5)
+position = Vector2(50.5, 70.5)
 shape = SubResource("RectangleShape2D_egjmp")
 
 [node name="CardStateMachine" type="Node" parent="." node_paths=PackedStringArray("initialState")]

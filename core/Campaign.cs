@@ -39,7 +39,7 @@ public partial class Campaign : Node
         // Nothing so far.
     }
 
-    public void AdvanceLevel()
+    public void IncreaseLevel()
     {
         this.CurrentLevel++;
 
