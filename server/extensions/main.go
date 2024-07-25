@@ -17,6 +17,12 @@ func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runti
 
 	initializer.RegisterAfterAuthenticateEmail(InitializeUser)
 	initializer.RegisterRpc("GetAvailableCards", GetAvailableCardsRpc)
+	initializer.RegisterRpc("GetAvailableDice", GetAvailableDiceRpc)
+	initializer.RegisterRpc("GetUserInventory", GetUserInventoryRpc)
+	initializer.RegisterRpc("GetUserDeck", GetUserDeckRpc)
+	initializer.RegisterRpc("GetUserDice", GetUserDiceRpc)
+	initializer.RegisterRpc("ReplaceDeckCardRpc", ReplaceUserDeckCardRpc)
+	initializer.RegisterRpc("SetUserDice", SetUserDiceRpc)
 
 	logger.Info("Module loaded in %dms", time.Since(initStart).Milliseconds())
 	return nil
