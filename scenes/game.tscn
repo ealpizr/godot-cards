@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bh3labrgxts1s" path="res://scenes/card.tscn" id="2_bccay"]
 [ext_resource type="PackedScene" uid="uid://dwhv7m8h4yduy" path="res://scenes/Coin.tscn" id="4_o4hrf"]
 [ext_resource type="Texture2D" uid="uid://d13vu1pf44wb2" path="res://assets/button UI.png" id="5_5x8wv"]
-[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="5_u4yd7"]
+[ext_resource type="PackedScene" uid="uid://qxcpjgx3n0u7" path="res://scenes/Player.tscn" id="5_u4yd7"]
 [ext_resource type="Script" path="res://core/TurnManager.cs" id="9_vwgqn"]
 
 [sub_resource type="FontFile" id="FontFile_14d2f"]
