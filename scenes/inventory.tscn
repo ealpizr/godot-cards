@@ -202,7 +202,7 @@ stretch_mode = 5
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Sidebar/Content/StatsContainer/VBoxContainer/CardsContainer"]
+[node name="Cards" type="Label" parent="Sidebar/Content/StatsContainer/VBoxContainer/CardsContainer"]
 layout_mode = 2
 text = "0"
 
@@ -224,7 +224,7 @@ stretch_mode = 5
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Sidebar/Content/StatsContainer/VBoxContainer/DiceContainer"]
+[node name="Dice" type="Label" parent="Sidebar/Content/StatsContainer/VBoxContainer/DiceContainer"]
 layout_mode = 2
 text = "0"
 
@@ -246,7 +246,7 @@ stretch_mode = 5
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Sidebar/Content/StatsContainer/VBoxContainer/CoinsContainer"]
+[node name="Coins" type="Label" parent="Sidebar/Content/StatsContainer/VBoxContainer/CoinsContainer"]
 layout_mode = 2
 text = "0"
 

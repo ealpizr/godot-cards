@@ -1,11 +1,36 @@
 using Godot;
+using godotcards.core.Api;
+using Nakama;
 using System;
+using System.Text.Json;
 
 public partial class Inventory : Control
 {
+    private readonly Nakama.Client _client = GlobalState.Instance.NakamaClient;
+    private readonly Nakama.ISession _session = GlobalState.Instance.Session;
+
 	public override void _Ready()
 	{
         RenderSidebarMenu();
+        LoadPlayerCoins();
+        LoadPlayerInventory();
+    }
+
+    private async void LoadPlayerInventory()
+    {
+        IApiRpc rpcReponse = await _client.RpcAsync(_session, "GetUserInventory");
+        UserInventory inventory = JsonSerializer.Deserialize<UserInventory>(rpcReponse.Payload);
+
+        GetNode<Label>("Sidebar/Content/StatsContainer/VBoxContainer/CardsContainer/Cards").Text = inventory.Cards.Count.ToString();
+        GetNode<Label>("Sidebar/Content/StatsContainer/VBoxContainer/DiceContainer/Dice").Text = inventory.Dice.Count.ToString();
+    }
+
+    private async void LoadPlayerCoins()
+    {
+        Nakama.IApiAccount account = await _client.GetAccountAsync(_session);
+        Wallet wallet = JsonSerializer.Deserialize<Wallet>(account.Wallet);
+
+        GetNode<Label>("Sidebar/Content/StatsContainer/VBoxContainer/CoinsContainer/Coins").Text = wallet.Coins.ToString();
     }
 
 	private void RenderSidebarMenu()

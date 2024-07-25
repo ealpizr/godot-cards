@@ -1,12 +1,6 @@
 using Godot;
+using godotcards.core.Api;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-
-class Wallet
-{
-	[JsonPropertyName("c-coins")]
-	public int Coins { get; set; }
-}
 
 public partial class Login : Control
 {
