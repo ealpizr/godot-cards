@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 
 // This is partial class but also abstract, the reason is C# technical rules.
 // The idea is to have the DifficultyCPUPlayer
@@ -8,7 +9,7 @@ using Godot;
 public abstract partial class CustomCPUPlayer : CPUPlayer
 {
     public override int Id { get; }
-    public override int Points { get; }
+    public override int Points { get; set; }
 
     public PlayContext Strategy { get; set; }
 
@@ -32,7 +33,7 @@ public abstract partial class CustomCPUPlayer : CPUPlayer
         interactable.SendInteraction(gameField, interaction);
     }
 
-    public override void Init(HBoxContainer container, Hand hand)
+    public override void Init(HBoxContainer container, Hand hand, Deck deck, Array<Card> cards)
     {
         throw new System.NotImplementedException();
     }

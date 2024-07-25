@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4njkj80ot7c7"]
+
+[ext_resource type="Script" path="res://scenes/Deck.cs" id="1_up0me"]
+
+[node name="Deck" type="Control"]
+layout_mode = 3
+anchor_right = 0.133
+anchor_bottom = 0.099
+offset_right = -0.240005
+offset_bottom = -0.280006
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_up0me")
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 0
+offset_right = 137.0
+offset_bottom = 23.0
+text = "Deck"
+horizontal_alignment = 1
+
+[node name="Total" type="Label" parent="."]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 21.0
+offset_right = 140.0
+offset_bottom = 44.0
+text = "No cards available"
+horizontal_alignment = 1

@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Godot.Collections;
 
 public partial class Campaign : Node
 {
@@ -14,12 +15,12 @@ public partial class Campaign : Node
 
     public int CurrentLevel = 1;
 
-    public Campaign(Difficulty level, IInteractable player, Hand otherHand, HBoxContainer otherPlayingField, GameField gameField)
+    public Campaign(Difficulty level, IInteractable player, Hand otherHand, HBoxContainer otherPlayingField, GameField gameField, Deck deck, Array<Card> cards)
     {
         this.level = level;
         this.player = player;
         this.otherPlayerBase = new CPUPlayer();
-        this.otherPlayerBase.Init(otherPlayingField, otherHand);
+        this.otherPlayerBase.Init(otherPlayingField, otherHand, deck, cards);
 
         // if level is easy, then the other player is easy.
         this.otherPlayer = new DifficultyCPUPlayer(this.otherPlayerBase);

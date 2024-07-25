@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cm0g0ay4dlkvv"]
+[gd_scene load_steps=9 format=3 uid="uid://dgau5a6evwebh"]
 
 [ext_resource type="Script" path="res://core/Shop/Shop.cs" id="1_msaup"]
 [ext_resource type="PackedScene" uid="uid://dwhv7m8h4yduy" path="res://scenes/Coin.tscn" id="2_udsul"]

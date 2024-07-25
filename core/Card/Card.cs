@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Card : Control
+public partial class Card : aCard
 {
 	// Signals are used to communicate between nodes
 	// We need this one because when a card is dragged, it needs to be reparented to the root node,
@@ -21,19 +21,8 @@ public partial class Card : Control
 	// reason the rotation! therefore it was better to handle the rotation inside the CardUI and leave the control CardUI for reparenting/state logic purposes.
 	public Control CardShape { get; private set; }
 
-	public bool isAttackPosition = true;
-
 	// New properties for the card
 	public new string Name { get; set; }
-	public string Description { get; set; }
-	public Texture Icon { get; set; }
-	public int EnergyCost { get; set; }
-	public int AttackPoints { get; set; }
-	public int DefensePoints { get; set; }
-	public int HealthPoints { get; set; }
-	public CardRarity Rarity { get; set; }
-
-	public bool IsSelected { get; set; }
 
 	// Constructor
 	public Card()
@@ -108,6 +97,11 @@ public partial class Card : Control
 	private void DropPointAreaExited(Area2D area)
 	{
 		Targets.Remove(area);
+	}
+
+    public override void OnCardEliminated(PlayerBase player)
+    {
+        player.Points -= eliminationPoints;
 	}
 }
 
