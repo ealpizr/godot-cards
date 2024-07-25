@@ -14,6 +14,16 @@ public partial class Inventory : Control
         RenderSidebarMenu();
         LoadPlayerCoins();
         LoadPlayerInventory();
+        LoadPlayerDice();
+    }
+
+    private async void LoadPlayerDice()
+    {
+        IApiRpc rpcReponse = await _client.RpcAsync(_session, "GetUserDice");
+        Dice dice = JsonSerializer.Deserialize<Dice>(rpcReponse.Payload);
+
+        GetNode<Label>("VBoxContainer/HBoxContainer/ColorRect/HBoxContainer/VBoxContainer/Label2").Text = dice.Name;
+        GetNode<Label>("VBoxContainer/HBoxContainer/ColorRect/HBoxContainer/VBoxContainer/Label").Text = dice.Description;
     }
 
     private async void LoadPlayerInventory()
@@ -23,6 +33,15 @@ public partial class Inventory : Control
 
         GetNode<Label>("Sidebar/Content/StatsContainer/VBoxContainer/CardsContainer/Cards").Text = inventory.Cards.Count.ToString();
         GetNode<Label>("Sidebar/Content/StatsContainer/VBoxContainer/DiceContainer/Dice").Text = inventory.Dice.Count.ToString();
+    
+        GridContainer cardContainer = GetNode<GridContainer>("VBoxContainer/HBoxContainer2/ColorRect/ScrollContainer/GridContainer");
+        foreach (godotcards.core.Api.Card card in inventory.Cards)
+        {
+            PackedScene cardScene = GD.Load<PackedScene>("res://scenes/inventory_card.tscn");
+            InventoryCard inventoryCard = (InventoryCard)cardScene.Instantiate();
+            inventoryCard.SetCard(card);
+            cardContainer.AddChild(inventoryCard);
+        }
     }
 
     private async void LoadPlayerCoins()
