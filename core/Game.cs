@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 // placeholder for the game logic that can needs
 // to be implement later by the other side of the
 // team related to game logic.
@@ -20,8 +21,10 @@ public partial class Game : Node, IGame
 	{
 		this.Start();
 
-		this.campaign = new Campaign(Difficulty.Easy, player, otherPlayer.Hand, otherPlayer.PlayingFieldContainer, gameField);        
-		this.campaign.CPUPlayerPlay();
+		Array<Card> cards = new Array<Card>();
+		cards.Add(new Card());
+		this.campaign = new Campaign(Difficulty.Easy, player, otherPlayer.Hand, otherPlayer.PlayingFieldContainer, gameField, player.deck, cards);        
+    this.campaign.CPUPlayerPlay();
 
 		this.Update();
 
@@ -30,7 +33,7 @@ public partial class Game : Node, IGame
 
 		if (this.turnManager.IsPlayerTurn) {
 			timer.Autostart = true;
-			this.campaign = new Campaign(Difficulty.Easy, player, otherPlayer.Hand, otherPlayer.PlayingFieldContainer, gameField);        
+			this.campaign = new Campaign(Difficulty.Easy, player, otherPlayer.Hand, otherPlayer.PlayingFieldContainer, gameField, otherPlayer.deck, cards);        
 			this.campaign.AdvanceLevel();
 			
 			if (timer.IsStopped()) {
@@ -59,6 +62,9 @@ public partial class Game : Node, IGame
 		
 		player.Hand = GetNode<Hand>("GameUI/Hand");
 		otherPlayer.Hand = GetNode<Hand>("GameUI/HandOther");
+
+		player.deck = GetNode<Deck>("GameUI/DeckPlayer");
+		otherPlayer.deck = GetNode<Deck>("GameUI/DeckOtherPlayer");
 
 		gameField = GetNode<GameField>("GameUI");
 		LevelLabel = GetNode<Label>("GameUI/Level/Label");

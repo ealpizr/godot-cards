@@ -13,6 +13,7 @@ import (
 // through the Nakama web dashboard. It's just easier to work with.
 func InitializeStorageObjects(si *StorageInteractor) {
 	si.CreateStorageObjectIfNotExists(cardsStorageKey, "[]", PUBLIC_READ, NO_WRITE)
+	si.CreateStorageObjectIfNotExists(diceStorageKey, "[]", PUBLIC_READ, NO_WRITE)
 }
 
 // Hook that executes when a new user signs up and gives them a few coins :)
@@ -33,6 +34,38 @@ func InitializeUser(ctx context.Context, logger runtime.Logger, db *sql.DB, nk r
 		}
 
 		if _, _, err := nk.WalletUpdate(ctx, userID, changeset, metadata, true); err != nil {
+			return err
+		}
+
+		defaultCards := []int{}
+		for i := 1; i <= 60; i++ {
+			defaultCards = append(defaultCards, i)
+		}
+		defaultDice := []int{1}
+
+		userInventory := UserInventory{
+			Cards: defaultCards,
+			Dice:  defaultDice,
+		}
+
+		userDeck := UserDeck{
+			Cards: defaultCards,
+		}
+
+		userDice := UserDice{
+			Id: 1,
+		}
+
+		si := NewStorageInteractor(ctx, logger, nk)
+		if err := si.WriteStorageObject(userInventoryKey, userInventory, PUBLIC_READ, NO_WRITE, userID); err != nil {
+			return err
+		}
+
+		if err := si.WriteStorageObject(userDeckKey, userDeck, PUBLIC_READ, NO_WRITE, userID); err != nil {
+			return err
+		}
+
+		if err := si.WriteStorageObject(userDiceKey, userDice, PUBLIC_READ, NO_WRITE, userID); err != nil {
 			return err
 		}
 	}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cfiwsnon8re82"]
+[gd_scene load_steps=15 format=3 uid="uid://cfiwsnon8re82"]
 
 [ext_resource type="Script" path="res://core/Game.cs" id="1_6akld"]
 [ext_resource type="Script" path="res://core/GameField.cs" id="1_ovy47"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://d13vu1pf44wb2" path="res://assets/button UI.png" id="5_5x8wv"]
 [ext_resource type="PackedScene" uid="uid://qxcpjgx3n0u7" path="res://scenes/Player.tscn" id="5_u4yd7"]
 [ext_resource type="Script" path="res://core/TurnManager.cs" id="9_vwgqn"]
+[ext_resource type="PackedScene" uid="uid://c4njkj80ot7c7" path="res://scenes/Deck.tscn" id="10_vo6fn"]
 
 [sub_resource type="FontFile" id="FontFile_14d2f"]
 cache/0/8/0/ascent = 0.0
@@ -375,6 +376,18 @@ script = ExtResource("1_ovy47")
 player1Hand = NodePath("CardDropAreaOther/HBoxContainer")
 player2Hand = NodePath("CardDropArea/HBoxContainer")
 
+[node name="DeckPlayer" parent="GameUI" instance=ExtResource("10_vo6fn")]
+offset_left = 1083.0
+offset_top = 565.0
+offset_right = 1083.0
+offset_bottom = 565.0
+
+[node name="DeckOtherPlayer" parent="GameUI" instance=ExtResource("10_vo6fn")]
+offset_left = 1079.0
+offset_top = 175.0
+offset_right = 1079.0
+offset_bottom = 175.0
+
 [node name="Level" type="Control" parent="GameUI"]
 layout_mode = 3
 anchors_preset = 0
@@ -436,10 +449,10 @@ size_flags_vertical = 4
 alignment = 1
 
 [node name="HandOther" type="HBoxContainer" parent="GameUI"]
-offset_left = 125.0
-offset_top = 33.0
-offset_right = 1205.0
-offset_bottom = 183.0
+offset_left = 94.0
+offset_top = 29.0
+offset_right = 1174.0
+offset_bottom = 179.0
 alignment = 1
 script = ExtResource("2_abbgp")
 
