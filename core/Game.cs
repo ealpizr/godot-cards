@@ -3,20 +3,19 @@ using Godot.Collections;
 
 public partial class Game : Node, IGame
 {
+    private TurnManager turnManager;
+
 	PlayerBase player;
 	PlayerBase otherPlayer;
 
 	Campaign campaign;
 
 	GameField gameField;
-	TurnManager turnManager;
-	Timer timer = new Timer();
 
 	Label LevelLabel;
 	int currentLevel;
 
 	private PuntuacionFactory _puntuacionFactory = new PuntuacionJugadorFactory();
-
 
 	public override void _Ready()
 	{
@@ -29,28 +28,24 @@ public partial class Game : Node, IGame
 
 		this.Update();
 
-		this.turnManager = new TurnManager();
-		this.timer.WaitTime = 10;
-
 		if (this.turnManager.IsPlayerTurn) {
-			timer.Autostart = true;
 			this.campaign = new Campaign(Difficulty.Easy, player, otherPlayer.Hand, otherPlayer.PlayingFieldContainer, gameField, otherPlayer.deck, cards);        
 			this.campaign.AdvanceLevel();
-			
-			if (timer.IsStopped()) {
-				ChangeTurn();
-			}
-
 		} else {
-			timer.Autostart = true;
 			this.campaign.CPUPlayerPlay();
-			if (timer.IsStopped()) {
-				ChangeTurn();
-			}
 		}
+
+		turnManager = new TurnManager(player, otherPlayer);
+		turnManager.Start();
 	}
 
-	public void Start()
+	// Are we using this?
+    private void _on_end_turn_pressed()
+    {
+        this.turnManager.EndTurn();
+    }
+
+    public void Start()
 	{
 		this.player = new Player();
 		this.otherPlayer = new CPUPlayer();
@@ -69,30 +64,6 @@ public partial class Game : Node, IGame
 
 		gameField = GetNode<GameField>("GameUI");
 		LevelLabel = GetNode<Label>("GameUI/Level/Label");
-	}
-
-	private void _on_end_turn_pressed()
-	{
-		timer.Stop();
-		ChangeTurn();
-	}
-
-	public void ChangeTurn() {
-		if (this.turnManager.IsPlayerTurn) {
-			this.turnManager.EndPlayerTurn();
-
-			this.otherPlayer.Hand.HandStatus = false;
-			this.otherPlayer.PlayHand.HandStatus = false;
-
-			GD.Print("Ahora es turno del oponente");
-		}  else {
-			this.turnManager.StartPlayerTurn();
-
-			this.otherPlayer.Hand.HandStatus = true;
-			this.otherPlayer.PlayHand.HandStatus = true;
-
-			GD.Print("Ahora es tu turno");
-		}
 	}
 
 	public void Update()
