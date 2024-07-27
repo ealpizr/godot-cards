@@ -14,7 +14,7 @@ public partial class Game : Node, IGame
 	TurnManager turnManager;
 	Timer timer = new Timer();
 
-    Label LevelLabel;
+	Label LevelLabel;
 	int currentLevel;
 
 	public override void _Ready()
@@ -24,9 +24,9 @@ public partial class Game : Node, IGame
 		Array<Card> cards = new Array<Card>();
 		cards.Add(new Card());
 		this.campaign = new Campaign(Difficulty.Easy, player, otherPlayer.Hand, otherPlayer.PlayingFieldContainer, gameField, player.deck, cards);        
-        this.campaign.CPUPlayerPlay();
+    this.campaign.CPUPlayerPlay();
 
-        this.Update();
+		this.Update();
 
 		this.turnManager = new TurnManager();
 		this.timer.WaitTime = 10;
@@ -77,24 +77,27 @@ public partial class Game : Node, IGame
 	}
 
 	public void ChangeTurn() {
-		Button endTurn = GetNode<Button>("EndTurn");
-
 		if (this.turnManager.IsPlayerTurn) {
-			this.turnManager.EndTurn();
-			GD.Print("Ahora es turno del oponente");
+			this.turnManager.EndPlayerTurn();
 
-			endTurn.Disabled = true;
+			this.otherPlayer.Hand.HandStatus = false;
+			this.otherPlayer.PlayHand.HandStatus = false;
+
+			GD.Print("Ahora es turno del oponente");
 		}  else {
-			this.turnManager.IsPlayerTurn = true;
-			endTurn.Disabled = false;
+			this.turnManager.StartPlayerTurn();
+
+			this.otherPlayer.Hand.HandStatus = true;
+			this.otherPlayer.PlayHand.HandStatus = true;
+
 			GD.Print("Ahora es tu turno");
 		}
 	}
 
 	public void Update()
-    {
-        this.currentLevel = this.campaign.CurrentLevel;
+	{
+		this.currentLevel = this.campaign.CurrentLevel;
 
-        this.LevelLabel.Text = "Level: " + this.currentLevel;
-    }
+		this.LevelLabel.Text = "Level: " + this.currentLevel;
+	}
 }
