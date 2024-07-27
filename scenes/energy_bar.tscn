@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqwjdabd301vb"]
+
+[ext_resource type="Theme" uid="uid://dg5a4ijak5tgo" path="res://theme.tres" id="1_iy2jo"]
+[ext_resource type="Script" path="res://core/EnergyBar.cs" id="2_hiqau"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5npa"]
+bg_color = Color(5.29438e-06, 0.675652, 0.758219, 1)
+
+[node name="EnergyBar" type="Control"]
+custom_minimum_size = Vector2(1000, 23)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -480.0
+offset_bottom = -697.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_iy2jo")
+script = ExtResource("2_hiqau")
+
+[node name="Container" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_constants/separation = 10
+
+[node name="Bar" type="ProgressBar" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_o5npa")
+max_value = 25.0
+step = 1.0
+value = 10.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="Container"]
+layout_mode = 2
+text = "0/26"
+horizontal_alignment = 1
+vertical_alignment = 1

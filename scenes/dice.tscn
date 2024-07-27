@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckqoqpc7b021l"]
+
+[ext_resource type="Theme" uid="uid://dg5a4ijak5tgo" path="res://theme.tres" id="1_lpp8h"]
+[ext_resource type="Script" path="res://core/Dice.cs" id="2_k6rga"]
+
+[node name="Dice" type="Control"]
+custom_minimum_size = Vector2(170, 80)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1110.0
+offset_bottom = -640.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_lpp8h")
+script = ExtResource("2_k6rga")
+
+[node name="Container" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 170.0
+offset_bottom = 80.0
+theme_override_constants/separation = 10
+
+[node name="FirstDice" type="ColorRect" parent="Container"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0.6, 0.701961, 1)
+
+[node name="Value" type="Label" parent="Container/FirstDice"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SecondDice" type="ColorRect" parent="Container"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0.6, 0.701961, 1)
+
+[node name="Value" type="Label" parent="Container/SecondDice"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
