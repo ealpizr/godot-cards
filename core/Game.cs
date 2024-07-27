@@ -1,8 +1,6 @@
 using Godot;
 using Godot.Collections;
-// placeholder for the game logic that can needs
-// to be implement later by the other side of the
-// team related to game logic.
+
 public partial class Game : Node, IGame
 {
 	PlayerBase player;
@@ -14,8 +12,11 @@ public partial class Game : Node, IGame
 	TurnManager turnManager;
 	Timer timer = new Timer();
 
-    Label LevelLabel;
+	Label LevelLabel;
 	int currentLevel;
+
+	private PuntuacionFactory _puntuacionFactory = new PuntuacionJugadorFactory();
+
 
 	public override void _Ready()
 	{
@@ -24,9 +25,9 @@ public partial class Game : Node, IGame
 		Array<Card> cards = new Array<Card>();
 		cards.Add(new Card());
 		this.campaign = new Campaign(Difficulty.Easy, player, otherPlayer.Hand, otherPlayer.PlayingFieldContainer, gameField, player.deck, cards);        
-        this.campaign.CPUPlayerPlay();
+		this.campaign.CPUPlayerPlay();
 
-        this.Update();
+		this.Update();
 
 		this.turnManager = new TurnManager();
 		this.timer.WaitTime = 10;
@@ -55,7 +56,7 @@ public partial class Game : Node, IGame
 		this.otherPlayer = new CPUPlayer();
 		// Refactorable.
 		// This can be generalized to a way to use N amount of player,
-		// here the game has a predifined amount of players and it's easy as assigning.  
+		// here the game has a predefined amount of players and it's easy as assigning.  
 
 		player.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("HBoxContainer");
 		otherPlayer.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("HBoxContainer");
@@ -92,9 +93,23 @@ public partial class Game : Node, IGame
 	}
 
 	public void Update()
-    {
-        this.currentLevel = this.campaign.CurrentLevel;
+	{
+		this.currentLevel = this.campaign.CurrentLevel;
 
-        this.LevelLabel.Text = "Level: " + this.currentLevel;
-    }
+		this.LevelLabel.Text = "Level: " + this.currentLevel;
+	}
+
+	public void CalcularPuntuacionFinal(Player player)
+	{
+		IPuntuacion puntuacion = _puntuacionFactory.CrearPuntuacion(player);
+		GD.Print($"Puntuación Final: {puntuacion.TotalPuntos}");
+
+		int winnerCCoins = puntuacion.GetCCoinsForWinner();
+		int loserCCoins = puntuacion.GetCCoinsForLoser();
+		int objectivesCCoins = puntuacion.GetCCoinsForObjectives();
+
+		GD.Print($"C-Coins para el ganador: {winnerCCoins}");
+		GD.Print($"C-Coins para el perdedor: {loserCCoins}");
+		GD.Print($"C-Coins adicionales por objetivos: {objectivesCCoins}");
+	}
 }

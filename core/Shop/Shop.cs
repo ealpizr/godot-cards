@@ -33,6 +33,9 @@ public class CardData
 	
 	[JsonPropertyName("type")]
 	public string Type { get; set; }
+	
+	[JsonPropertyName("image")]
+	public string Image { get; set; }
 }
 
 public class CardPackData
@@ -62,6 +65,9 @@ public partial class Shop : Control
 	private HBoxContainer packsHBoxContainer;
 	private HBoxContainer diceHBoxContainer;
 	private HBoxContainer upgradesHBoxContainer;
+	
+	private int cCoins;
+	private Coins coinsUI;
 
 	public override void _Ready()
 	{
@@ -71,15 +77,47 @@ public partial class Shop : Control
 		LoadAvailableCardPacks();
 		LoadAvailableUpgrades();
 		LoadAvailableSpecialDice();
+		
+		Button exitButton = GetNode<Button>("ExitToMenuButton");
+		exitButton.Connect("pressed", new Callable(this, nameof(OnExitToMenuButtonPressed)));
+		
+		cCoins = 1000; // Ejemplo inicial
+
+		// Obtén la referencia al nodo Coins para actualizar el UI
+		coinsUI = GetNode<Coins>("CoinsUI"); // Asegúrate de que el nodo Coins tenga este nombre
+		UpdateUI();
 	}
 
 	private void InitializeShop()
 	{
-		playerCoins = 100;
+		playerCoins = 1000;
 		upgrades = new List<string> { "Energy Bar Upgrade", "Shield Upgrade" };
 		specialDice = new List<string> { "Fire Dice", "Water Dice" };
 
 		GD.Print("Shop is ready with initial setup.");
+	}
+	
+	public bool CanAfford(int cost)
+	{
+		return cCoins >= cost;
+	}
+
+	public void BuyCard(int cardID, int cost)
+	{
+		if (CanAfford(cost))
+		{
+			cCoins -= cost;
+			GD.Print($"Card with ID {cardID} purchased for {cost} C-Coins.");
+			UpdateUI();
+		}
+	}
+
+	private void UpdateUI()
+	{
+		if (coinsUI != null)
+		{
+			coinsUI.UpdateUI(cCoins);
+		}
 	}
 
 	private void SetupContainers()
@@ -102,7 +140,8 @@ public partial class Shop : Control
 		{
 			PackedScene cardScene = GD.Load<PackedScene>("res://scenes/Shop_card.tscn");
 			ShopCard cardNode = (ShopCard)cardScene.Instantiate();
-			((ShopCard)cardNode).SetCardData(card.ID, card.Name, card.Cost, card.Attack, card.Health, card.Description, card.Rarity, card.ManaCost, card.Type);
+			((ShopCard)cardNode).SetCardData(card.ID, card.Name, card.Cost, card.Attack, card.Health, card.Description, card.Rarity, card.ManaCost, card.Type, card.Image);
+			cardNode.SetShopReference(this);
 			cardHBoxContainer.AddChild(cardNode);
 		}
 	}
@@ -250,5 +289,9 @@ public partial class Shop : Control
 		}
 		GD.Print("Not enough coins to purchase special dice: " + dice);
 		return false;
+	}
+	private void OnExitToMenuButtonPressed()
+	{
+		GetTree().ChangeSceneToFile("res://scenes/menu.tscn");
 	}
 }

@@ -23,7 +23,7 @@ public partial class Menu : Control
 		// Create the menu
 		menuDirector.AddNavigateToMenuButton("Play", "Jugar", 0, 1);
 		menuDirector.AddNavigateToSceneButton("Inventory", "Inventario", "res://scenes/inventory.tscn", 0);
-		menuDirector.AddNavigateToSceneButton("Store", "Tienda", "res://scenes/shop.tscn", 0);
+		menuDirector.AddNavigateToSceneButton("Store", "Tienda", "res://scenes/Shop.tscn", 0);
 		menuDirector.AddExitButton("Exit", "Salir", 0);
 
 		menuDirector.AddNavigateToSceneButton("PVP", "PVP", "res://scenes/game.tscn", 1);

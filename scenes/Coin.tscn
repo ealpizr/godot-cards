@@ -7,7 +7,7 @@
 font_size = 24
 font_color = Color(0.741176, 0.537255, 0.639216, 1)
 
-[node name="Coin" type="Control"]
+[node name="CoinsUI" type="Control"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 3
 anchors_preset = 0

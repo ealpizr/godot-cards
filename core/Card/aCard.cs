@@ -1,8 +1,8 @@
 using Godot;
 
 public abstract partial class aCard : Control {
-    // for these cards, I need to create th e
-    public bool isAttackPosition = true;
+	// for these cards, I need to create th e
+	public bool isAttackPosition = true;
 
 	// New properties for the card
 	public new string Name { get; set; }
@@ -16,7 +16,9 @@ public abstract partial class aCard : Control {
 
 	public bool IsSelected { get; set; }
 
-    public int eliminationPoints { get; set; }
+	public int eliminationPoints { get; set; }
+	
+	public int Puntos { get; set; }
 
-    public abstract void OnCardEliminated(PlayerBase player);
+	public abstract void OnCardEliminated(PlayerBase player);
 } 

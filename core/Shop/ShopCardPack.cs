@@ -1,6 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 
+
 public partial class ShopCardPack : Control
 {
 	[Signal]

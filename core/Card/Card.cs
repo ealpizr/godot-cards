@@ -99,9 +99,9 @@ public partial class Card : aCard
 		Targets.Remove(area);
 	}
 
-    public override void OnCardEliminated(PlayerBase player)
-    {
-        player.Points -= eliminationPoints;
+	public override void OnCardEliminated(PlayerBase player)
+	{
+		player.Points -= eliminationPoints;
 	}
 }
 

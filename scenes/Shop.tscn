@@ -5,12 +5,12 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_xg7rs"]
 font_size = 90
-font_color = Color(0.573085, 0.202383, 0.776155, 1)
+font_color = Color(0.94902, 0.85098, 0.756863, 0.631373)
 shadow_size = 23
 shadow_offset = Vector2(5, 5)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_077di"]
-bg_color = Color(0.547442, 0.0837803, 0.544571, 0.779)
+bg_color = Color(0.152941, 0.00784314, 0.152941, 0.372549)
 border_width_left = 10
 border_width_top = 10
 border_width_right = 10
@@ -32,7 +32,7 @@ expand_margin_right = 10.0
 expand_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_udo8l"]
-bg_color = Color(0.419258, 0.0502073, 0.417225, 0.780392)
+bg_color = Color(0.419608, 0.0509804, 0.415686, 0.235294)
 border_width_left = 10
 border_width_top = 10
 border_width_right = 10
@@ -67,7 +67,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1, 0.507, 0.13, 1)
+color = Color(0, 0, 0, 0.254902)
 
 [node name="header" type="Label" parent="."]
 layout_mode = 0
@@ -142,7 +142,7 @@ offset_bottom = 504.0
 [node name="upgradesHBoxContainer" type="HBoxContainer" parent="TabContainer/UPGRADES/ScrollContainer"]
 layout_mode = 2
 
-[node name="Coin" parent="." instance=ExtResource("2_udsul")]
+[node name="CoinsUI" parent="." instance=ExtResource("2_udsul")]
 offset_left = 1076.0
 offset_top = 4.0
 offset_right = 1276.0
@@ -150,8 +150,8 @@ offset_bottom = 54.0
 
 [node name="ExitToMenuButton" type="Button" parent="."]
 layout_mode = 2
-offset_left = 1108.0
-offset_top = 624.0
-offset_right = 1240.0
-offset_bottom = 690.0
+offset_left = 1120.0
+offset_top = 113.0
+offset_right = 1252.0
+offset_bottom = 179.0
 text = "EXIT"
