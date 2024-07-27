@@ -78,16 +78,19 @@ public partial class Game : Node, IGame
 	}
 
 	public void ChangeTurn() {
-		Button endTurn = GetNode<Button>("EndTurn");
-
 		if (this.turnManager.IsPlayerTurn) {
-			this.turnManager.EndTurn();
-			GD.Print("Ahora es turno del oponente");
+			this.turnManager.EndPlayerTurn();
 
-			endTurn.Disabled = true;
+			this.otherPlayer.Hand.HandStatus = false;
+			this.otherPlayer.PlayHand.HandStatus = false;
+
+			GD.Print("Ahora es turno del oponente");
 		}  else {
-			this.turnManager.IsPlayerTurn = true;
-			endTurn.Disabled = false;
+			this.turnManager.StartPlayerTurn();
+
+			this.otherPlayer.Hand.HandStatus = true;
+			this.otherPlayer.PlayHand.HandStatus = true;
+
 			GD.Print("Ahora es tu turno");
 		}
 	}

@@ -4,6 +4,7 @@ using Godot.Collections;
 public partial class Hand : HBoxContainer
 {
 	public Array<Card> Cards = new Array<Card>();
+	public bool HandStatus { get; set; }
 	public override void _Ready()
 	{
 		//GetTree().Get
