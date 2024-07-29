@@ -1,22 +1,33 @@
 using Godot;
 using Godot.Collections;
+using GodotCards.DesignPatterns.Observer;
 using System.Collections.Generic;
 
 public partial class Player : PlayerBase, IInteractable, IControllable
 {
-	public override int Id { get; }
-	public override string UserName { get; }
-	public override int Points { get; set; }
+	public Player(Hand hand, Hand playHand, Deck deck, Dice dice, EnergyBar energyBar, TurnDelegate turnDelegate) : base(hand, playHand, deck, dice, energyBar, turnDelegate)
+    {
 
-	public override Hand Hand { get; set; }
-	public override Hand PlayHand { get; set; }
-	public override Deck deck { get; set; }
+    }
+
+	public int Id { get; }
+	public string UserName { get; }
 
 	public List<Card> CartasEliminadas { get; set; } = new List<Card>();
 	public int ObjetivosEspecialesCompletados { get; set; }
 	public int PuntosExtras { get; set; }
 
-	public void OnGuiInput(InputEvent e)
+    public override void OnTurnStart()
+    {
+        GD.Print("OnTurnStart Player");
+    }
+
+    public override void OnTurnEnd()
+    {
+        GD.Print("OnTurnEnd Player");
+    }
+
+    public void OnGuiInput(InputEvent e)
 	{
 		GD.Print("Player being clicked.");
 	}
@@ -25,8 +36,8 @@ public partial class Player : PlayerBase, IInteractable, IControllable
 	{
 		this.Hand = hand;
 		this.PlayingFieldContainer = container;
-		this.deck = deck;
-		this.deck.EmitSignal(Deck.SignalName.LoadCards, cards);
+		this.Deck = deck;
+		this.Deck.EmitSignal(Deck.SignalName.LoadCards, cards);
 	}
 
 	public void OnInput(InputEvent e)

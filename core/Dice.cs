@@ -2,6 +2,7 @@ using Godot;
 using Nakama;
 using System;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 public partial class Dice : Control
 {
@@ -33,7 +34,7 @@ public partial class Dice : Control
         GetNode<Label>("Container/SecondDice/Value").Text = _dice2.ToString();
     }
 
-    public async void Roll()
+    public async Task Roll()
     {
         Random random = new Random();
 

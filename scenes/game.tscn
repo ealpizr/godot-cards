@@ -6,9 +6,9 @@
 [ext_resource type="Script" path="res://core/Hand.cs" id="2_abbgp"]
 [ext_resource type="PackedScene" uid="uid://bh3labrgxts1s" path="res://scenes/card.tscn" id="2_bccay"]
 [ext_resource type="PackedScene" uid="uid://qxcpjgx3n0u7" path="res://scenes/Player.tscn" id="5_u4yd7"]
-[ext_resource type="PackedScene" path="res://scenes/dice.tscn" id="9_ldg73"]
+[ext_resource type="PackedScene" uid="uid://ckqoqpc7b021l" path="res://scenes/dice.tscn" id="9_ldg73"]
 [ext_resource type="Script" path="res://core/TurnManager.cs" id="9_vwgqn"]
-[ext_resource type="PackedScene" path="res://scenes/energy_bar.tscn" id="10_sfq62"]
+[ext_resource type="PackedScene" uid="uid://bqwjdabd301vb" path="res://scenes/energy_bar.tscn" id="10_sfq62"]
 [ext_resource type="PackedScene" uid="uid://c4njkj80ot7c7" path="res://scenes/Deck.tscn" id="10_vo6fn"]
 
 [sub_resource type="FontFile" id="FontFile_14d2f"]
@@ -373,16 +373,16 @@ metadata/_edit_lock_ = true
 
 [node name="GameUI" type="CanvasLayer" parent="." node_paths=PackedStringArray("player1Hand", "player2Hand") groups=["ui_layer"]]
 script = ExtResource("1_ovy47")
-player1Hand = NodePath("CardDropAreaOther/HBoxContainer")
-player2Hand = NodePath("CardDropArea/HBoxContainer")
+player1Hand = NodePath("PlayerDropArea/PlayerPlayHand")
+player2Hand = NodePath("OpponentDropArea/OpponentPlayHand")
 
-[node name="DeckPlayer" parent="GameUI" instance=ExtResource("10_vo6fn")]
+[node name="PlayerDeck" parent="GameUI" instance=ExtResource("10_vo6fn")]
 offset_left = 1095.0
 offset_top = 582.0
 offset_right = 1095.0
 offset_bottom = 582.0
 
-[node name="DeckOtherPlayer" parent="GameUI" instance=ExtResource("10_vo6fn")]
+[node name="OpponentDeck" parent="GameUI" instance=ExtResource("10_vo6fn")]
 offset_left = 42.0
 offset_top = 63.0
 offset_right = 42.0
@@ -405,43 +405,43 @@ offset_bottom = 12.0
 text = "Level: "
 label_settings = SubResource("LabelSettings_n2yhw")
 
-[node name="CardDropAreaOther" type="Area2D" parent="GameUI"]
+[node name="PlayerDropArea" type="Area2D" parent="GameUI"]
 z_index = 1
 position = Vector2(0, -26)
 collision_layer = 2
 
-[node name="CollisionShape" type="CollisionShape2D" parent="GameUI/CardDropAreaOther"]
+[node name="CollisionShape" type="CollisionShape2D" parent="GameUI/PlayerDropArea"]
 position = Vector2(636.836, 470.5)
 shape = SubResource("RectangleShape2D_npqku")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/CardDropAreaOther"]
-offset_left = 54.0
-offset_top = 397.0
-offset_right = 1231.0
-offset_bottom = 520.0
+[node name="PlayerPlayHand" type="HBoxContainer" parent="GameUI/PlayerDropArea"]
+offset_left = 51.0
+offset_top = 407.0
+offset_right = 1228.0
+offset_bottom = 530.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 70
 alignment = 1
 
-[node name="CardDropArea" type="Area2D" parent="GameUI"]
+[node name="OpponentDropArea" type="Area2D" parent="GameUI"]
 z_index = 1
 position = Vector2(-1, -30)
 collision_layer = 2
 
-[node name="CollisionShape" type="CollisionShape2D" parent="GameUI/CardDropArea"]
+[node name="CollisionShape" type="CollisionShape2D" parent="GameUI/OpponentDropArea"]
 position = Vector2(641, 309.5)
 shape = SubResource("RectangleShape2D_777pd")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/CardDropArea"]
+[node name="OpponentPlayHand" type="HBoxContainer" parent="GameUI/OpponentDropArea"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 65.0
+offset_left = 58.0
 offset_top = 229.0
-offset_right = 1234.0
+offset_right = 1227.0
 offset_bottom = 386.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -450,7 +450,7 @@ size_flags_vertical = 4
 theme_override_constants/separation = 70
 alignment = 1
 
-[node name="HandOther" type="HBoxContainer" parent="GameUI"]
+[node name="OpponentHand" type="HBoxContainer" parent="GameUI"]
 offset_left = 94.0
 offset_top = 34.0
 offset_right = 1174.0
@@ -458,16 +458,16 @@ offset_bottom = 184.0
 alignment = 1
 script = ExtResource("2_abbgp")
 
-[node name="Card2" parent="GameUI/HandOther" instance=ExtResource("2_bccay")]
+[node name="Card2" parent="GameUI/OpponentHand" instance=ExtResource("2_bccay")]
 layout_mode = 2
 
-[node name="Card1" parent="GameUI/HandOther" instance=ExtResource("2_bccay")]
+[node name="Card1" parent="GameUI/OpponentHand" instance=ExtResource("2_bccay")]
 layout_mode = 2
 
-[node name="Card3" parent="GameUI/HandOther" instance=ExtResource("2_bccay")]
+[node name="Card3" parent="GameUI/OpponentHand" instance=ExtResource("2_bccay")]
 layout_mode = 2
 
-[node name="Hand" type="HBoxContainer" parent="GameUI"]
+[node name="PlayerHand" type="HBoxContainer" parent="GameUI"]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -482,14 +482,38 @@ grow_vertical = 0
 alignment = 1
 script = ExtResource("2_abbgp")
 
-[node name="Card1" parent="GameUI/Hand" instance=ExtResource("2_bccay")]
+[node name="Card1" parent="GameUI/PlayerHand" instance=ExtResource("2_bccay")]
 layout_mode = 2
 
-[node name="Card2" parent="GameUI/Hand" instance=ExtResource("2_bccay")]
+[node name="Card2" parent="GameUI/PlayerHand" instance=ExtResource("2_bccay")]
 layout_mode = 2
 
-[node name="Card3" parent="GameUI/Hand" instance=ExtResource("2_bccay")]
+[node name="Card3" parent="GameUI/PlayerHand" instance=ExtResource("2_bccay")]
 layout_mode = 2
+
+[node name="PlayerDice" parent="GameUI" instance=ExtResource("9_ldg73")]
+offset_left = 56.0
+offset_top = 566.0
+offset_right = -1054.0
+offset_bottom = -74.0
+
+[node name="OpponentDice" parent="GameUI" instance=ExtResource("9_ldg73")]
+offset_left = 964.0
+offset_top = 73.0
+offset_right = -146.0
+offset_bottom = -567.0
+
+[node name="EnergyBar" parent="GameUI" instance=ExtResource("10_sfq62")]
+offset_left = 10.0
+offset_top = 692.0
+offset_right = -270.0
+offset_bottom = -5.0
+
+[node name="OpponentEnergyBar" parent="GameUI" instance=ExtResource("10_sfq62")]
+offset_left = 18.0
+offset_top = 8.0
+offset_right = -118.0
+offset_bottom = -689.0
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 30.0
@@ -516,29 +540,5 @@ layout_mode = 2
 [node name="EndTurn" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Finalizar Turno"
-
-[node name="PlayerDice" parent="." instance=ExtResource("9_ldg73")]
-offset_left = 56.0
-offset_top = 566.0
-offset_right = 226.0
-offset_bottom = 646.0
-
-[node name="OpponentDice" parent="." instance=ExtResource("9_ldg73")]
-offset_left = 964.0
-offset_top = 73.0
-offset_right = 1134.0
-offset_bottom = 153.0
-
-[node name="EnergyBar" parent="." instance=ExtResource("10_sfq62")]
-offset_left = 10.0
-offset_top = 692.0
-offset_right = 1010.0
-offset_bottom = 715.0
-
-[node name="OpponentEnergyBar" parent="." instance=ExtResource("10_sfq62")]
-offset_left = 18.0
-offset_top = 8.0
-offset_right = 1156.0
-offset_bottom = 31.0
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/EndTurn" to="." method="_on_end_turn_pressed"]

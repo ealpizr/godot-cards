@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace GodotCards.DesignPatterns.Command;
 
-namespace godotcards.core.Commands
+public interface ICommand
 {
-    public interface ICommand
-    {
-        void Execute();
-
-        void Undo();
-    }
+    void Execute();
 }

@@ -1,20 +1,14 @@
 using System.IO;
 using Godot;
 using Godot.Collections;
+using GodotCards.DesignPatterns.Observer;
 
-public partial class CPUPlayer : PlayerBase
+// Why so many classes for CPU?
+// Feels a little bit overkill.
+public abstract class CPUPlayer : PlayerBase
 {
-	public override int Id { get; }
-	public override string UserName { get; }
-	public override int Points { get; set; }
-
-	public override Hand Hand { get; set; }
-
-	public override Hand PlayHand {get; set; }
-  public override Deck deck { get; set; }
-
-	public CPUPlayer() {
-		this.PlayHand = new Hand();
+	protected CPUPlayer(Hand hand, Hand playHand, Deck deck, Dice dice, EnergyBar energyBar, TurnDelegate turnDelegate) : base(hand, playHand, deck, dice, energyBar, turnDelegate)
+	{
 	}
 
 	public override void ReceiveInteraction(PlayerBase interaction) {
@@ -52,7 +46,17 @@ public partial class CPUPlayer : PlayerBase
     {
         this.Hand = hand;
         this.PlayingFieldContainer = container;
-        this.deck = deck;
-        this.deck.EmitSignal(Deck.SignalName.LoadCards, cards);
+        this.Deck = deck;
+        this.Deck.EmitSignal(Deck.SignalName.LoadCards, cards);
+    }
+
+    public override void OnTurnStart()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnTurnEnd()
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -1,13 +1,34 @@
 using Godot;
+using GodotCards.DesignPatterns.Command;
+using GodotCards.DesignPatterns.Observer;
 
+// Why so many classes for CPU?
+// Feels a little bit overkill.
 public partial class DifficultyCPUPlayer : CustomCPUPlayer
 {
+    private readonly TurnManager turnManager;
 
-    public DifficultyCPUPlayer(IInteractable interactable) : base(interactable)
+    public DifficultyCPUPlayer(PlayerBase player, TurnManager turnManager) : base(player, player.Hand, player.PlayHand, player.Deck, player.Dice, player.EnergyBar, player.TurnObserver.TurnDelegate)
     {
-        this.interactable = interactable;
+        this.interactable = player;
+        this.turnManager = turnManager;
 
         this.Strategy.SetStrategy(new PeaceFulStrategy());
+    }
+
+    public override void OnTurnStart()
+    {
+        // This should be executed by an invoker.
+        ICommand rollDiceCommand = new RollDiceCommand(this);
+        rollDiceCommand.Execute();
+
+        ICommand endTurnCommand = new EndTurnCommand(this.turnManager);
+        endTurnCommand.Execute();
+    }
+
+    public override void OnTurnEnd()
+    {
+        // We can do something here. Maybe show an alert or message.
     }
 
     // don't forget to change to override.
