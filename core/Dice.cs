@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 public partial class Dice : Control
 {
+    [Signal]
+    public delegate void ClickedEventHandler();
+
     private int _dice1;
     private int _dice2;
     private int _min = 1;
@@ -14,6 +17,12 @@ public partial class Dice : Control
     public override void _Ready()
     {
         LoadPlayerDice();
+        GetNode<Button>("Button").Pressed += OnClicked;
+    }
+
+    private void OnClicked()
+    {
+        EmitSignal(SignalName.Clicked);
     }
 
     private async void LoadPlayerDice()
@@ -45,8 +54,6 @@ public partial class Dice : Control
             UpdateDiceValues();
             await ToSignal(GetTree().CreateTimer(0.3f), "timeout");
         }
-
-        UpdateDiceValues();
     }
 
     public int GetSum()

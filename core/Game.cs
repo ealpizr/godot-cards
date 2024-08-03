@@ -1,4 +1,5 @@
 using Godot;
+using GodotCards.DesignPatterns.Command;
 using GodotCards.DesignPatterns.Observer;
 
 public enum GameMode
@@ -11,6 +12,7 @@ public partial class Game : Node, IGame
 {
     private GameMode gameMode { get; set; }
     private TurnManager turnManager = new TurnManager();
+    private readonly ActionManager actionManager = new ActionManager();
 
     PlayerBase player;
     PlayerBase opponent;
@@ -51,14 +53,46 @@ public partial class Game : Node, IGame
     {
         this.gameMode = GameMode.Campaign;
         this.SetupPlayers();
-        Campaign campaign = new Campaign(level, this.opponent, this.turnManager);
+        Campaign campaign = new Campaign(level, this.opponent, this.turnManager, this.actionManager);
         this.opponent = campaign.GetCPUPlayer();
 
         SetupAndStartTurnManager(Turn.Opponent);
     }
 
+    private bool IsPlayerTurn()
+    {
+        return this.turnManager.IsPlayerTurn;
+    }
+
+    private void PlayerDiceClicked()
+    {
+        if (!IsPlayerTurn())
+        {
+            return;
+        }
+
+        ICommand rollDiceCommand = new RollDiceCommand(this.player);
+        actionManager.ExecuteAction(rollDiceCommand);
+    }
+
+    private void EndTurnPressed()
+    {
+        if(!IsPlayerTurn())
+        {
+            return;
+        }
+
+        ICommand endTurnCommand = new EndTurnCommand(this.turnManager);
+        actionManager.ExecuteAction(endTurnCommand);
+    }
+
+    
+
     public override void _Ready()
     {
+        GetNode<Dice>("GameUI/PlayerDice").Clicked += PlayerDiceClicked;
+        GetNode<Button>("MarginContainer/VBoxContainer/EndTurn").Pressed += EndTurnPressed;
+
         SetupPlayers();
         SetupCampaign(1);
         return;
