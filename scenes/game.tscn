@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cfiwsnon8re82"]
+[gd_scene load_steps=13 format=3 uid="uid://cfiwsnon8re82"]
 
 [ext_resource type="Script" path="res://core/Game.cs" id="1_6akld"]
 [ext_resource type="Script" path="res://core/GameField.cs" id="1_ovy47"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://core/Hand.cs" id="2_abbgp"]
 [ext_resource type="PackedScene" uid="uid://bh3labrgxts1s" path="res://scenes/card.tscn" id="2_bccay"]
 [ext_resource type="PackedScene" uid="uid://ckqoqpc7b021l" path="res://scenes/dice.tscn" id="9_ldg73"]
-[ext_resource type="Script" path="res://core/Observer/TurnManager.cs" id="9_vwgqn"]
 [ext_resource type="PackedScene" uid="uid://bqwjdabd301vb" path="res://scenes/energy_bar.tscn" id="10_sfq62"]
 [ext_resource type="PackedScene" uid="uid://c4njkj80ot7c7" path="res://scenes/Deck.tscn" id="10_vo6fn"]
 
@@ -516,9 +515,6 @@ offset_bottom = -689.0
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 30.0
-
-[node name="TurnManager" type="Node" parent="."]
-script = ExtResource("9_vwgqn")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 offset_left = 1033.0
