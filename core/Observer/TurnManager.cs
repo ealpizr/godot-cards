@@ -8,7 +8,7 @@ public enum Turn
     Opponent
 }
 
-public class TurnManager : Observable<Turn>
+public partial class TurnManager : Observable<Turn>
 {
     private Timer timer;
     public bool IsPlayerTurn => State == Turn.Player;

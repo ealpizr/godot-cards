@@ -65,7 +65,7 @@ public partial class CardReleasedState : CardStateBase
 			if (Card.Targets[0].GetParent().Name == "GameUI")
 			{
 				// moves the card to the the selected play zone.
-				HBoxContainer hBoxContainer = Card.Targets[0].GetNode<HBoxContainer>("HBoxContainer");
+				HBoxContainer hBoxContainer = Card.Targets[0].GetNode<HBoxContainer>("PlayerPlayHand");
 				((GameField) Card.Targets[0].GetParent()).EmitSignal(GameField.SignalName.ReparentToHboxContainer, Card, hBoxContainer);
 			}
 			Card.DropPointDetector.Monitoring = false;
