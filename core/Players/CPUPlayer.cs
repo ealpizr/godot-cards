@@ -43,20 +43,20 @@ public abstract class CPUPlayer : PlayerBase
 	}
 
 	  public override void Init(HBoxContainer container, Hand hand, Deck deck, Array<Card> cards)
-    {
-        this.Hand = hand;
-        this.PlayingFieldContainer = container;
-        this.Deck = deck;
-        this.Deck.EmitSignal(Deck.SignalName.LoadCards, cards);
-    }
+	{
+		this.Hand = hand;
+		this.PlayingFieldContainer = container;
+		this.Deck = deck;
+		this.Deck.EmitSignal(Deck.SignalName.LoadCards, cards);
+	}
 
-    public override void OnTurnStart()
-    {
-        throw new System.NotImplementedException();
-    }
+	public override void OnTurnStart()
+	{
+		throw new System.NotImplementedException();
+	}
 
-    public override void OnTurnEnd()
-    {
-        throw new System.NotImplementedException();
-    }
+	public override void OnTurnEnd()
+	{
+		throw new System.NotImplementedException();
+	}
 }
