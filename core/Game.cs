@@ -99,8 +99,8 @@ public partial class Game : Node, IGame
 		// This can be generalized to a way to use N amount of player,
 		// here the game has a predefined amount of players and it's easy as assigning.  
 
-		player.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("HBoxContainer");
-		opponent.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("HBoxContainer");
+		player.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("PlayerPlayHand");
+		opponent.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("OppoPlayHand");
 
 		player.Hand = GetNode<Hand>("GameUI/Hand");
 		opponent.Hand = GetNode<Hand>("GameUI/HandOther");
