@@ -48,13 +48,19 @@ public partial class CardReleasedState : CardStateBase
 			{
 				if (Card.isAttackPosition) 
 				{
-					Card.ColorRect.Color = new Color(193, 0, 255, 1);
-					
+					if (!Card.IsAttacking) 
+					{
+						Card.ColorRect.Color = Colors.PaleVioletRed;
+						Card.Label.Text = "Attacking";
+						Card.IsAttacking = true;
+					} 
+					else 
+					{
+						Card.ColorRect.Color = Colors.DarkViolet;
+						Card.Label.Text = "Attack";
+						Card.IsAttacking = false;
+					}
 				} 
-				else 
-				{
-
-				}
 			}
 		}
 

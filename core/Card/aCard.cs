@@ -13,6 +13,7 @@ public abstract partial class aCard : Control {
 	public int DefensePoints { get; set; }
 	public int HealthPoints { get; set; }
 	public CardRarity Rarity { get; set; }
+	public bool IsAttacking { get; set; }
 
 	public bool IsSelected { get; set; }
 
