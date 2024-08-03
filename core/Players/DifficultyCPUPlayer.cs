@@ -22,9 +22,6 @@ public partial class DifficultyCPUPlayer : CustomCPUPlayer
         ICommand rollDiceCommand = new RollDiceCommand(this);
         rollDiceCommand.Execute();
 
-        ICommand playCardCommand = new PlayCardCommand(this, this.Hand.Cards[0]);
-        playCardCommand.Execute();
-
         ICommand endTurnCommand = new EndTurnCommand(this.turnManager);
         endTurnCommand.Execute();
     }
