@@ -91,6 +91,11 @@ public partial class Game : Node, IGame
 		this.turnManager.EndTurn();
 	}
 
+	private void _on_attack_button_pressed()
+	{
+		GD.Print("Funciona");
+	}
+
 	public void Start()
 	{
 		//this.player = new Player();
