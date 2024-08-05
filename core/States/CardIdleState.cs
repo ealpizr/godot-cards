@@ -14,7 +14,7 @@ public partial class CardIdleState : CardStateBase
 
 		Card.EmitSignal(Card.SignalName.ReparentRequested, Card);
 		Card.ColorRect.Color = Colors.WebGreen;
-		Card.Label.Text = "Idle";
+		Card.Label.Text = Card.Name;
 
 		// PivotOffset can be resseted to left top corner on idle state
 		Card.PivotOffset = new Vector2(0, 0);
