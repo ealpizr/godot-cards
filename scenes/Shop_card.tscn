@@ -5,104 +5,151 @@
 [ext_resource type="Texture2D" uid="uid://htho7bbncj0e" path="res://assets/card_characters/image_0.png" id="3_vq4rx"]
 
 [node name="ShopCard" type="Control"]
-custom_minimum_size = Vector2(294, 371)
+custom_minimum_size = Vector2(294, 338)
 layout_mode = 3
-anchor_right = 0.231
-anchor_bottom = 0.517
-offset_right = -1.67999
-offset_bottom = -1.24002
+anchor_right = 0.191
+anchor_bottom = 0.542
+offset_right = 49.52
+offset_bottom = -52.2401
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_cc0g7")
 script = ExtResource("2_qps4t")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -2.0
+anchors_preset = -1
+anchor_right = 0.833
+anchor_bottom = 0.914
+offset_left = -1.0
+offset_top = 1.0
+offset_right = 0.0979767
+offset_bottom = 30.068
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.415686)
 
-[node name="BuyButton" type="Button" parent="."]
+[node name="Image" type="TextureRect" parent="Background"]
 layout_mode = 2
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 84.0
-offset_top = 372.0
-offset_right = -89.0
-offset_bottom = 43.0
-text = "Buy"
+offset_left = -2.0
+offset_top = 65.0
+offset_right = 245.0
+offset_bottom = 211.0
+texture = ExtResource("3_vq4rx")
+stretch_mode = 3
 
-[node name="Container" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(294, 371)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1.0
-offset_right = -1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="ID" type="Label" parent="Container"]
+[node name="Name" type="Label" parent="Background"]
 layout_mode = 2
+offset_left = 1.0
+offset_top = 49.0
+offset_right = 246.0
+offset_bottom = 67.0
+size_flags_horizontal = 4
+text = "Carta 1"
+horizontal_alignment = 1
+
+[node name="Health" type="Label" parent="Background"]
+layout_mode = 2
+offset_left = 7.0
+offset_top = 222.0
+offset_right = 71.0
+offset_bottom = 241.0
+size_flags_horizontal = 4
+text = "❤ 10"
+horizontal_alignment = 1
+
+[node name="Attack" type="Label" parent="Background"]
+layout_mode = 2
+offset_left = 6.0
+offset_top = 253.0
+offset_right = 70.0
+offset_bottom = 272.0
+size_flags_horizontal = 4
+text = "⚔ 10"
+
+[node name="ManaCost" type="Label" parent="Background"]
+layout_mode = 2
+offset_left = 204.0
+offset_top = 11.0
+offset_right = 229.0
+offset_bottom = 29.0
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.25332, 0.473895, 1, 1)
+text = "10"
+
+[node name="Cost" type="Label" parent="Background"]
+layout_mode = 2
+offset_left = 162.0
+offset_top = 252.0
+offset_right = 234.0
+offset_bottom = 271.0
+size_flags_horizontal = 4
+text = "🪙 30"
+
+[node name="ID" type="Label" parent="Background"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 11.0
+offset_right = 27.0
+offset_bottom = 29.0
 size_flags_horizontal = 4
 text = "1"
 
-[node name="Name" type="Label" parent="Container"]
+[node name="Defense" type="Label" parent="Background"]
 layout_mode = 2
+offset_left = 161.0
+offset_top = 220.0
+offset_right = 242.0
+offset_bottom = 239.0
 size_flags_horizontal = 4
-text = "Carta 1"
+text = "🛡️ 5"
 
-[node name="Cost" type="Label" parent="Container"]
+[node name="Rarity" type="Label" parent="Background"]
 layout_mode = 2
-size_flags_horizontal = 4
-text = "30 c-coins"
-
-[node name="Attack" type="Label" parent="Container"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "attack"
-
-[node name="Defense" type="Label" parent="Container"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "defense"
-
-[node name="Health" type="Label" parent="Container"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "health"
-horizontal_alignment = 1
-
-[node name="Description" type="Label" parent="Container"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "description"
-horizontal_alignment = 1
-
-[node name="Rarity" type="Label" parent="Container"]
-layout_mode = 2
+offset_left = 137.0
+offset_top = 311.0
+offset_right = 198.0
+offset_bottom = 329.0
 size_flags_horizontal = 4
 text = "rarity"
 horizontal_alignment = 1
 
-[node name="Mana" type="Label" parent="Container"]
+[node name="Type" type="Label" parent="Background"]
 layout_mode = 2
-size_flags_horizontal = 4
-text = "manaCost"
-
-[node name="Type" type="Label" parent="Container"]
-layout_mode = 2
+offset_left = 12.0
+offset_top = 310.0
+offset_right = 57.0
+offset_bottom = 328.0
 size_flags_horizontal = 4
 text = "type"
 horizontal_alignment = 1
 
-[node name="ImageRect" type="TextureRect" parent="Container"]
+[node name="ColorOverlay" type="ColorRect" parent="Background"]
+visible = false
+layout_mode = 0
+offset_right = 246.0
+offset_bottom = 337.0
+color = Color(0, 0, 0, 0.917647)
+
+[node name="Description" type="Label" parent="Background"]
+visible = false
 layout_mode = 2
-texture = ExtResource("3_vq4rx")
-stretch_mode = 3
+offset_left = 9.0
+offset_right = 240.0
+offset_bottom = 210.0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 0
+text = "description"
+horizontal_alignment = 3
+vertical_alignment = 3
+autowrap_mode = 2
+
+[node name="BuyButton" type="Button" parent="."]
+layout_mode = 2
+anchor_right = 0.838
+anchor_bottom = 1.03
+offset_left = 60.0
+offset_top = 340.0
+offset_right = -65.372
+offset_bottom = 28.86
+text = "Buy"
