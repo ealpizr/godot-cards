@@ -1,4 +1,5 @@
-using Godot;
+﻿using Godot;
+using godotcards.core.Api;
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +13,6 @@ public partial class Card : aCard
 
 	// Card properties
 	public ColorRect ColorRect { get; private set; }
-	public Label Label { get; private set; }
 	public Area2D DropPointDetector { get; private set; }
 	public List<Node> Targets { get; private set; } = new List<Node>();
 	private IStateMachine cardStateMachine;
@@ -29,8 +29,8 @@ public partial class Card : aCard
 	{
 		// Initialize properties
 		Name = "";
-		Description = "";
-		Icon = null;
+        Description = "";
+		Icon = GD.Load<Texture2D>("res://assets/card_characters/image_0.png");
 		EnergyCost = 0;
 		AttackPoints = 0;
 		DefensePoints = 0;
@@ -43,8 +43,14 @@ public partial class Card : aCard
 	{
 		// Get references to child nodes
 		ColorRect = GetNode<ColorRect>("CardShape/Color");
-		Label = GetNode<Label>("CardShape/Label");
-		DropPointDetector = GetNode<Area2D>("DropPointDetector");
+        GetNode<TextureRect>("CardShape/Color/Image").Texture = Icon;
+        GetNode<Label>("CardShape/Color/Name").Text = Name;
+        GetNode<Label>("CardShape/Color/Attack").Text = $"⚔ {AttackPoints.ToString()}";
+        GetNode<Label>("CardShape/Color/Health").Text = $"❤ {HealthPoints.ToString()}";
+        GetNode<Label>("CardShape/Color/ManaCost").Text = EnergyCost.ToString();
+
+
+        DropPointDetector = GetNode<Area2D>("DropPointDetector");
 		CardShape = GetNode<Control>("CardShape");
 
 		// Learning point: I was debugging why the card shape was on the way of the mouse event detection from the droppointdector.

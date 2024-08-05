@@ -8,7 +8,6 @@ public partial class CardReleasedState : CardStateBase
 	public override void Enter()
 	{
 		Card.ColorRect.Color = Colors.DarkViolet;
-		Card.Label.Text = "Released";
 
 		if (Card.Targets.Count > 0)
 		{
@@ -25,24 +24,18 @@ public partial class CardReleasedState : CardStateBase
 				if (Card.isAttackPosition)
 				{
 					Card.isAttackPosition = false;
-					Card.Label.Text = "Defense";
 
 					Card.CardShape.PivotOffset = Card.Size / 2;
-					Card.Label.PivotOffset = Card.Size / 2;
 
 					Card.CardShape.RotationDegrees = 90;
-					Card.Label.RotationDegrees = -90;
 				}
 				else
 				{
 					Card.isAttackPosition = true;
 
 					Card.CardShape.PivotOffset = Card.Size / 2;
-					Card.Label.PivotOffset = Card.Size / 2;
 
-					Card.Label.Text = "Attack";
 					Card.CardShape.RotationDegrees = 0;
-					Card.Label.RotationDegrees = -0;
 				}
 			}
 			else if (mouseButton.ButtonIndex == MouseButton.Right && mouseButton.IsPressed() && Card.IsSelected)  
@@ -52,13 +45,11 @@ public partial class CardReleasedState : CardStateBase
 					if (!Card.IsAttacking) 
 					{
 						Card.ColorRect.Color = Colors.PaleVioletRed;
-						Card.Label.Text = "Attacking";
 						Card.IsAttacking = true;
 					} 
 					else 
 					{
 						Card.ColorRect.Color = Colors.DarkViolet;
-						Card.Label.Text = "Attack";
 						Card.IsAttacking = false;
 					}
 				} 

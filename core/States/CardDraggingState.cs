@@ -16,7 +16,6 @@ public partial class CardDraggingState : CardStateBase
 
 		Card.Reparent(uiLayer);
 		Card.ColorRect.Color = Colors.NavyBlue;
-		Card.Label.Text = "Dragging";
 
 		minimumDragThresholdElapsed = false;
 		SceneTreeTimer thresholdTimer = GetTree().CreateTimer(DRAG_MINIMUM_THRESHOLD, false);

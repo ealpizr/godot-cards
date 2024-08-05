@@ -7,7 +7,7 @@ public abstract partial class aCard : Control {
 	// New properties for the card
 	public new string Name { get; set; }
 	public string Description { get; set; }
-	public Texture Icon { get; set; }
+	public Texture2D Icon { get; set; }
 	public int EnergyCost { get; set; }
 	public int AttackPoints { get; set; }
 	public int DefensePoints { get; set; }

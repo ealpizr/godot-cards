@@ -5,7 +5,7 @@ public partial class UtilityCard : Card
 {
 	public new int DefensePoints { get; set; }
 
-	public UtilityCard(string name, string description, Texture icon, int energyCost, int defensePoints, int healthPoints, CardRarity rarity)
+	public UtilityCard(string name, string description, Texture2D icon, int energyCost, int defensePoints, int healthPoints, CardRarity rarity)
 	{
 		Name = name;
 		Description = description;

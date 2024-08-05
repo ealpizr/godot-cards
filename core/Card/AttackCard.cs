@@ -5,7 +5,7 @@ public partial class AttackCard : Card
 {
 	public new int AttackPoints { get; set; }
 
-	public AttackCard(string name, string description, Texture icon, int energyCost, int attackPoints, int healthPoints, CardRarity rarity)
+	public AttackCard(string name, string description, Texture2D icon, int energyCost, int attackPoints, int healthPoints, CardRarity rarity)
 	{
 		Name = name;
 		Description = description;
