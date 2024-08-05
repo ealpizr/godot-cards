@@ -377,3 +377,92 @@ func SetUserDiceRpc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk r
 
 	return payload, nil
 }
+
+func GetAllCardsRpc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
+	si := NewStorageInteractor(ctx, logger, nk)
+
+	allCardsJson, err := si.ReadStorageObject(cardsStorageKey, serverUserId)
+	if err != nil {
+		logger.Error("Could not read cards from storage", err.Error())
+		return "", err
+	}
+
+	return allCardsJson, nil
+}
+
+func BuyCardRpc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
+	si := NewStorageInteractor(ctx, logger, nk)
+
+	userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+	if !ok {
+		return "", errors.New("invalid context")
+	}
+
+	buyCardPayload := &BuyCardPayload{}
+	err := json.Unmarshal([]byte(payload), &buyCardPayload)
+	if err != nil {
+		logger.Error("Could not unmarshal buy card payload", err.Error())
+		return "", err
+	}
+
+	userInventoryJson, err := si.ReadStorageObject(userInventoryKey, userID)
+	if err != nil {
+		logger.Error("Could not read user inventory from storage", err.Error())
+		return "", err
+	}
+
+	allCardsJson, err := si.ReadStorageObject(cardsStorageKey, serverUserId)
+	if err != nil {
+		logger.Error("Could not read cards from storage", err.Error())
+		return "", err
+	}
+
+	userInventory := UserInventory{}
+	err = json.Unmarshal([]byte(userInventoryJson), &userInventory)
+	if err != nil {
+		logger.Error("Could not unmarshal user inventory", err.Error())
+		return "", err
+	}
+
+	allCards := []Card{}
+	err = json.Unmarshal([]byte(allCardsJson), &allCards)
+	if err != nil {
+		logger.Error("Could not unmarshal all cards", err.Error())
+		return "", err
+	}
+
+	cardFound := false
+	for _, card := range allCards {
+		if card.ID == buyCardPayload.Id {
+			cardFound = true
+			break
+		}
+	}
+
+	if !cardFound {
+		logger.Error("Could not find card to buy")
+		return "", errors.New("could not find card to buy")
+	}
+
+	userInventory.Cards = append(userInventory.Cards, buyCardPayload.Id)
+
+	err = si.WriteStorageObject(userInventoryKey, userInventory, PUBLIC_READ, NO_WRITE, userID)
+	if err != nil {
+		logger.Error("Could not write user inventory to storage", err.Error())
+		return "", err
+	}
+
+	walletChangeset := map[string]int64{
+		"c-coins": -int64(allCards[buyCardPayload.Id-1].Cost),
+	}
+	walletMetadata := map[string]interface{}{
+		"motive": "Bought card",
+	}
+
+	if _, _, err := nk.WalletUpdate(ctx, userID, walletChangeset, walletMetadata, true); err != nil {
+		logger.Error("Could not update user wallet", err.Error())
+		return "", err
+	}
+
+	return payload, nil
+}

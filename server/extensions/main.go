@@ -23,6 +23,8 @@ func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runti
 	initializer.RegisterRpc("GetUserDice", GetUserDiceRpc)
 	initializer.RegisterRpc("ReplaceDeckCardRpc", ReplaceUserDeckCardRpc)
 	initializer.RegisterRpc("SetUserDice", SetUserDiceRpc)
+	initializer.RegisterRpc("GetAllCards", GetAllCardsRpc)
+	initializer.RegisterRpc("BuyCard", BuyCardRpc)
 
 	logger.Info("Module loaded in %dms", time.Since(initStart).Milliseconds())
 	return nil
