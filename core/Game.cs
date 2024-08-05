@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 using GodotCards.DesignPatterns.Observer;
 
@@ -30,7 +31,7 @@ public partial class Game : Node, IGame
 		EnergyBar playerEnergyBar = GetNode<EnergyBar>("GameUI/PlayerEnergyBar");
 		TurnDelegate playerTurnDelegate = (currentTurn) => currentTurn == Turn.Player;
 		player = new Player(playerHand, playerPlayHand, playerDeck, playerDice, playerEnergyBar, playerTurnDelegate);
-	  
+
 		Hand opponentHand = GetNode<Hand>("GameUI/OpponentHand");
 		Hand opponentPlayHand = opponentHand;
 		Dice opponentDice = GetNode<Dice>("GameUI/OpponentDice");
@@ -98,15 +99,6 @@ public partial class Game : Node, IGame
 		// Refactorable.
 		// This can be generalized to a way to use N amount of player,
 		// here the game has a predefined amount of players and it's easy as assigning.  
-
-		player.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("PlayerPlayHand");
-		opponent.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("OppoPlayHand");
-
-		player.Hand = GetNode<Hand>("GameUI/Hand");
-		opponent.Hand = GetNode<Hand>("GameUI/HandOther");
-
-		player.Deck = GetNode<Deck>("GameUI/DeckPlayer");
-		opponent.Deck = GetNode<Deck>("GameUI/DeckOtherPlayer");
 
 		gameField = GetNode<GameField>("GameUI");
 		LevelLabel = GetNode<Label>("GameUI/Level/Label");

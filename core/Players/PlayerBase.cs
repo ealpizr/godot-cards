@@ -12,9 +12,14 @@ public abstract partial class PlayerBase :  IInteractable, ITurnAware
 		this.Hand = hand;
 		this.PlayHand = playHand;
 		this.Deck = deck;
+		this.Deck.Player = this;
 		this.Dice = dice;
 		this.EnergyBar = energyBar;
 		TurnObserver = new TurnObserver(this, turnDelegate);
+		GlobalState globalState = GlobalState.Instance;
+		GD.Print("Card purchased:");
+		GD.Print(globalState.purchasedCards.Count);
+		this.Deck.EmitSignal(Deck.SignalName.LoadCards, globalState.purchasedCards);
 	}
 
 	public int Points { get; set; }

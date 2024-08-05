@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Nakama;
+using System.Security.Cryptography.X509Certificates;
 
 public class CardData
 {
@@ -15,7 +16,7 @@ public class CardData
 
 	[JsonPropertyName("cost")]
 	public int Cost { get; set; }
-	
+
 	[JsonPropertyName("attack")]
 	public int Attack { get; set; }
 	
@@ -106,8 +107,38 @@ public partial class Shop : Control
 	{
 		if (CanAfford(cost))
 		{
+			CardData cardSelected = null;
+
+			foreach (CardData card in availableCards)
+			{
+				if (card.ID == cardID)
+				{
+					cardSelected = card;
+					break;
+				}
+			}
+
 			cCoins -= cost;
 			GD.Print($"Card with ID {cardID} purchased for {cost} C-Coins.");
+
+			GlobalState globalState = GlobalState.Instance;
+
+			aCard purchasedCard = new Card(cardSelected.Name, cardSelected.Description, cardSelected.ManaCost, cardSelected.Attack, 100, cardSelected.Health);
+
+			GD.Print(cardSelected.Rarity);	
+			switch (cardSelected.Rarity)
+			{
+				case "Common":
+					purchasedCard = new NormalCard(purchasedCard);
+					break;
+				case "Legendaria":
+					purchasedCard = new LegendariaCard(purchasedCard);
+					break;
+					
+			}
+
+			GD.Print(purchasedCard.Puntos);
+			globalState.purchasedCards.Add((Card) purchasedCard);
 			UpdateUI();
 		}
 	}
@@ -255,6 +286,8 @@ public partial class Shop : Control
 		if (playerCoins >= card.Cost)
 		{
 			playerCoins -= card.Cost;
+			Game game = GetNode<Game>("/root/Game");
+
 			availableCards.Remove(card);
 			GD.Print("Purchased card: " + card.Name);
 			return true;

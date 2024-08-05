@@ -12,13 +12,16 @@ public abstract partial class aCard : Control {
 	public int AttackPoints { get; set; }
 	public int DefensePoints { get; set; }
 	public int HealthPoints { get; set; }
-	public CardRarity Rarity { get; set; }
+	
+	public Label Rarity { get; set; }
 
 	public bool IsSelected { get; set; }
 
 	public int eliminationPoints { get; set; }
 	
 	public int Puntos { get; set; }
+
+	public int RarityValue { get; set; }
 
 	public abstract void OnCardEliminated(PlayerBase player);
 } 

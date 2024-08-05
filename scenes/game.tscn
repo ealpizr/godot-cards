@@ -456,13 +456,7 @@ offset_bottom = 184.0
 alignment = 1
 script = ExtResource("2_abbgp")
 
-[node name="Card2" parent="GameUI/OpponentHand" instance=ExtResource("2_bccay")]
-layout_mode = 2
-
 [node name="Card1" parent="GameUI/OpponentHand" instance=ExtResource("2_bccay")]
-layout_mode = 2
-
-[node name="Card3" parent="GameUI/OpponentHand" instance=ExtResource("2_bccay")]
 layout_mode = 2
 
 [node name="PlayerHand" type="HBoxContainer" parent="GameUI"]
@@ -481,12 +475,6 @@ alignment = 1
 script = ExtResource("2_abbgp")
 
 [node name="Card1" parent="GameUI/PlayerHand" instance=ExtResource("2_bccay")]
-layout_mode = 2
-
-[node name="Card2" parent="GameUI/PlayerHand" instance=ExtResource("2_bccay")]
-layout_mode = 2
-
-[node name="Card3" parent="GameUI/PlayerHand" instance=ExtResource("2_bccay")]
 layout_mode = 2
 
 [node name="PlayerDice" parent="GameUI" instance=ExtResource("9_ldg73")]

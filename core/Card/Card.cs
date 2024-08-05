@@ -24,18 +24,27 @@ public partial class Card : aCard
 	// New properties for the card
 	public new string Name { get; set; }
 
-	// Constructor
 	public Card()
 	{
-		// Initialize properties
-		Name = "";
-		Description = "";
+		Name = "Card";
+		Description = "Description";
 		Icon = null;
 		EnergyCost = 0;
 		AttackPoints = 0;
 		DefensePoints = 0;
 		HealthPoints = 0;
-		Rarity = CardRarity.Common; // Default value
+	}
+	// Constructor
+	public Card(String name, String description, int pEnergyCost, int pAttackPoints, int pDefensePoints, int pHealthPoints)
+	{
+		// Initialize properties
+		Name = name;
+		Description = description;
+		Icon = null;
+		EnergyCost = pEnergyCost;
+		AttackPoints = pAttackPoints;
+		DefensePoints = pDefensePoints;
+		HealthPoints = pHealthPoints;
 	}
 
 	public override void _Ready()
@@ -45,6 +54,9 @@ public partial class Card : aCard
 		Label = GetNode<Label>("CardShape/Label");
 		DropPointDetector = GetNode<Area2D>("DropPointDetector");
 		CardShape = GetNode<Control>("CardShape");
+		Rarity = GetNode<Label>("CardShape/Rarity");
+
+		Rarity.Text = "Common";
 
 		// Learning point: I was debugging why the card shape was on the way of the mouse event detection from the droppointdector.
 		// this control had a handler for the mouse events, so it was handling first the mouse events and the other didn't get the chance to handle it.
@@ -103,14 +115,5 @@ public partial class Card : aCard
 	{
 		player.Points -= eliminationPoints;
 	}
-}
-
-// Enum to define the rarity of the card
-public enum CardRarity
-{
-	Common,
-	Normal,
-	Elite,
-	Legendary
 }
 

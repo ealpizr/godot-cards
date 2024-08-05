@@ -17,6 +17,13 @@ public partial class Hand : HBoxContainer
 			}
 		}
 	}
+
+	public void AddCard(Card card)
+	{
+		Cards.Add(card);
+		card.ReparentRequested += OnReparentRequested;
+		AddChild(card);
+	}
 	
 	private void OnReparentRequested(Card card)
 	{

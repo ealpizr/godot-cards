@@ -69,7 +69,6 @@ public partial class CardReleasedState : CardStateBase
 				((GameField) Card.Targets[0].GetParent()).EmitSignal(GameField.SignalName.ReparentToHboxContainer, Card, hBoxContainer);
 			}
 			Card.DropPointDetector.Monitoring = false;
-			//EmitSignal(SignalName.TransitionRequested, this, Variant.From(CardState.Idle));
 			
 			return;
 		}

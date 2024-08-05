@@ -1,5 +1,7 @@
 using Godot;
+using Godot.Collections;
 using System;
+using System.Collections.Generic;
 
 // This class is loaded automatically by the engine when the game starts.
 // See https://docs.godotengine.org/en/stable/tutorials/scripting/singletons_autoload.html
@@ -32,6 +34,8 @@ public partial class GlobalState : Node
 
 	// This is just temporary. We should move this to a proper server request system.
 	public int Coins { get; set; }
+
+	public Array<Card> purchasedCards = new Array<Card>();
 
 	// Do we keep this here?
 	public string Version { get; } = "pre-alpha v0.1";

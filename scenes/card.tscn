@@ -40,6 +40,19 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.179393, 0.351562, 0.274448, 1)
 
+[node name="Rarity" type="Label" parent="CardShape"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 18
+text = "Rarity
+"
+horizontal_alignment = 2
+
 [node name="Label" type="Label" parent="CardShape"]
 layout_mode = 1
 anchors_preset = 15

@@ -34,10 +34,11 @@ public partial class Player : PlayerBase, IInteractable, IControllable
 
 	public override void Init(HBoxContainer container, Hand hand, Deck deck, Array<Card> cards)
 	{
-		this.Hand = hand;
-		this.PlayingFieldContainer = container;
-		this.Deck = deck;
-		this.Deck.EmitSignal(Deck.SignalName.LoadCards, cards);
+		return;
+		// this.Hand = hand;
+		// this.PlayingFieldContainer = container;
+		// this.Deck = deck;
+		// this.Deck.EmitSignal(Deck.SignalName.LoadCards, cards);
 	}
 
 	public void OnInput(InputEvent e)

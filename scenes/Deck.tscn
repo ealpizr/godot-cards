@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c4njkj80ot7c7"]
 
-[ext_resource type="Script" path="res://scenes/Deck.cs" id="1_up0me"]
+[ext_resource type="Script" path="res://core/Deck.cs" id="1_dq2lx"]
 
 [node name="Deck" type="Control"]
 layout_mode = 3
@@ -10,7 +10,7 @@ offset_right = -0.240005
 offset_bottom = -0.280006
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_up0me")
+script = ExtResource("1_dq2lx")
 
 [node name="Name" type="Label" parent="."]
 layout_mode = 0
