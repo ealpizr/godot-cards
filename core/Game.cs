@@ -15,7 +15,7 @@ public enum GameMode
     PvP
 }
 
-public partial class Game : Node, IGame
+public partial class Game : Node
 {
     private const int INITIAL_HAND_CARDS = 3;
     private GameMode gameMode { get; set; }
@@ -32,44 +32,41 @@ public partial class Game : Node, IGame
     private PuntuacionFactory _puntuacionFactory = new PuntuacionJugadorFactory();
     public GodotCards.DesignPatterns.Command.ICommand _attackCommand;
 
-    private Card BuildGameCard(godotcards.core.Api.Card card)
+    private aCard BuildGameCard(godotcards.core.Api.Card card)
     {
         // This is probably very bad. We creating a bunch of scenes here.
         // Does this allocate a bunch of memory we're not using? No time to check.
-        Card c = (Card)GD.Load<PackedScene>("res://scenes/card.tscn").Instantiate();
-        c.Name = card.Name;
-        c.Description = card.Description;
-        c.Icon = GD.Load<Texture2D>(card.Image);
-        c.EnergyCost = card.ManaCost;
-        c.AttackPoints = card.Attack;
-        c.DefensePoints = 0;
-        c.HealthPoints = card.Health;
+        aCard c = (aCard)GD.Load<PackedScene>("res://scenes/card.tscn").Instantiate();
 
-        switch (card.Rarity)
+        aCard cardInitalizer = new Card();
+        if (card.Rarity != "Común")
         {
-            case "Común":
-                c.Rarity = CardRarity.Common;
-                break;
-            case "Rara":
-                c.Rarity = CardRarity.Normal;
-                break;
-            case "Élite":
-                c.Rarity = CardRarity.Elite;
-                break;
-            case "Legendaria":
-                c.Rarity = CardRarity.Legendary;
-                break;
+            switch (card.Rarity)
+            {
+                case "Normal":
+                    cardInitalizer = new NormalCard(c);
+                    break;
+                case "Élite":
+                    cardInitalizer = new EliteCard(c);
+                    break;
+                case "Legendaria":
+                    cardInitalizer = new LegendariaCard(c);
+                    break;
+            }
         }
+
+
+        cardInitalizer.Init(c, card);
 
         return c;
     }
 
-    private async Task<(Array<Card>, Array<Card>)> GetGameOpponentCards()
+    private async Task<(Array<aCard>, Array<aCard>)> GetGameOpponentCards()
     {
         IApiRpc rpcReponse = await GlobalState.Instance.NakamaClient.RpcAsync(GlobalState.Instance.Session, "GetAllCards");
         godotcards.core.Api.Card[] userDeck = JsonSerializer.Deserialize<godotcards.core.Api.Card[]>(rpcReponse.Payload);
-        List<Card> deck = new List<Card>();
-        List<Card> hand = new List<Card>();
+        List<aCard> deck = new List<aCard>();
+        List<aCard> hand = new List<aCard>();
 
         while (deck.Count < 60)
         {
@@ -88,15 +85,15 @@ public partial class Game : Node, IGame
             deck.RemoveAt(randomIndex);
         }
 
-        return (new Array<Card>(deck), new Array<Card>(hand));
+        return (new Array<aCard>(deck), new Array<aCard>(hand));
     }
 
-    private async Task<(Array<Card>, Array<Card>)> GetGamePlayerCards()
+    private async Task<(Array<aCard>, Array<aCard>)> GetGamePlayerCards()
     {
         IApiRpc rpcReponse = await GlobalState.Instance.NakamaClient.RpcAsync(GlobalState.Instance.Session, "GetUserDeck");
         godotcards.core.Api.Card[] userDeck = JsonSerializer.Deserialize<godotcards.core.Api.Card[]>(rpcReponse.Payload);
-        List<Card> deck = new List<Card>();
-        List<Card> hand = new List<Card>();
+        List<aCard> deck = new List<aCard>();
+        List<aCard> hand = new List<aCard>();
 
         // I don't like this mapping but it's the fastest way to do it.
         foreach (godotcards.core.Api.Card card in userDeck)
@@ -111,7 +108,7 @@ public partial class Game : Node, IGame
             deck.RemoveAt(randomIndex);
         }
 
-        return (new Array<Card>(deck), new Array<Card>(hand));
+        return (new Array<aCard>(deck), new Array<aCard>(hand));
     }
 
     private async void SetupPlayers()
@@ -133,11 +130,11 @@ public partial class Game : Node, IGame
         TurnDelegate opponentTurnDelegate = (currentTurn) => currentTurn == Turn.Opponent;
         opponent = new Player(opponentHand, opponentPlayHand, opponentDeck, opponentDice, opponentEnergyBar, opponentTurnDelegate);
 
-        (Array<Card> deck, Array<Card> hand) = await GetGamePlayerCards();
+        (Array<aCard> deck, Array<aCard> hand) = await GetGamePlayerCards();
         playerHand.LoadInitialCards(hand);
         playerDeck.LoadCardsToDeck(deck);
 
-        (Array<Card> opponentDeckCards, Array<Card> opponentHandCards) = await GetGameOpponentCards();
+        (Array<aCard> opponentDeckCards, Array<aCard> opponentHandCards) = await GetGameOpponentCards();
         opponentHand.LoadInitialCards(opponentHandCards);
         opponentDeck.LoadCardsToDeck(opponentDeckCards);
 	}
@@ -206,27 +203,6 @@ public partial class Game : Node, IGame
 
         SetupCampaign(1);
         return;
-
-        //this.Start();
-
-        //Array<Card> cards = new Array<Card>();
-        //cards.Add(new Card());
-        //this.campaign = new Campaign(Difficulty.Easy, player, opponent.Hand, opponent.PlayingFieldContainer, gameField, player.Deck, cards);
-        //this.campaign.CPUPlayerPlay();
-
-        //this.Update();
-
-        //if (this.turnManager.IsPlayerTurn)
-        //{
-        //    this.campaign = new Campaign(Difficulty.Easy, player, opponent.Hand, opponent.PlayingFieldContainer, gameField, opponent.Deck, cards);
-        //    this.campaign.AdvanceLevel();
-        //}
-        //else
-        //{
-        //    this.campaign.CPUPlayerPlay();
-        //}
-
-
     }
 
     // Are we using this?
@@ -240,28 +216,6 @@ public partial class Game : Node, IGame
         _attackCommand = new AttackCommand(player, opponent);
         _attackCommand.Execute();
     }
-
-    public void Start()
-    {
-        //this.player = new Player();
-        //this.opponent = new CPUPlayer();
-        // Refactorable.
-        // This can be generalized to a way to use N amount of player,
-        // here the game has a predefined amount of players and it's easy as assigning.  
-
-        player.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("PlayerPlayHand");
-        opponent.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("OpponentPlayHand");
-
-        player.Hand = GetNode<Hand>("GameUI/Hand");
-        opponent.Hand = GetNode<Hand>("GameUI/HandOther");
-
-        player.Deck = GetNode<Deck>("GameUI/DeckPlayer");
-        opponent.Deck = GetNode<Deck>("GameUI/DeckOtherPlayer");
-
-        gameField = GetNode<GameField>("GameUI");
-        LevelLabel = GetNode<Label>("GameUI/Level/Label");
-    }
-
     public void Update()
     {
         this.LevelLabel.Text = "Level: " + this.currentLevel;

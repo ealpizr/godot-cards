@@ -6,7 +6,7 @@ public class DrawCardFromDeckCommand : IUndoableCommand
 {
     private const int MAX_CARDS_IN_HAND = 5;
     private readonly PlayerBase _player;
-    private Card _card;
+    private aCard _card;
 
     public DrawCardFromDeckCommand(PlayerBase player)
     {

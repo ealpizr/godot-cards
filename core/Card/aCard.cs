@@ -1,7 +1,9 @@
+using System;
 using Godot;
 
 public abstract partial class aCard : Control {
-	// for these cards, I need to create th e
+		[Signal]
+	public delegate void ReparentRequestedEventHandler(Card card);
 	public bool isAttackPosition = true;
 
 	// New properties for the card
@@ -27,6 +29,8 @@ public abstract partial class aCard : Control {
 	public int Puntos { get; set; }
 
 	public int RarityValue { get; set; }
+
+	public abstract void Init(aCard c, godotcards.core.Api.Card card);
 
 	public abstract void OnCardEliminated(PlayerBase player);
 } 

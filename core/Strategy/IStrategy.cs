@@ -4,17 +4,17 @@ using Godot.Collections;
 
 public interface IStrategy
 {
-    public Array<Card> PlanAttack(Player oponent, PlayerBase currentPlayer);
+    public Array<aCard> PlanAttack(Player oponent, PlayerBase currentPlayer);
 }
 
 public class AggressiveStrategy : IStrategy
 {
-    public Array<Card> PlanAttack(Player oponent, PlayerBase currentPlayer)
+    public Array<aCard> PlanAttack(Player oponent, PlayerBase currentPlayer)
     {
         GD.Print("Thinking Aggresively...");
         if (currentPlayer.PlayHand.Cards.Count == 0)
         {
-            Array<Card> cards = new Array<Card>
+            Array<aCard> cards = new Array<aCard>
             {
                 selectRandomCard(currentPlayer.Hand)
             };
@@ -23,7 +23,7 @@ public class AggressiveStrategy : IStrategy
         else
         {
             if (currentPlayer.Hand.Cards.Count > 0) {
-                Array<Card> cards = currentPlayer.PlayHand.Cards;
+                Array<aCard> cards = currentPlayer.PlayHand.Cards;
                 cards.Add(selectRandomCard(currentPlayer.Hand));
                 return cards;
             }
@@ -34,7 +34,7 @@ public class AggressiveStrategy : IStrategy
         }
     }
 
-    private Card selectRandomCard(Hand hand)
+    private aCard selectRandomCard(Hand hand)
     {
         Random random = new Random();
         int index = random.Next(hand.Cards.Count);

@@ -63,7 +63,7 @@ public partial class DifficultyCPUPlayer : CustomCPUPlayer
             GD.Print("Hand is null. Please verify the hand is being initialized.");
         }
 
-        ((PlayerBase)this.interactable).PlayHand.Cards = this.Strategy.PlanAttack((Player)interaction, (PlayerBase)this.interactable);
+        ((PlayerBase)this.interactable).PlayHand.Cards = Strategy.PlanAttack((Player)interaction, (PlayerBase)this.interactable);
 
         base.SendInteraction(gameField, interaction);
         // behaviour such as: verify that the player is capable of winning.
