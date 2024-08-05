@@ -41,7 +41,13 @@ public partial class Hand : HBoxContainer
 
 	public void AddCard(Card card)
     {
-        card.Reparent(this);
+		Cards.Add(card);
+        AddChild(card);
+    }
+
+	public void RemoveCard(Card card)
+    {
+        card.Dispose();
     }
 	
 	private void OnReparentRequested(Card card)

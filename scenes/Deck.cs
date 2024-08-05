@@ -5,10 +5,15 @@ using System.Collections.Generic;
 
 public partial class Deck : Control
 {
-	public Stack<Card> cards = new Stack<Card>();
+	public Stack<Card> Cards = new Stack<Card>();
 
+	// Most likely don't need this
 	[Signal]
 	public delegate void LoadCardsEventHandler(Array<Card> cardsList);
+
+	[Signal]
+	public delegate void ClickEventHandler();
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -23,6 +28,7 @@ public partial class Deck : Control
 			{
 				if (GetRect().HasPoint(((InputEventMouseButton)e).Position)) {
 					GD.Print("Deck clicked" + this.Name);
+					EmitSignal(nameof(SignalName.Click));
 				}
 			}
 		}
@@ -30,9 +36,14 @@ public partial class Deck : Control
 
 	public void LoadCardsToDeck(Array<Card> cardsList)
 	{
-		cards = new Stack<Card>(cardsList);
-		Label label = GetChild<Label>(1);
-		label.Text = cards.Count.ToString();
+		Cards = new Stack<Card>(cardsList);
+        RenderDeck();
 	}
+
+	public void RenderDeck()
+    {
+        Label label = GetChild<Label>(1);
+        label.Text = Cards.Count.ToString();
+    }
 
 }

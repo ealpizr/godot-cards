@@ -33,6 +33,8 @@ public partial class Game : Node, IGame
 
     private Card BuildGameCard(godotcards.core.Api.Card card)
     {
+        // This is probably very bad. We creating a bunch of scenes here.
+        // Does this allocate a bunch of memory we're not using? No time to check.
         Card c = (Card)GD.Load<PackedScene>("res://scenes/card.tscn").Instantiate();
         c.Name = card.Name;
         c.Description = card.Description;
@@ -117,6 +119,7 @@ public partial class Game : Node, IGame
         Hand playerPlayHand = playerHand;
         Dice playerDice = GetNode<Dice>("GameUI/PlayerDice");
         Deck playerDeck = GetNode<Deck>("GameUI/PlayerDeck");
+        playerDeck.Click += PlayerDeckClicked;
         EnergyBar playerEnergyBar = GetNode<EnergyBar>("GameUI/PlayerEnergyBar");
         TurnDelegate playerTurnDelegate = (currentTurn) => currentTurn == Turn.Player;
         player = new Player(playerHand, playerPlayHand, playerDeck, playerDice, playerEnergyBar, playerTurnDelegate);
@@ -160,6 +163,17 @@ public partial class Game : Node, IGame
         return this.turnManager.IsPlayerTurn;
     }
 
+    private void PlayerDeckClicked()
+    {
+        if (!IsPlayerTurn())
+        {
+            return;
+        }
+
+        ICommand drawCardFromDeckCommand = new DrawCardFromDeckCommand(this.player);
+        actionManager.ExecuteAction(drawCardFromDeckCommand);
+    }
+
     private void PlayerDiceClicked()
     {
         if (!IsPlayerTurn())
@@ -189,7 +203,6 @@ public partial class Game : Node, IGame
         GetNode<Dice>("GameUI/PlayerDice").Clicked += PlayerDiceClicked;
         GetNode<Button>("MarginContainer/VBoxContainer/EndTurn").Pressed += EndTurnPressed;
 
-        SetupPlayers();
         SetupCampaign(1);
         return;
 
