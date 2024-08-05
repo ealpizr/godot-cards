@@ -1,4 +1,6 @@
+using System.Windows.Input;
 using Godot;
+using GodotCards.DesignPatterns.Command;
 using GodotCards.DesignPatterns.Observer;
 
 public enum GameMode
@@ -20,6 +22,7 @@ public partial class Game : Node, IGame
 	int currentLevel;
 
 	private PuntuacionFactory _puntuacionFactory = new PuntuacionJugadorFactory();
+	public GodotCards.DesignPatterns.Command.ICommand _attackCommand;
 
 	private void SetupPlayers()
 	{
@@ -89,6 +92,12 @@ public partial class Game : Node, IGame
 	private void _on_end_turn_pressed()
 	{
 		this.turnManager.EndTurn();
+	}
+
+	private void _on_attack_button_pressed()
+	{
+		_attackCommand = new AttackCommand(player, opponent);
+		_attackCommand.Execute();
 	}
 
 	public void Start()

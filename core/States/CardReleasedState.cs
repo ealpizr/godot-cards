@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class CardReleasedState : CardStateBase
@@ -70,7 +71,6 @@ public partial class CardReleasedState : CardStateBase
 			// verification process to see if the targets are in the game field.
 			if (Card.Targets[0].GetParent().Name == "GameUI")
 			{
-				// moves the card to the the selected play zone.
 				HBoxContainer playerContainer = Card.Targets[0].GetNode<HBoxContainer>("PlayerPlayHand");
 				HBoxContainer opponentContainer =  Card.Targets[0].GetNode<HBoxContainer>("OpponentPlayHand");
 
