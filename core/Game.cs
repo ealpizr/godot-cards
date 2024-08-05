@@ -150,7 +150,8 @@ public partial class Game : Node
     {
         this.gameMode = GameMode.Campaign;
         this.SetupPlayers();
-        Campaign campaign = new Campaign(level, this.opponent, this.turnManager, this.actionManager);
+        HBoxContainer playArea = GetNode<HBoxContainer>("GameUI/OpponentDropArea/OpponentPlayHand");
+        Campaign campaign = new Campaign(level, this.opponent, this.turnManager, this.actionManager, playArea);
         this.opponent = campaign.GetCPUPlayer();
 
         SetupAndStartTurnManager(Turn.Opponent);

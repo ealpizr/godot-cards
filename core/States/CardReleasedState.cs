@@ -65,10 +65,8 @@ public partial class CardReleasedState : CardStateBase
 			if (Card.Targets[0].GetParent().Name == "GameUI")
 			{
 				HBoxContainer playerContainer = Card.Targets[0].GetNode<HBoxContainer>("PlayerPlayHand");
-				HBoxContainer opponentContainer =  Card.Targets[0].GetNode<HBoxContainer>("OpponentPlayHand");
 
 				((GameField) Card.Targets[0].GetParent()).EmitSignal(GameField.SignalName.ReparentToHboxContainer, Card, playerContainer);
-				((GameField) Card.Targets[0].GetParent()).EmitSignal(GameField.SignalName.ReparentToHboxContainer, Card, opponentContainer);
 			}
 			Card.DropPointDetector.Monitoring = false;
 			

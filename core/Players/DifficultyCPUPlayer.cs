@@ -24,6 +24,20 @@ public partial class DifficultyCPUPlayer : CustomCPUPlayer
         ICommand rollDiceCommand = new RollDiceCommand(this);
         actionManager.ExecuteAction(rollDiceCommand);
 
+        ICommand drawCardFromDeckCommand = new DrawCardFromDeckCommand(this);
+        actionManager.ExecuteAction(drawCardFromDeckCommand);
+
+        // Executing strategy based on the current state of the game.
+        this.PlayHand.Cards = this.Strategy.PlanAttack((Player)this.interactable, (PlayerBase)this.interactable);
+
+        GD.Print("Playing cards on the field.", this.Hand.Cards.Count);
+        // Place cards on the field.
+        foreach (Card card in this.PlayHand.Cards)
+        {
+            ICommand placeCardOnFieldCommand = new PlayCardCommand(this, card);
+            actionManager.ExecuteAction(placeCardOnFieldCommand);
+        }
+        
         ICommand endTurnCommand = new EndTurnCommand(this.turnManager);
         actionManager.ExecuteAction(endTurnCommand);
     }
