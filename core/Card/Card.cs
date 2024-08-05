@@ -1,4 +1,5 @@
-using Godot;
+﻿using Godot;
+using godotcards.core.Api;
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +13,6 @@ public partial class Card : aCard
 
 	// Card properties
 	public ColorRect ColorRect { get; private set; }
-	public Label Label { get; private set; }
 	public Area2D DropPointDetector { get; private set; }
 	public List<Node> Targets { get; private set; } = new List<Node>();
 	private IStateMachine cardStateMachine;
@@ -26,6 +26,10 @@ public partial class Card : aCard
 
 	public Card()
 	{
+		// Initialize properties
+		Name = "";
+        Description = "";
+		Icon = GD.Load<Texture2D>("res://assets/card_characters/image_0.png");
 		Name = "Card";
 		Description = "Description";
 		Icon = null;
@@ -33,6 +37,7 @@ public partial class Card : aCard
 		AttackPoints = 0;
 		DefensePoints = 0;
 		HealthPoints = 0;
+		IsAttacking = false;
 	}
 	// Constructor
 	public Card(String name, String description, int pEnergyCost, int pAttackPoints, int pDefensePoints, int pHealthPoints)
@@ -51,12 +56,17 @@ public partial class Card : aCard
 	{
 		// Get references to child nodes
 		ColorRect = GetNode<ColorRect>("CardShape/Color");
-		Label = GetNode<Label>("CardShape/Label");
-		DropPointDetector = GetNode<Area2D>("DropPointDetector");
-		CardShape = GetNode<Control>("CardShape");
-		Rarity = GetNode<Label>("CardShape/Rarity");
+        GetNode<TextureRect>("CardShape/Color/Image").Texture = Icon;
+        GetNode<Label>("CardShape/Color/Name").Text = Name;
+        GetNode<Label>("CardShape/Color/Attack").Text = $"⚔ {AttackPoints.ToString()}";
+        GetNode<Label>("CardShape/Color/Health").Text = $"❤ {HealthPoints.ToString()}";
+        GetNode<Label>("CardShape/Color/ManaCost").Text = EnergyCost.ToString();
 
-		Rarity.Text = "Common";
+
+        DropPointDetector = GetNode<Area2D>("DropPointDetector");
+		CardShape = GetNode<Control>("CardShape");
+
+		Rarity = CardRarity.Common;
 
 		// Learning point: I was debugging why the card shape was on the way of the mouse event detection from the droppointdector.
 		// this control had a handler for the mouse events, so it was handling first the mouse events and the other didn't get the chance to handle it.

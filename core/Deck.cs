@@ -5,12 +5,16 @@ using System.Collections.Generic;
 
 public partial class Deck : Control
 {
-	public Array<Card> cards;
+	public Stack<Card> Cards = new Stack<Card>();
 
 	public PlayerBase Player { get; set; }
 
+		// Most likely don't need this
 	[Signal]
 	public delegate void LoadCardsEventHandler(Array<Card> cardsList);
+
+	[Signal]
+	public delegate void ClickEventHandler();
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -21,32 +25,11 @@ public partial class Deck : Control
 	{
 		if (e is InputEventMouseButton mouseButton)
 		{
-			if (mouseButton.ButtonIndex == MouseButton.Left && mouseButton.IsPressed() && e.IsPressed() && this.Name == "PlayerDeck")
+			if (mouseButton.ButtonIndex == MouseButton.Left && mouseButton.IsPressed() && e.IsPressed())
 			{
 				if (GetRect().HasPoint(((InputEventMouseButton)e).Position)) {
-					GD.Print("Card selected:", this.cards.Count);
-					cards[0].CustomMinimumSize = new Vector2(100, 150);
-
-					// Load a new card scene and populate it with the card data
-					Card card = Player.Hand.Cards[0].Duplicate() as Card;
-
-					// population
-					aCard reference = cards[0];
-					card.Name = reference.Name;
-					card.Description = reference.Description;
-					card.AttackPoints = reference.AttackPoints;
-					card.DefensePoints= reference.DefensePoints;
-					card.HealthPoints = reference.HealthPoints;
-					card.EnergyCost = reference.EnergyCost;
-					GD.Print(reference.Rarity.Text);
-					card.RarityValue = reference.RarityValue;
-					card.Icon = reference.Icon;
-					card.eliminationPoints = reference.eliminationPoints;
-					card.Puntos = reference.Puntos;
-					card.IsSelected = reference.IsSelected;
-
-					Player.Hand.AddCard((Card)card);
-					GD.Print(Player.Hand.GetChildCount());
+					GD.Print("Deck clicked" + this.Name);
+					EmitSignal(nameof(SignalName.Click));
 				}
 			}
 		}
@@ -54,9 +37,14 @@ public partial class Deck : Control
 
 	public void LoadCardsToDeck(Array<Card> cardsList)
 	{
-		cards = cardsList;
-		Label label = GetChild<Label>(1);
-		label.Text = cards.Count.ToString();
+		Cards = new Stack<Card>(cardsList);
+        RenderDeck();
 	}
+
+	public void RenderDeck()
+    {
+        Label label = GetChild<Label>(1);
+        label.Text = Cards.Count.ToString();
+    }
 
 }

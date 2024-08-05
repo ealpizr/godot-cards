@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using Godot.Collections;
+using GodotCards.DesignPatterns.Command;
 using GodotCards.DesignPatterns.Observer;
 
 public partial class Campaign
@@ -19,9 +20,9 @@ public partial class Campaign
         {5, Difficulty.Hard}, // Should be boss
     };
 
-    public Campaign(int level, PlayerBase player, TurnManager turnManager)
+    public Campaign(int level, PlayerBase player, TurnManager turnManager, ActionManager actionManager)
     {
-        cpuPlayer = new DifficultyCPUPlayer(player, turnManager);
+        cpuPlayer = new DifficultyCPUPlayer(player, turnManager, actionManager);
         cpuPlayer.ChangeLevel(difficultyMap[level]);
     }
 

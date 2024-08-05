@@ -20,6 +20,9 @@ public class CardData
 	[JsonPropertyName("attack")]
 	public int Attack { get; set; }
 	
+	[JsonPropertyName("defense")]
+	public int Defense { get; set; }
+	
 	[JsonPropertyName("health")]
 	public int Health { get; set; }
 	
@@ -82,10 +85,10 @@ public partial class Shop : Control
 		Button exitButton = GetNode<Button>("ExitToMenuButton");
 		exitButton.Connect("pressed", new Callable(this, nameof(OnExitToMenuButtonPressed)));
 		
-		cCoins = 1000; // Ejemplo inicial
+		cCoins = 1000;
 
-		// Obtén la referencia al nodo Coins para actualizar el UI
-		coinsUI = GetNode<Coins>("CoinsUI"); // Asegúrate de que el nodo Coins tenga este nombre
+		
+		coinsUI = GetNode<Coins>("CoinsUI"); 
 		UpdateUI();
 	}
 
@@ -171,7 +174,7 @@ public partial class Shop : Control
 		{
 			PackedScene cardScene = GD.Load<PackedScene>("res://scenes/Shop_card.tscn");
 			ShopCard cardNode = (ShopCard)cardScene.Instantiate();
-			((ShopCard)cardNode).SetCardData(card.ID, card.Name, card.Cost, card.Attack, card.Health, card.Description, card.Rarity, card.ManaCost, card.Type, card.Image);
+			((ShopCard)cardNode).SetCardData(card.ID, card.Name, card.Cost, card.Attack, card.Defense, card.Health, card.Description, card.Rarity, card.ManaCost, card.Type, card.Image);
 			cardNode.SetShopReference(this);
 			cardHBoxContainer.AddChild(cardNode);
 		}

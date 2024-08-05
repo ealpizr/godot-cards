@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class CardReleasedState : CardStateBase
@@ -7,7 +8,6 @@ public partial class CardReleasedState : CardStateBase
 	public override void Enter()
 	{
 		Card.ColorRect.Color = Colors.DarkViolet;
-		Card.Label.Text = "Released";
 
 		if (Card.Targets.Count > 0)
 		{
@@ -24,37 +24,35 @@ public partial class CardReleasedState : CardStateBase
 				if (Card.isAttackPosition)
 				{
 					Card.isAttackPosition = false;
-					Card.Label.Text = "Defense";
 
 					Card.CardShape.PivotOffset = Card.Size / 2;
-					Card.Label.PivotOffset = Card.Size / 2;
 
 					Card.CardShape.RotationDegrees = 90;
-					Card.Label.RotationDegrees = -90;
 				}
 				else
 				{
 					Card.isAttackPosition = true;
 
 					Card.CardShape.PivotOffset = Card.Size / 2;
-					Card.Label.PivotOffset = Card.Size / 2;
 
-					Card.Label.Text = "Attack";
 					Card.CardShape.RotationDegrees = 0;
-					Card.Label.RotationDegrees = -0;
 				}
 			}
 			else if (mouseButton.ButtonIndex == MouseButton.Right && mouseButton.IsPressed() && Card.IsSelected)  
 			{
 				if (Card.isAttackPosition) 
 				{
-					Card.ColorRect.Color = new Color(193, 0, 255, 1);
-					
+					if (!Card.IsAttacking) 
+					{
+						Card.ColorRect.Color = Colors.PaleVioletRed;
+						Card.IsAttacking = true;
+					} 
+					else 
+					{
+						Card.ColorRect.Color = Colors.DarkViolet;
+						Card.IsAttacking = false;
+					}
 				} 
-				else 
-				{
-
-				}
 			}
 		}
 
@@ -64,9 +62,11 @@ public partial class CardReleasedState : CardStateBase
 			// verification process to see if the targets are in the game field.
 			if (Card.Targets[0].GetParent().Name == "GameUI")
 			{
-				// moves the card to the the selected play zone.
-				HBoxContainer hBoxContainer = Card.Targets[0].GetNode<HBoxContainer>("PlayerPlayHand");
-				((GameField) Card.Targets[0].GetParent()).EmitSignal(GameField.SignalName.ReparentToHboxContainer, Card, hBoxContainer);
+				HBoxContainer playerContainer = Card.Targets[0].GetNode<HBoxContainer>("PlayerPlayHand");
+				HBoxContainer opponentContainer =  Card.Targets[0].GetNode<HBoxContainer>("OpponentPlayHand");
+
+				((GameField) Card.Targets[0].GetParent()).EmitSignal(GameField.SignalName.ReparentToHboxContainer, Card, playerContainer);
+				((GameField) Card.Targets[0].GetParent()).EmitSignal(GameField.SignalName.ReparentToHboxContainer, Card, opponentContainer);
 			}
 			Card.DropPointDetector.Monitoring = false;
 			
