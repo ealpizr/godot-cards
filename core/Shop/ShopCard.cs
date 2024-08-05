@@ -16,6 +16,8 @@ public partial class ShopCard : Control
 	private string cardImage;
 
 	private Shop shop;
+	private Label descriptionLabel;
+	private ColorRect colorOverlay;
 
 	public override void _Ready()
 	{
@@ -23,8 +25,7 @@ public partial class ShopCard : Control
 
 		Button buyButton = GetNode<Button>("BuyButton");
 		buyButton.Connect("pressed", new Callable(this, nameof(OnBuyButtonPressed)));
-
-		// Busca el nodo Shop en la jerarquía de padres
+		
 		Node parent = GetParent();
 		while (parent != null && !(parent is Shop))
 		{
@@ -35,6 +36,27 @@ public partial class ShopCard : Control
 		{
 			shop = foundShop;
 		}
+
+		descriptionLabel = GetNode<Label>("Background/Description");
+		descriptionLabel.Visible = false;
+
+		colorOverlay = GetNode<ColorRect>("Background/ColorOverlay");
+		colorOverlay.Visible = false;
+		
+		Connect("mouse_entered", new Callable(this, nameof(_on_mouse_entered)));
+		Connect("mouse_exited", new Callable(this, nameof(_on_mouse_exited)));
+	}
+
+	private void _on_mouse_entered()
+	{
+		descriptionLabel.Visible = true;
+		colorOverlay.Visible = true;
+	}
+
+	private void _on_mouse_exited()
+	{
+		descriptionLabel.Visible = false;
+		colorOverlay.Visible = false;
 	}
 
 	public void SetCardData(int id, string name, int cost, int attack, int defense, int health, string description, string rarity, int manacost, string type, string image)
@@ -51,36 +73,23 @@ public partial class ShopCard : Control
 		cardType = type;
 		cardImage = image;
 
-		Label idLabel = GetNode<Label>("Container/ID");
-		Label nameLabel = GetNode<Label>("Container/Name");
-		Label costLabel = GetNode<Label>("Container/Cost");
-		Label attackLabel = GetNode<Label>("Container/Attack");
-		Label defenseLabel = GetNode<Label>("Container/Defense");
-		Label healthLabel = GetNode<Label>("Container/Health");
-		Label descriptionLabel = GetNode<Label>("Container/Description");
-		Label rarityLabel = GetNode<Label>("Container/Rarity");
-		Label manacostLabel = GetNode<Label>("Container/Mana");
-		Label typeLabel = GetNode<Label>("Container/Type");
-		TextureRect imageRect = GetNode<TextureRect>("Container/ImageRect");
-
-		idLabel.Text = id.ToString();
-		nameLabel.Text = name;
-		costLabel.Text = cost.ToString();
-		attackLabel.Text = attack.ToString();
-		defenseLabel.Text = defense.ToString();
-		healthLabel.Text = health.ToString();
-		descriptionLabel.Text = description;
-		rarityLabel.Text = rarity;
-		manacostLabel.Text = manacost.ToString();
-		typeLabel.Text = type;
-		Texture2D texture = (Texture2D)GD.Load(cardImage);
-		imageRect.Texture = texture;
+		GetNode<TextureRect>("Background/Image").Texture = GD.Load<Texture2D>(cardImage);
+		GetNode<Label>("Background/Name").Text = cardName;
+		GetNode<Label>("Background/Cost").Text = $"🪙 {cardCost.ToString()}";
+		GetNode<Label>("Background/Attack").Text = $"⚔ {cardAttack.ToString()}";
+		GetNode<Label>("Background/Defense").Text = $"🛡️ {cardDefense.ToString()}";
+		GetNode<Label>("Background/Health").Text = $"❤ {cardHealth.ToString()}";
+		GetNode<Label>("Background/Description").Text = cardDescription;
+		GetNode<Label>("Background/Rarity").Text = cardRarity;
+		GetNode<Label>("Background/ManaCost").Text = cardManaCost.ToString();
+		GetNode<Label>("Background/Type").Text = cardType;
+		GetNode<Label>("Background/ID").Text = cardID.ToString();
 	}
 	
 	public void SetShopReference(Shop shopRef)
-{
-	shop = shopRef;
-}
+	{
+		shop = shopRef;
+	}
 
 	private void OnBuyButtonPressed()
 	{

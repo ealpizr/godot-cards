@@ -32,7 +32,7 @@ public class CardData
 	[JsonPropertyName("rarity")]
 	public string Rarity { get; set; }
 	
-	[JsonPropertyName("manacost")]
+	[JsonPropertyName("manaCost")]
 	public int ManaCost { get; set; }
 	
 	[JsonPropertyName("type")]

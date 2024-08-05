@@ -20,7 +20,7 @@ public partial class Inventory : Control
 	private async void LoadPlayerDice()
 	{
 		IApiRpc rpcReponse = await _client.RpcAsync(_session, "GetUserDice");
-        godotcards.core.Api.Dice dice = JsonSerializer.Deserialize<godotcards.core.Api.Dice>(rpcReponse.Payload);
+		godotcards.core.Api.Dice dice = JsonSerializer.Deserialize<godotcards.core.Api.Dice>(rpcReponse.Payload);
 
 		GetNode<Label>("VBoxContainer/HBoxContainer/ColorRect/HBoxContainer/VBoxContainer/Label2").Text = dice.Name;
 		GetNode<Label>("VBoxContainer/HBoxContainer/ColorRect/HBoxContainer/VBoxContainer/Label").Text = dice.Description;
