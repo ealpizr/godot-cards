@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public partial class Deck : Control
 {
-	public Array<Card> cards;
+	public Stack<Card> cards = new Stack<Card>();
 
 	[Signal]
 	public delegate void LoadCardsEventHandler(Array<Card> cardsList);
@@ -30,7 +30,7 @@ public partial class Deck : Control
 
 	public void LoadCardsToDeck(Array<Card> cardsList)
 	{
-		cards = cardsList;
+		cards = new Stack<Card>(cardsList);
 		Label label = GetChild<Label>(1);
 		label.Text = cards.Count.ToString();
 	}
