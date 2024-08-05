@@ -1,13 +1,33 @@
-[gd_scene load_steps=10 format=3 uid="uid://bh3labrgxts1s"]
+[gd_scene load_steps=12 format=3 uid="uid://cwaexycylddrq"]
 
-[ext_resource type="Theme" uid="uid://dg5a4ijak5tgo" path="res://theme.tres" id="1_a56tg"]
-[ext_resource type="Script" path="res://core/Card/Card.cs" id="2_bkaqj"]
-[ext_resource type="Texture2D" uid="uid://htho7bbncj0e" path="res://assets/card_characters/image_0.png" id="3_nvv3w"]
-[ext_resource type="Script" path="res://core/Card/CardStateMachine.cs" id="3_xnp3a"]
-[ext_resource type="Script" path="res://core/States/CardIdleState.cs" id="4_xa3ls"]
-[ext_resource type="Script" path="res://core/States/CardClickedState.cs" id="5_vkwn3"]
-[ext_resource type="Script" path="res://core/States/CardDraggingState.cs" id="6_otr84"]
-[ext_resource type="Script" path="res://core/States/CardReleasedState.cs" id="7_odobm"]
+[ext_resource type="Theme" uid="uid://dg5a4ijak5tgo" path="res://theme.tres" id="1_l6ouj"]
+[ext_resource type="Script" path="res://core/Card/Card.cs" id="2_j4b73"]
+[ext_resource type="Texture2D" uid="uid://htho7bbncj0e" path="res://assets/card_characters/image_0.png" id="3_y0qg8"]
+[ext_resource type="Script" path="res://core/Card/CardStateMachine.cs" id="4_ml82t"]
+[ext_resource type="Script" path="res://core/States/CardIdleState.cs" id="5_kyk5r"]
+[ext_resource type="Script" path="res://core/States/CardClickedState.cs" id="6_0llr4"]
+[ext_resource type="Script" path="res://core/States/CardDraggingState.cs" id="7_yimvu"]
+[ext_resource type="Script" path="res://core/States/CardReleasedState.cs" id="8_1djta"]
+
+[sub_resource type="FontFile" id="FontFile_4wpm1"]
+cache/0/8/0/ascent = 0.0
+cache/0/8/0/descent = 0.0
+cache/0/8/0/underline_position = 0.0
+cache/0/8/0/underline_thickness = 0.0
+cache/0/8/0/scale = 1.0
+cache/0/8/0/kerning_overrides/8/0 = Vector2(0, 0)
+cache/0/8/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/8/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_h8fv1"]
+font = SubResource("FontFile_4wpm1")
+font_size = 8
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_egjmp"]
 size = Vector2(99, 149)
@@ -23,8 +43,8 @@ offset_bottom = -570.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(0, 70)
-theme = ExtResource("1_a56tg")
-script = ExtResource("2_bkaqj")
+theme = ExtResource("1_l6ouj")
+script = ExtResource("2_j4b73")
 
 [node name="CardShape" type="Control" parent="."]
 anchors_preset = 0
@@ -51,9 +71,25 @@ offset_top = -9.0
 offset_right = 16.5
 offset_bottom = 94.0
 grow_horizontal = 2
-texture = ExtResource("3_nvv3w")
+texture = ExtResource("3_y0qg8")
 expand_mode = 2
 stretch_mode = 5
+
+[node name="RarityLabel" type="Label" parent="CardShape/Color"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -72.0
+offset_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 11
+text = "Común"
+label_settings = SubResource("LabelSettings_h8fv1")
+autowrap_mode = 2
+uppercase = true
 
 [node name="Name" type="Label" parent="CardShape/Color"]
 layout_mode = 1
@@ -127,25 +163,24 @@ collision_mask = 2
 monitorable = false
 
 [node name="CollisionShape" type="CollisionShape2D" parent="DropPointDetector"]
-visible = false
 position = Vector2(50.5, 75.5)
 shape = SubResource("RectangleShape2D_egjmp")
 
 [node name="CardStateMachine" type="Node" parent="." node_paths=PackedStringArray("initialState")]
-script = ExtResource("3_xnp3a")
+script = ExtResource("4_ml82t")
 initialState = NodePath("CardIdleState")
 
 [node name="CardIdleState" type="Node" parent="CardStateMachine"]
-script = ExtResource("4_xa3ls")
+script = ExtResource("5_kyk5r")
 
 [node name="CardClickedState" type="Node" parent="CardStateMachine"]
-script = ExtResource("5_vkwn3")
+script = ExtResource("6_0llr4")
 State = 1
 
 [node name="CardDraggingState" type="Node" parent="CardStateMachine"]
-script = ExtResource("6_otr84")
+script = ExtResource("7_yimvu")
 State = 2
 
 [node name="CardReleasedState" type="Node" parent="CardStateMachine"]
-script = ExtResource("7_odobm")
+script = ExtResource("8_1djta")
 State = 3

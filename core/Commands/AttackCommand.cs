@@ -20,8 +20,8 @@ public class AttackCommand : ICommand
 
     public void Execute()
     {
-        Card playerCard = null;
-		Card opponentCard = null;
+        aCard playerCard = null;
+		aCard opponentCard = null;
 
 		for (int i = 0; i < _player.Hand.Cards.Count; i++) {
 			if (_player.Hand.Cards[i].IsAttacking) {
@@ -37,5 +37,11 @@ public class AttackCommand : ICommand
 		
 		opponentCard.DefensePoints -= playerCard.AttackPoints;
         GD.Print("Attack success");
+
+        if (opponentCard.DefensePoints <= 0) {
+            playerCard.OnCardEliminated(_opponent);
+        }
+
+        GD.Print("Losed " + _opponent.Points + " points");
     }
 }

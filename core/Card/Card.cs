@@ -8,8 +8,6 @@ public partial class Card : aCard
 	// Signals are used to communicate between nodes
 	// We need this one because when a card is dragged, it needs to be reparented to the root node,
 	// otherwise it will be restricted to the Hand's container.
-	[Signal]
-	public delegate void ReparentRequestedEventHandler(Card card);
 
 	// Card properties
 	public ColorRect ColorRect { get; private set; }
@@ -125,5 +123,33 @@ public partial class Card : aCard
 	{
 		player.Points -= eliminationPoints;
 	}
+
+    public override void Init(aCard c, godotcards.core.Api.Card card)
+    {
+		c.Name = card.Name;
+		c.Description = card.Description;
+		c.Icon = GD.Load<Texture2D>(card.Image);
+		c.EnergyCost = card.ManaCost;
+		c.AttackPoints = card.Attack;
+		c.DefensePoints = 0;
+		c.HealthPoints = card.Health;
+
+		switch (card.Rarity)
+		{
+			case "Común":
+				c.Rarity = CardRarity.Common;
+				break;
+			case "Rara":
+				c.Rarity = CardRarity.Normal;
+				break;
+			case "Élite":
+				c.Rarity = CardRarity.Elite;
+				break;
+			case "Legendaria":
+				c.Rarity = CardRarity.Legendary;
+				break;
+		}
+    }
+
 }
 

@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 public partial class Deck : Control
 {
-	public Stack<Card> Cards = new Stack<Card>();
+	public Stack<aCard> Cards = new Stack<aCard>();
 
 	public PlayerBase Player { get; set; }
 
 		// Most likely don't need this
 	[Signal]
-	public delegate void LoadCardsEventHandler(Array<Card> cardsList);
+	public delegate void LoadCardsEventHandler(Array<aCard> cardsList);
 
 	[Signal]
 	public delegate void ClickEventHandler();
@@ -35,9 +35,9 @@ public partial class Deck : Control
 		}
 	}
 
-	public void LoadCardsToDeck(Array<Card> cardsList)
+	public void LoadCardsToDeck(Array<aCard> cardsList)
 	{
-		Cards = new Stack<Card>(cardsList);
+		Cards = new Stack<aCard>(cardsList);
         RenderDeck();
 	}
 

@@ -3,7 +3,7 @@ using Godot.Collections;
 
 public partial class Hand : HBoxContainer
 {
-	public Array<Card> Cards = new Array<Card>();
+	public Array<aCard> Cards = new Array<aCard>();
 	public bool HandStatus { get; set; }
 	public override void _Ready()
 	{
@@ -18,7 +18,7 @@ public partial class Hand : HBoxContainer
 		}
 	}
 
-	public void AddCard(Card card)
+	public void AddCard(aCard card)
 	{
 		Cards.Add(card);
 		card.ReparentRequested += OnReparentRequested;
@@ -28,29 +28,29 @@ public partial class Hand : HBoxContainer
     {
         foreach (Node child in GetChildren())
         {
-            if (child is Card card)
+            if (child is aCard card)
             {
                 RemoveChild(card);
             }
         }
     }
 
-	public void LoadInitialCards(Array<Card> cardsList)
+	public void LoadInitialCards(Array<aCard> cardsList)
     {
 		RemoveAllCards();
 
-        foreach (Card card in cardsList)
+        foreach (aCard card in cardsList)
         {			
             AddChild(card);
         }
     }
 
-	public void RemoveCard(Card card)
+	public void RemoveCard(aCard card)
     {
         card.Dispose();
     }
 	
-	private void OnReparentRequested(Card card)
+	private void OnReparentRequested(aCard card)
 	{
 		card.Reparent(this);
 	}

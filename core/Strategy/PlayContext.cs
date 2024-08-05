@@ -20,7 +20,7 @@ public class PlayContext
         this._strategy = strategy;
     }
 
-    public Array<Card> PlanAttack(Player player, PlayerBase currentPlayer)
+    public Array<aCard> PlanAttack(Player player, PlayerBase currentPlayer)
     {
         return this._strategy.PlanAttack(player, currentPlayer);
     }
