@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using godotcards.core.Api;
 using GodotCards.DesignPatterns.Command;
 using GodotCards.DesignPatterns.Observer;
 using Nakama;
@@ -30,6 +29,7 @@ public partial class Game : Node, IGame
     int currentLevel;
 
     private PuntuacionFactory _puntuacionFactory = new PuntuacionJugadorFactory();
+    public GodotCards.DesignPatterns.Command.ICommand _attackCommand;
 
     private Card BuildGameCard(godotcards.core.Api.Card card)
     {
@@ -71,7 +71,7 @@ public partial class Game : Node, IGame
         while (deck.Count < 60)
         {
             int randomIndex = new Random().Next(0, userDeck.Length);
-            if(deck.Contains(BuildGameCard(userDeck[randomIndex])))
+            if (deck.Contains(BuildGameCard(userDeck[randomIndex])))
             {
                 continue;
             }
@@ -221,6 +221,12 @@ public partial class Game : Node, IGame
         this.turnManager.EndTurn();
     }
 
+    private void _on_attack_button_pressed()
+    {
+        _attackCommand = new AttackCommand(player, opponent);
+        _attackCommand.Execute();
+    }
+
     public void Start()
     {
         //this.player = new Player();
@@ -230,7 +236,7 @@ public partial class Game : Node, IGame
         // here the game has a predefined amount of players and it's easy as assigning.  
 
         player.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("PlayerPlayHand");
-        opponent.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("OppoPlayHand");
+        opponent.PlayingFieldContainer = GetNode("GameUI/CardDropArea").GetNode<HBoxContainer>("OpponentPlayHand");
 
         player.Hand = GetNode<Hand>("GameUI/Hand");
         opponent.Hand = GetNode<Hand>("GameUI/HandOther");

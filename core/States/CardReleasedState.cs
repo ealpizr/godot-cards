@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class CardReleasedState : CardStateBase
@@ -48,13 +49,19 @@ public partial class CardReleasedState : CardStateBase
 			{
 				if (Card.isAttackPosition) 
 				{
-					Card.ColorRect.Color = new Color(193, 0, 255, 1);
-					
+					if (!Card.IsAttacking) 
+					{
+						Card.ColorRect.Color = Colors.PaleVioletRed;
+						Card.Label.Text = "Attacking";
+						Card.IsAttacking = true;
+					} 
+					else 
+					{
+						Card.ColorRect.Color = Colors.DarkViolet;
+						Card.Label.Text = "Attack";
+						Card.IsAttacking = false;
+					}
 				} 
-				else 
-				{
-
-				}
 			}
 		}
 
@@ -64,9 +71,11 @@ public partial class CardReleasedState : CardStateBase
 			// verification process to see if the targets are in the game field.
 			if (Card.Targets[0].GetParent().Name == "GameUI")
 			{
-				// moves the card to the the selected play zone.
-				HBoxContainer hBoxContainer = Card.Targets[0].GetNode<HBoxContainer>("PlayerPlayHand");
-				((GameField) Card.Targets[0].GetParent()).EmitSignal(GameField.SignalName.ReparentToHboxContainer, Card, hBoxContainer);
+				HBoxContainer playerContainer = Card.Targets[0].GetNode<HBoxContainer>("PlayerPlayHand");
+				HBoxContainer opponentContainer =  Card.Targets[0].GetNode<HBoxContainer>("OpponentPlayHand");
+
+				((GameField) Card.Targets[0].GetParent()).EmitSignal(GameField.SignalName.ReparentToHboxContainer, Card, playerContainer);
+				((GameField) Card.Targets[0].GetParent()).EmitSignal(GameField.SignalName.ReparentToHboxContainer, Card, opponentContainer);
 			}
 			Card.DropPointDetector.Monitoring = false;
 			//EmitSignal(SignalName.TransitionRequested, this, Variant.From(CardState.Idle));

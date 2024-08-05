@@ -36,6 +36,7 @@ public partial class Card : aCard
 		DefensePoints = 0;
 		HealthPoints = 0;
 		Rarity = CardRarity.Common; // Default value
+		IsAttacking = false;
 	}
 
 	public override void _Ready()

@@ -7,6 +7,7 @@ public partial class ShopCard : Control
 	private string cardName;
 	private int cardCost;
 	private int cardAttack;
+	private int cardDefense;
 	private int cardHealth;
 	private string cardDescription;
 	private string cardRarity;
@@ -36,12 +37,13 @@ public partial class ShopCard : Control
 		}
 	}
 
-	public void SetCardData(int id, string name, int cost, int attack, int health, string description, string rarity, int manacost, string type, string image)
+	public void SetCardData(int id, string name, int cost, int attack, int defense, int health, string description, string rarity, int manacost, string type, string image)
 	{
 		cardID = id;
 		cardName = name;
 		cardCost = cost;
 		cardAttack = attack;
+		cardDefense = defense;
 		cardHealth = health;
 		cardDescription = description;
 		cardRarity = rarity;
@@ -53,6 +55,7 @@ public partial class ShopCard : Control
 		Label nameLabel = GetNode<Label>("Container/Name");
 		Label costLabel = GetNode<Label>("Container/Cost");
 		Label attackLabel = GetNode<Label>("Container/Attack");
+		Label defenseLabel = GetNode<Label>("Container/Defense");
 		Label healthLabel = GetNode<Label>("Container/Health");
 		Label descriptionLabel = GetNode<Label>("Container/Description");
 		Label rarityLabel = GetNode<Label>("Container/Rarity");
@@ -64,6 +67,7 @@ public partial class ShopCard : Control
 		nameLabel.Text = name;
 		costLabel.Text = cost.ToString();
 		attackLabel.Text = attack.ToString();
+		defenseLabel.Text = defense.ToString();
 		healthLabel.Text = health.ToString();
 		descriptionLabel.Text = description;
 		rarityLabel.Text = rarity;

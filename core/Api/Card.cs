@@ -23,6 +23,9 @@ namespace godotcards.core.Api
 
 		[JsonPropertyName("attack")]
 		public int Attack { get; set; }
+		
+		[JsonPropertyName("defense")]
+		public int Defense { get; set; }
 
 		[JsonPropertyName("health")]
 		public int Health { get; set; }
