@@ -52,6 +52,8 @@ public partial class CardReleasedState : CardStateBase
 						Card.ColorRect.Color = Colors.DarkViolet;
 						Card.IsAttacking = false;
 					}
+
+					GD.Print("Attack position: " + Card.IsAttacking);
 				} 
 			}
 		}

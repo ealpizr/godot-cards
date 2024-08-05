@@ -26,7 +26,7 @@ public partial class EliteCard : CardDecorator
         };
 
 		label.AddThemeFontSizeOverride("font_size", 10);
-		c.AddChild(label);
+		c.GetNode("CardShape").AddChild(label);
 		c.Rarity = CardRarity.Elite;
 
 		this.card.eliminationPoints += 2;

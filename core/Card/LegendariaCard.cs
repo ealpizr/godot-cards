@@ -26,7 +26,7 @@ public partial class LegendariaCard : CardDecorator
         };
 
 		label.AddThemeFontSizeOverride("font_size", 10);
-		c.AddChild(label);
+		c.GetNode("CardShape").AddChild(label);
 		c.Rarity = CardRarity.Legendary;
 
 		this.card.eliminationPoints += 4;
