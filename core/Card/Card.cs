@@ -13,7 +13,7 @@ public partial class Card : aCard
 	public ColorRect ColorRect { get; private set; }
 	public Area2D DropPointDetector { get; private set; }
 	public List<Node> Targets { get; private set; } = new List<Node>();
-	private IStateMachine cardStateMachine;
+	public IStateMachine cardStateMachine;
 
 	// added a control to seperate the card shape from the card itself because the hboxcontainer always resets the position of the card and for some
 	// reason the rotation! therefore it was better to handle the rotation inside the CardUI and leave the control CardUI for reparenting/state logic purposes.

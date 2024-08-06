@@ -1,4 +1,6 @@
+using System;
 using Godot;
+using Godot.Collections;
 using GodotCards.DesignPatterns.Command;
 using GodotCards.DesignPatterns.Observer;
 using Microsoft.VisualBasic;
@@ -28,11 +30,11 @@ public partial class DifficultyCPUPlayer : CustomCPUPlayer
         actionManager.ExecuteAction(drawCardFromDeckCommand);
 
         // Executing strategy based on the current state of the game.
-        this.PlayHand.Cards = this.Strategy.PlanAttack((Player)this.interactable, (PlayerBase)this.interactable);
+        Array<aCard> cardsToPlay = this.Strategy.PlanAttack((Player)this.interactable, (PlayerBase)this.interactable);
 
-        GD.Print("Playing cards on the field.", this.Hand.Cards.Count);
+        GD.Print("Playing cards from strategy.", cardsToPlay.Count);
         // Place cards on the field.
-        foreach (Card card in this.PlayHand.Cards)
+        foreach (Card card in cardsToPlay)
         {
             ICommand placeCardOnFieldCommand = new PlayCardCommand(this, card);
             actionManager.ExecuteAction(placeCardOnFieldCommand);

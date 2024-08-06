@@ -123,7 +123,7 @@ public partial class Game : Node
         player = new Player(playerHand, playerPlayHand, playerDeck, playerDice, playerEnergyBar, playerTurnDelegate);
 
         Hand opponentHand = GetNode<Hand>("GameUI/OpponentHand");
-        Hand opponentPlayHand = opponentHand;
+        Hand opponentPlayHand = new Hand();
         Dice opponentDice = GetNode<Dice>("GameUI/OpponentDice");
         Deck opponentDeck = GetNode<Deck>("GameUI/OpponentDeck");
         EnergyBar opponentEnergyBar = GetNode<EnergyBar>("GameUI/OpponentEnergyBar");
@@ -154,7 +154,7 @@ public partial class Game : Node
         Campaign campaign = new Campaign(level, this.opponent, this.turnManager, this.actionManager, playArea);
         this.opponent = campaign.GetCPUPlayer();
 
-        SetupAndStartTurnManager(Turn.Opponent);
+        SetupAndStartTurnManager(Turn.Player);
     }
 
     private bool IsPlayerTurn()

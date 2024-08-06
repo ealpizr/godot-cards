@@ -17,9 +17,6 @@ public abstract partial class PlayerBase :  IInteractable, ITurnAware
 		this.EnergyBar = energyBar;
 		TurnObserver = new TurnObserver(this, turnDelegate);
 		GlobalState globalState = GlobalState.Instance;
-		GD.Print("Card purchased:");
-		GD.Print(globalState.purchasedCards.Count);
-		this.Deck.EmitSignal(Deck.SignalName.LoadCards, globalState.purchasedCards);
 	}
 
 	public int Points { get; set; }

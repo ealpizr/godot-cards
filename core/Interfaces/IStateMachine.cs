@@ -10,6 +10,8 @@ public interface IStateMachine {
 
 	public void OnMouseExit();
 
+	public void ChangeState(CardState to);
+
 	public void Init(Control control);
 
 }

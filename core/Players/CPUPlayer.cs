@@ -47,7 +47,6 @@ public abstract class CPUPlayer : PlayerBase
 		this.Hand = hand;
 		this.PlayingFieldContainer = container;
 		this.Deck = deck;
-		this.Deck.EmitSignal(Deck.SignalName.LoadCards, cards);
 	}
 
 	public override void OnTurnStart()

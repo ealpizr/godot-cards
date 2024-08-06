@@ -9,16 +9,12 @@ public partial class Deck : Control
 
 	public PlayerBase Player { get; set; }
 
-		// Most likely don't need this
-	[Signal]
-	public delegate void LoadCardsEventHandler(Array<aCard> cardsList);
-
 	[Signal]
 	public delegate void ClickEventHandler();
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		this.LoadCards += LoadCardsToDeck;
+		//this.LoadCards += LoadCardsToDeck;
 	}
 
 	public override void _Input(InputEvent e)

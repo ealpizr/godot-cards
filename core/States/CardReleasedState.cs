@@ -57,7 +57,7 @@ public partial class CardReleasedState : CardStateBase
 				} 
 			}
 		}
-
+		// leave this after the mouse button event, so we can check if the card is in the drop point. Bad idea to handle this since the code shouldnt be an ordered behavior in this way but it works for now.
 		if (Card.DropPointDetector.Monitoring == false) return;
 		if (inDropPoint)
 		{

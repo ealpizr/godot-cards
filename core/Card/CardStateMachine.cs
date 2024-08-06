@@ -7,7 +7,7 @@ public partial class CardStateMachine : Node, IStateMachine
 	[Export]
 	private CardStateBase initialState;
 
-	private IStateBase<CardState> currentState;
+	public IStateBase<CardState> currentState;
 	private Dictionary<CardState, CardStateBase> states = new Dictionary<CardState, CardStateBase>();
 
 	public void Init(Control card)
@@ -88,5 +88,22 @@ public partial class CardStateMachine : Node, IStateMachine
 		}
 	}
 
+    public void ChangeState(CardState to)
+	{
+		if (currentState != null)
+		{
+			currentState.Exit();
+		}
+
+		CardStateBase newState = states[to];
+		if (newState == null)
+		{
+			GD.PrintErr($"Invalid card state requested. Got '{to}'.");
+			return;
+		}
+
+		newState.Enter();
+		currentState = newState;
+	}
 
 }
