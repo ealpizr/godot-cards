@@ -12,7 +12,6 @@ public partial class ShopCard : Control
 	private string cardDescription;
 	private string cardRarity;
 	private int cardManaCost;
-	private string cardType;
 	private string cardImage;
 
 	private Shop shop;
@@ -59,7 +58,7 @@ public partial class ShopCard : Control
 		colorOverlay.Visible = false;
 	}
 
-	public void SetCardData(int id, string name, int cost, int attack, int defense, int health, string description, string rarity, int manacost, string type, string image)
+	public void SetCardData(int id, string name, int cost, int attack, int defense, int health, string description, string rarity, int manacost, string image)
 	{
 		cardID = id;
 		cardName = name;
@@ -70,7 +69,6 @@ public partial class ShopCard : Control
 		cardDescription = description;
 		cardRarity = rarity;
 		cardManaCost = manacost;
-		cardType = type;
 		cardImage = image;
 
 		GetNode<TextureRect>("Background/Image").Texture = GD.Load<Texture2D>(cardImage);
@@ -82,7 +80,6 @@ public partial class ShopCard : Control
 		GetNode<Label>("Background/Description").Text = cardDescription;
 		GetNode<Label>("Background/Rarity").Text = cardRarity;
 		GetNode<Label>("Background/ManaCost").Text = cardManaCost.ToString();
-		GetNode<Label>("Background/Type").Text = cardType;
 		GetNode<Label>("Background/ID").Text = cardID.ToString();
 	}
 	

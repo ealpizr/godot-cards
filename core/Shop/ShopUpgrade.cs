@@ -14,13 +14,4 @@ public partial class ShopUpgrade : Control
 		GetNode<Label>("UpgradeName").Text = upgradeName;
 		GetNode<Label>("UpgradeCost").Text = upgradeCost.ToString();
 	}
-
-	private void OnPurchaseButtonPressed()
-	{
-		Shop shop = GetParent().GetParent().GetParent() as Shop;
-		if (shop != null)
-		{
-			shop.PurchaseUpgrade(upgradeName);
-		}
-	}
 }

@@ -90,6 +90,7 @@ theme = SubResource("Theme_xiwdq")
 tab_focus_mode = 1
 
 [node name="CARDS" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/CARDS"]
@@ -105,27 +106,16 @@ offset_bottom = -0.152039
 [node name="cardHBoxContainer" type="HBoxContainer" parent="TabContainer/CARDS/ScrollContainer"]
 layout_mode = 2
 
-[node name="PACKS" type="TabBar" parent="TabContainer"]
-visible = false
-layout_mode = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/PACKS"]
-layout_mode = 0
-offset_right = 1269.0
-offset_bottom = 480.0
-
-[node name="packsHBoxContainer" type="HBoxContainer" parent="TabContainer/PACKS/ScrollContainer"]
-layout_mode = 2
-
 [node name="DICE" type="TabBar" parent="TabContainer"]
 visible = false
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/DICE"]
 layout_mode = 0
-offset_top = 1.0
-offset_right = 1278.0
-offset_bottom = 512.0
+offset_left = 382.0
+offset_top = 89.0
+offset_right = 1173.0
+offset_bottom = 515.0
 
 [node name="diceHBoxContainer" type="HBoxContainer" parent="TabContainer/DICE/ScrollContainer"]
 layout_mode = 2

@@ -41,7 +41,30 @@ public class CardData
 	[JsonPropertyName("image")]
 	public string Image { get; set; }
 }
+public class DiceData
+{
+	[JsonPropertyName("id")]
+	public int ID { get; set; }
 
+	[JsonPropertyName("max")]
+	public int Max { get; set; }
+
+	[JsonPropertyName("min")]
+	public int Min { get; set; }
+
+	[JsonPropertyName("cost")]
+	public int Cost { get; set; }
+	
+	[JsonPropertyName("name")]
+	public string Name { get; set; }
+	
+	[JsonPropertyName("rarity")]
+	public string Rarity { get; set; }
+	
+	[JsonPropertyName("description")]
+	public string Description { get; set; }
+	
+}
 public class CardPackData
 {
 	[JsonPropertyName("id")]
@@ -61,9 +84,9 @@ public partial class Shop : Control
 {
 	private int playerCoins;
 	private List<CardData> availableCards;
+	private List<DiceData> availableDice;
 	private List<CardPackData> availableCardPacks;
 	private List<string> upgrades;
-	private List<string> specialDice;
 
 	private HBoxContainer cardHBoxContainer;
 	private HBoxContainer packsHBoxContainer;
@@ -78,9 +101,8 @@ public partial class Shop : Control
 		InitializeShop();
 		SetupContainers();
 		LoadAvailableCards();
-		LoadAvailableCardPacks();
+		LoadAvailableDice();
 		LoadAvailableUpgrades();
-		LoadAvailableSpecialDice();
 		
 		Button exitButton = GetNode<Button>("ExitToMenuButton");
 		exitButton.Connect("pressed", new Callable(this, nameof(OnExitToMenuButtonPressed)));
@@ -96,7 +118,6 @@ public partial class Shop : Control
 	{
 		playerCoins = 1000;
 		upgrades = new List<string> { "Energy Bar Upgrade", "Shield Upgrade" };
-		specialDice = new List<string> { "Fire Dice", "Water Dice" };
 
 		GD.Print("Shop is ready with initial setup.");
 	}
@@ -174,92 +195,28 @@ public partial class Shop : Control
 		{
 			PackedScene cardScene = GD.Load<PackedScene>("res://scenes/Shop_card.tscn");
 			ShopCard cardNode = (ShopCard)cardScene.Instantiate();
-			((ShopCard)cardNode).SetCardData(card.ID, card.Name, card.Cost, card.Attack, card.Defense, card.Health, card.Description, card.Rarity, card.ManaCost, card.Type, card.Image);
+			((ShopCard)cardNode).SetCardData(card.ID, card.Name, card.Cost, card.Attack, card.Defense, card.Health, card.Description, card.Rarity, card.ManaCost, card.Image);
 			cardNode.SetShopReference(this);
 			cardHBoxContainer.AddChild(cardNode);
 		}
 	}
-
-	private async void LoadAvailableCardPacks()
+	
+	private async void LoadAvailableDice()
 	{
 		Nakama.Client client = GlobalState.Instance.NakamaClient;
 		Nakama.ISession session = GlobalState.Instance.Session;
 
-		Nakama.IApiRpc response = await client.RpcAsync(session, "GetAvailableCards");
-		availableCards = JsonSerializer.Deserialize<List<CardData>>(response.Payload);
+		Nakama.IApiRpc response = await client.RpcAsync(session, "GetAvailableDice");
+		availableDice = JsonSerializer.Deserialize<List<DiceData>>(response.Payload);
 
-		availableCardPacks = new List<CardPackData>();
-
-		if (availableCards.Count >= 2)
+		foreach (DiceData dice in availableDice)
 		{
-			CardPackData cardPack1 = new CardPackData
-			{
-				ID = 1,
-				Name = "Starter Pack",
-				Cost = 150,
-				Cards = new List<CardData>
-				{
-					availableCards[0],
-					availableCards[1]
-				}
-			};
-			availableCardPacks.Add(cardPack1);
+			PackedScene diceScene = GD.Load<PackedScene>("res://scenes/ShopDice.tscn");
+			ShopDice diceNode = (ShopDice)diceScene.Instantiate();
+			diceNode.SetDiceData(dice.ID, dice.Max ,dice.Min, dice.Cost, dice.Name, dice.Rarity, dice.Description);
+			diceNode.SetShopReference(this);
+			diceHBoxContainer.AddChild(diceNode);
 		}
-
-		if (availableCards.Count >= 4)
-		{
-			CardPackData cardPack2 = new CardPackData
-			{
-				ID = 2,
-				Name = "Advanced Pack",
-				Cost = 300,
-				Cards = new List<CardData>
-				{
-					availableCards[2],
-					availableCards[3]
-				}
-			};
-			availableCardPacks.Add(cardPack2);
-		}
-
-		foreach (CardPackData cardPack in availableCardPacks)
-		{
-			PackedScene cardPackScene = GD.Load<PackedScene>("res://scenes/ShopCardPack.tscn");
-			ShopCardPack cardPackNode = (ShopCardPack)cardPackScene.Instantiate();
-			cardPackNode.SetCardPackData(cardPack.ID, cardPack.Name, cardPack.Cost, cardPack.Cards);
-			
-			packsHBoxContainer.AddChild(cardPackNode);
-		}
-	}
-
-	private void OnBuyCardPack(int id)
-	{
-		CardPackData cardPack = availableCardPacks.Find(pack => pack.ID == id);
-		if (cardPack != null)
-		{
-			if (PurchaseCardPack(cardPack))
-			{
-				GD.Print("Successfully purchased card pack: " + cardPack.Name);
-				// Actualiza la interfaz de usuario o maneja la compra exitosa
-			}
-			else
-			{
-				GD.Print("Failed to purchase card pack: " + cardPack.Name);
-			}
-		}
-	}
-
-	public bool PurchaseCardPack(CardPackData cardPack)
-	{
-		if (playerCoins >= cardPack.Cost)
-		{
-			playerCoins -= cardPack.Cost;
-			availableCardPacks.Remove(cardPack);
-			GD.Print("Purchased card pack: " + cardPack.Name);
-			return true;
-		}
-		GD.Print("Not enough coins to purchase card pack: " + cardPack.Name);
-		return false;
 	}
 
 	private void LoadAvailableUpgrades()
@@ -273,59 +230,6 @@ public partial class Shop : Control
 		}
 	}
 
-	private void LoadAvailableSpecialDice()
-	{
-		foreach (string dice in specialDice)
-		{
-			PackedScene diceScene = GD.Load<PackedScene>("res://scenes/ShopDice.tscn");
-			ShopDice diceNode = (ShopDice)diceScene.Instantiate();
-			diceNode.SetDiceData(dice, 30);
-			diceHBoxContainer.AddChild(diceNode);
-		}
-	}
-
-	public bool PurchaseCard(CardData card)
-	{
-		if (playerCoins >= card.Cost)
-		{
-			playerCoins -= card.Cost;
-			Game game = GetNode<Game>("/root/Game");
-
-			availableCards.Remove(card);
-			GD.Print("Purchased card: " + card.Name);
-			return true;
-		}
-		GD.Print("Not enough coins to purchase card: " + card.Name);
-		return false;
-	}
-
-	public bool PurchaseUpgrade(string upgrade)
-	{
-		int upgradeCost = 50;
-		if (playerCoins >= upgradeCost)
-		{
-			playerCoins -= upgradeCost;
-			upgrades.Remove(upgrade);
-			GD.Print("Purchased upgrade: " + upgrade);
-			return true;
-		}
-		GD.Print("Not enough coins to purchase upgrade: " + upgrade);
-		return false;
-	}
-
-	public bool PurchaseSpecialDice(string dice)
-	{
-		int diceCost = 30;
-		if (playerCoins >= diceCost)
-		{
-			playerCoins -= diceCost;
-			specialDice.Remove(dice);
-			GD.Print("Purchased special dice: " + dice);
-			return true;
-		}
-		GD.Print("Not enough coins to purchase special dice: " + dice);
-		return false;
-	}
 	private void OnExitToMenuButtonPressed()
 	{
 		GetTree().ChangeSceneToFile("res://scenes/menu.tscn");
