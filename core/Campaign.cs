@@ -20,10 +20,11 @@ public partial class Campaign
         {5, Difficulty.Hard}, // Should be boss
     };
 
-    public Campaign(int level, PlayerBase player, TurnManager turnManager, ActionManager actionManager)
+    public Campaign(int level, PlayerBase player, TurnManager turnManager, ActionManager actionManager, HBoxContainer playArea)
     {
         cpuPlayer = new DifficultyCPUPlayer(player, turnManager, actionManager);
         cpuPlayer.ChangeLevel(difficultyMap[level]);
+        cpuPlayer.PlayingFieldContainer = playArea;
     }
 
     public CustomCPUPlayer GetCPUPlayer()

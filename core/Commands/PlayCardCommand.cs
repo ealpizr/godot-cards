@@ -7,7 +7,10 @@ public class PlayCardCommand : IUndoableCommand
     private PlayerBase player;
     private Card card;
 
-    public PlayCardCommand(PlayerBase player, Card card) { }
+    public PlayCardCommand(PlayerBase player, Card card) {
+        this.player = player;
+        this.card = card;
+     }
 
     public void Execute()
     {

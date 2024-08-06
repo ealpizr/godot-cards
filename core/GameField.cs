@@ -4,10 +4,6 @@ using Godot;
 // This could be a Singleton and pass the corresponding card to the corresponding play field.
 public partial class GameField : CanvasLayer, IGameField
 {
-	[Export]
-	private HBoxContainer player1Hand;
-	[Export]
-	private HBoxContainer player2Hand;
 
 	// create a signal to update the corresponding card to this hboxcontainer
 	[Signal]
